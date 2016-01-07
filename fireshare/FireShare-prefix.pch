@@ -1,0 +1,73 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+#define isNSNull(value) [value isKindOfClass:[NSNull class]]
+#define replaceNSNullValue(value) isNSNull(value) ? nil : value
+#define RADIANS(degrees) ((degrees * M_PI) / 180.0)
+
+
+
+
+#define TUTORIAL_LOGIN_SEEN @"tutorialLoginSeen"
+#define TUTORIAL_SUGGESTION_SEEN @"tutorialSuggestionSeen"
+#define TUTORIAL_HEADER_SEEN @"tutorialHeaderSeen"
+#define TUTORIAL_BODY_SEEN @"tutorialHeaderSeen"
+#define SCROLL_OFFSET_NAVBAR_LIMIT 150.0f
+#define SCROLL_NAVBAR_START_OFFSET 200.0f
+//FONTS
+#define AVENIR_LIGHT   @"AvenirNextCondensed-Regular"
+#define FONT_BOLD  @"AvenirNextCondensed-Bold"
+#define AVENIR_MEDIUM  @"AvenirNextCondensed-Medium"
+
+#define FONT_BLACK  @"GothamBlack"
+
+#define TIMER_DURATION_ADDS 10
+#define BASE_URL @"http://fireshare.anabtatec-mobile.com/"
+#define BASE_URL_IMAGES_RECIPES @"http://collectme.anabtatec-mobile.com/assets/recipes/"
+#define IS_IPHONE_4_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.width - ( double )320 ) < DBL_EPSILON )
+
+
+#define IS_IPHONE_4 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )480 ) < DBL_EPSILON )
+
+
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+#define IS_RETINA ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale >= 2.0))
+
+#define IS_IPHONE_6 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )667 ) < DBL_EPSILON )
+#define isNSNull(value) [value isKindOfClass:[NSNull class]]
+#define replaceNSNullValue(value) isNSNull(value) ? nil : value
+
+#define noConexion @"Al parecer no tienes conexión a Internet. ¿Deseas ir a la configuración?"
+#define VideoError @"No es posible cargar el video. Comprueba tu conexión a Internet e intenta nuevamente."
+#define NoDetail @"No puedes ver el detalle de un partido que aún no ha comenzado."
+#define NoContent @"Contenido no disponible"
+
+
+#define isIOS7 floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_8_0
+
+#define IS_IPHONE_6Plus ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )736 ) < DBL_EPSILON )
+
+
+
+//Encriptation
+
+#define AES256_KEY @"001SG0jm>M9n?-S22fm}=9|U8H5]S>Mb2U2K0L6gM0(5mL_P8G\"69jF92;Im+:)"
+#define HMAC_SHA1_KEY @"mNk1t[i1ryhvq6ohm$_aa3Bo3W67fl%96]%2dOrx}]ml4_6Gg@KR8sJ4-$#65ci"
+
+
+
+
+
