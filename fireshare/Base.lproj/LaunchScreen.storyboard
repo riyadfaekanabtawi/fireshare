@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8150" systemVersion="15A204g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8122"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,8 +16,30 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundColor.png" translatesAutoresizingMaskIntoConstraints="NO" id="moS-4T-AFG">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fireshare.png" translatesAutoresizingMaskIntoConstraints="NO" id="DA1-Ba-Y9L">
+                                <rect key="frame" x="192.5" y="288" width="215" height="24"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="1wA-Gj-kDb"/>
+                                    <constraint firstAttribute="width" constant="215" id="7ve-N5-PJ5"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DA1-Ba-Y9L" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="8JF-e7-Up5"/>
+                            <constraint firstItem="DA1-Ba-Y9L" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Enf-Oh-VQy"/>
+                            <constraint firstItem="moS-4T-AFG" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="T6R-FR-kTO"/>
+                            <constraint firstItem="moS-4T-AFG" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="eVA-OW-qgf"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="moS-4T-AFG" secondAttribute="bottom" id="hlZ-EP-sXL"/>
+                            <constraint firstAttribute="trailing" secondItem="moS-4T-AFG" secondAttribute="trailing" id="k6F-c2-Dah"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +47,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="backgroundColor.png" width="375" height="667"/>
+        <image name="fireshare.png" width="214" height="37"/>
+    </resources>
 </document>

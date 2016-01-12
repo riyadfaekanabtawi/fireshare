@@ -12,28 +12,35 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
    
     let imagePicker = UIImagePickerController()
     @IBOutlet var user_avatar: UIImageView!
+    @IBOutlet var avatar_placeholder: UIImageView!
     @IBOutlet var user_name_text_field: UITextField!
     @IBOutlet var user_email_text_field: UITextField!
     @IBOutlet var user_password_text_field: UITextField!
     @IBOutlet var user_password_confirmation_text_field: UITextField!
-    @IBOutlet var registerUIButton: UIButton!
+    @IBOutlet var registerUIButton: UIView!
+    @IBOutlet var registerLabel: UILabel!
     
-    @IBOutlet var selectFotoLabel: UILabel!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        self.registerUIButton.layer.cornerRadius = self.registerUIButton.frame.size.height/2
+        self.registerUIButton.layer.cornerRadius = 2
         self.registerUIButton.layer.masksToBounds = true
+        self.avatar_placeholder.layer.cornerRadius = 2
+        self.avatar_placeholder.layer.masksToBounds = true
         
-        self.registerUIButton.titleLabel?.font = UIFont(name: AVENIR_LIGHT, size: (self.registerUIButton.titleLabel?.font.pointSize)!)
-        self.selectFotoLabel.font = UIFont(name: AVENIR_LIGHT, size: (self.selectFotoLabel.font?.pointSize)!)
+        self.registerLabel.font = UIFont(name: FONT_BOLD_ITALIC, size: (self.registerLabel.font?.pointSize)!)
+    self.user_avatar.contentMode = UIViewContentMode.Center
         
-         self.user_name_text_field.font = UIFont(name: AVENIR_LIGHT, size: (self.user_name_text_field.font?.pointSize)!)
-         self.user_email_text_field.font = UIFont(name: AVENIR_LIGHT, size: (self.user_email_text_field.font?.pointSize)!)
-         self.user_password_confirmation_text_field.font = UIFont(name: AVENIR_LIGHT, size: (self.user_password_confirmation_text_field.font?.pointSize)!)
-         self.user_password_text_field.font = UIFont(name: AVENIR_LIGHT, size: (self.user_password_text_field.font?.pointSize)!)
-        self.user_avatar.layer.cornerRadius = self.user_avatar.frame.size.width/2
+         self.user_name_text_field.font = UIFont(name: FONT_BOLD_ITALIC, size: (self.user_name_text_field.font?.pointSize)!)
+         self.user_email_text_field.font = UIFont(name: FONT_BOLD_ITALIC, size: (self.user_email_text_field.font?.pointSize)!)
+         self.user_password_confirmation_text_field.font = UIFont(name: FONT_BOLD_ITALIC, size: (self.user_password_confirmation_text_field.font?.pointSize)!)
+         self.user_password_text_field.font = UIFont(name: FONT_BOLD_ITALIC, size: (self.user_password_text_field.font?.pointSize)!)
+        self.user_avatar.layer.cornerRadius = 2
         self.user_avatar.layer.masksToBounds = true
+        
+        
+
         // Do any additional setup after loading the view.
     }
 
@@ -44,7 +51,7 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
+            self.user_avatar.contentMode = UIViewContentMode.ScaleAspectFill
             self.user_avatar.image = pickedImage
        
         }
@@ -80,8 +87,8 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
         
      
         
-        if (self.user_email_text_field.text == "" || self.user_name_text_field.text == "" || self.user_password_confirmation_text_field.text == "" || self.user_password_text_field.text == ""){
-            let alert = UIAlertController(title: "Ooops!", message: "Missing fields", preferredStyle: UIAlertControllerStyle.Alert)
+        if (self.user_email_text_field.text == "" || self.user_name_text_field.text == "" || self.user_password_confirmation_text_field.text == "" || self.user_password_text_field.text == "" || self.user_avatar.image == nil){
+            let alert = UIAlertController(title: "Ooops!", message: "Tienes que completar todos los campos y elejir una foto de perfil para poder registrarte.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         

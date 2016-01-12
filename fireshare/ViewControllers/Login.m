@@ -43,10 +43,10 @@
 - (void)viewDidLoad
 {
     [self animateLogin ];
-    self.username.font = [UIFont fontWithName:AVENIR_LIGHT size:self.username.font.pointSize];
-    self.password.font = [UIFont fontWithName:AVENIR_LIGHT size:self.password.font.pointSize];
-    self.signInButton.titleLabel.font = [UIFont fontWithName:AVENIR_LIGHT size:self.signInButton.titleLabel.font.pointSize];
+    self.username.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.username.font.pointSize];
+    self.password.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.password.font.pointSize];
     
+    self.iniciarSesionLabel.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.signupLabel.font.pointSize];
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
     [self.view layoutIfNeeded];
     slideIndex = 0;
@@ -481,21 +481,21 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     
     self.mark.transform =CGAffineTransformConcat(scale,translate);
-    self.signInButton.transform =CGAffineTransformConcat(scale,translate);
+    self.signupLabel.transform =CGAffineTransformConcat(scale,translate);
     
     self.usernameView.transform =CGAffineTransformConcat(scale,translate);
     self.passwordView.transform =CGAffineTransformConcat(scale,translate);
     
     
-    self.signInButton.userInteractionEnabled=NO;
+    self.signupLabel.userInteractionEnabled=NO;
     
     
     [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
         self.mark.transform=CGAffineTransformIdentity;
-        self.signInButton.transform=CGAffineTransformIdentity;
+        self.signupLabel.transform=CGAffineTransformIdentity;
           self.passwordView.transform=CGAffineTransformIdentity;
           self.usernameView.transform=CGAffineTransformIdentity;
-          self.signInButton.userInteractionEnabled=YES;
+          self.signupLabel.userInteractionEnabled=YES;
     } completion:^(BOOL finished) {
         
     }];

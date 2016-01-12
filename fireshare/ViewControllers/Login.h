@@ -17,13 +17,15 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
-@property (weak, nonatomic) IBOutlet UIButton *signInButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *donthave;
 @property (weak, nonatomic) IBOutlet UILabel *signupLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *mark;
 
 @property (weak, nonatomic) IBOutlet UIView *usernameView;
+
+@property (weak, nonatomic) IBOutlet UILabel *iniciarSesionLabel;
 @property (weak, nonatomic) IBOutlet UIView *passwordView;
 
 @end

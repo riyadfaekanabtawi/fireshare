@@ -16,9 +16,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//        for (NSString *font in [UIFont familyNames]) {
-//            NSLog(@"%@", [UIFont fontNamesForFamilyName:font]);
-//        }
+        for (NSString *font in [UIFont familyNames]) {
+            NSLog(@"%@", [UIFont fontNamesForFamilyName:font]);
+        }
 
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
     {

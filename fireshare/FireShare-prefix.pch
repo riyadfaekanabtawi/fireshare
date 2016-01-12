@@ -28,11 +28,12 @@
 #define SCROLL_OFFSET_NAVBAR_LIMIT 150.0f
 #define SCROLL_NAVBAR_START_OFFSET 200.0f
 //FONTS
-#define AVENIR_LIGHT   @"AvenirNextCondensed-Regular"
-#define FONT_BOLD  @"AvenirNextCondensed-Bold"
-#define AVENIR_MEDIUM  @"AvenirNextCondensed-Medium"
-
+#define FONT_REGULAR   @"GothamBook"
+#define FONT_BOLD  @"GothamBold"
+#define FONT_MEDIUM  @"GothamMedium"
+#define FONT_LIGHT  @"GothamBook"
 #define FONT_BLACK  @"GothamBlack"
+#define FONT_BOLD_ITALIC @"GothamBold-Italic"
 
 #define TIMER_DURATION_ADDS 10
 #define BASE_URL @"http://fireshare.anabtatec-mobile.com/"

@@ -181,16 +181,9 @@
 
 +(void)RegisterUserWithUsername:(NSString *)user_name andPassword:(NSString *)password andPasswordConfirmation:(NSString *)password_confirmation andEmailAddress:(NSString *)email andPicture:(NSString *)picture andDeviceToken:(NSString *)device_token AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
     
-    
-    NSString *device_id = [[Functions deviceUUID] stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    
-    NSString *newString = [[device_id componentsSeparatedByCharactersInSet:
-                            [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
-                           componentsJoinedByString:@""];
-    
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *myNumber = [f numberFromString:newString];
+    
     int i = arc4random() % 1000;
     NSNumber *number = [NSNumber numberWithInt:i];
     
