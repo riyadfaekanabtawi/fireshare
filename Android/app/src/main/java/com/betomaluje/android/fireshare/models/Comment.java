@@ -10,7 +10,13 @@ public class Comment {
     @Expose
     private long id;
     @Expose
-    private String title;
+    private String text;
+    @Expose
+    private String userImgUrl;
+    @Expose
+    private String userName;
+    @Expose
+    private boolean isHot;
 
     public long getId() {
         return id;
@@ -20,11 +26,35 @@ public class Comment {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getText() {
+        return text;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getUserImgUrl() {
+        return userImgUrl;
+    }
+
+    public void setUserImgUrl(String userImgUrl) {
+        this.userImgUrl = userImgUrl;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public boolean isHot() {
+        return isHot;
+    }
+
+    public void setIsHot(boolean isHot) {
+        this.isHot = isHot;
     }
 }

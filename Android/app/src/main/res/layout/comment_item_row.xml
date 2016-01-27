@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView_userProfile"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textView_userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView_userProfile"
+        android:layout_alignTop="@+id/imageView_userProfile"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/imageView_userProfile"
+        android:layout_toRightOf="@+id/imageView_userProfile"
+        android:gravity="center_vertical"
+        android:textColor="#4a4a4a"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textView_userName"
+        android:layout_marginTop="8dp"
+        android:background="#f2f2f2" />
+
+    <TextView
+        android:id="@+id/textView_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@+id/divider"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@+id/imageView_hot"
+        android:layout_toStartOf="@+id/imageView_hot"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="4"
+        android:textColor="#4a4a4a"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imageView_hot"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textView_comment"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@mipmap/fire"
+        android:visibility="gone" />
+
+</RelativeLayout>

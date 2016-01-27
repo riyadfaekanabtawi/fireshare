@@ -14,9 +14,15 @@ public class Post {
     @Expose
     private long likes;
     @Expose
-    private String title;
+    private String text;
     @Expose
     private ArrayList<Comment> comments;
+    @Expose
+    private String userImgUrl;
+    @Expose
+    private String date;
+    @Expose
+    private String userName;
 
     public long getId() {
         return id;
@@ -34,12 +40,12 @@ public class Post {
         this.likes = likes;
     }
 
-    public String getTitle() {
-        return title;
+    public String getText() {
+        return text;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public ArrayList<Comment> getComments() {
@@ -48,5 +54,29 @@ public class Post {
 
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getUserImgUrl() {
+        return userImgUrl;
+    }
+
+    public void setUserImgUrl(String imgUrl) {
+        this.userImgUrl = imgUrl;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
