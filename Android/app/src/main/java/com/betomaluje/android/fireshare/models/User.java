@@ -1,5 +1,7 @@
 package com.betomaluje.android.fireshare.models;
 
+import com.betomaluje.android.fireshare.services.FireShareRestClient;
+import com.betomaluje.android.fireshare.services.ServiceManager;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,6 +11,10 @@ import java.util.ArrayList;
  * Created by betomaluje on 1/7/16.
  */
 public class User {
+
+    public static enum IMAGE_TYPE {
+        SMALL, MEDIUM, ORIGINAL
+    }
 
     @Expose
     private String avatar;
@@ -24,6 +30,9 @@ public class User {
     @SerializedName("recipes")
     @Expose
     private ArrayList<Post> posts;
+    @SerializedName("avatar_file_name")
+    @Expose
+    private String avatarFileName;
 
     public String getAvatar() {
         return avatar;
@@ -31,6 +40,14 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAvatarFileName() {
+        return avatarFileName;
+    }
+
+    public void setAvatarFileName(String avatarFileName) {
+        this.avatarFileName = avatarFileName;
     }
 
     public String getDeviceToken() {
@@ -71,5 +88,33 @@ public class User {
 
     public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
+    }
+
+    public String getUserImage() {
+        return getUserImage(IMAGE_TYPE.SMALL);
+    }
+
+    public String getUserImage(IMAGE_TYPE imageType) {
+        if (avatar == null || avatar.isEmpty()) {
+            String type;
+
+            switch (imageType) {
+                case SMALL:
+                    type = "small";
+                    break;
+                case MEDIUM:
+                    type = "medium";
+                    break;
+                case ORIGINAL:
+                    type = "original";
+                    break;
+                default:
+                    type = "small";
+                    break;
+            }
+            return FireShareRestClient.BASE_URL + "assets/users/" + id + "/" + type + "/" + avatarFileName;
+        } else {
+            return FireShareRestClient.BASE_URL + avatar;
+        }
     }
 }

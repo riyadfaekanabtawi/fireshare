@@ -14,10 +14,9 @@ public class ImageUtils {
 
     public static String imageToBase64String(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 10, baos);
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
         return Base64.encodeToString(b, Base64.NO_WRAP);
-        //return new String(Base64.encode(b, Base64.DEFAULT));
     }
 
     public static Bitmap scaleDown(Resources res, Bitmap realImage, float maxImageSize, boolean filter) {
@@ -29,9 +28,8 @@ public class ImageUtils {
         int width = Math.round((float) ratio * realImage.getWidth());
         int height = Math.round((float) ratio * realImage.getHeight());
 
-        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+        return Bitmap.createScaledBitmap(realImage, width,
                 height, filter);
-        return newBitmap;
     }
 
     /**

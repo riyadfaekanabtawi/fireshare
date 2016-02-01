@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.User;
@@ -49,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
@@ -188,12 +189,14 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void loaded(User data) {
                     super.loaded(data);
+                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    finish();
                 }
 
                 @Override
                 public void error(String error) {
                     super.error(error);
-                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    Toast.makeText(RegisterActivity.this, "No te hemos podido registrar. Intenta en unos momentos", Toast.LENGTH_LONG).show();
                 }
             });
         }

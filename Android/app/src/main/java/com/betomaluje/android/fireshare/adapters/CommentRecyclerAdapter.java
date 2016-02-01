@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.Comment;
+import com.betomaluje.android.fireshare.models.User;
+import com.betomaluje.android.fireshare.utils.RoundedTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
         @Bind(R.id.textView_comment)
         TextView textViewComment;
 
+        @Bind(R.id.textView_date)
+        TextView textViewDate;
+
         @Bind(R.id.imageView_hot)
         ImageView imageViewHot;
 
@@ -51,25 +56,34 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
             ButterKnife.bind(this, itemView);
         }
 
-        public void setDataIntoView(Context context, Comment comment) {
-            Picasso.with(context).load(comment.getUserImgUrl()).fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
+        public void setDataIntoView(Context context, Comment comment, int position) {
+            Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
+                    .transform(new RoundedTransformation(8, 0))
+                    .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
 
-            textViewUserName.setText(comment.getUserName());
+            textViewUserName.setText(comment.getUser().getName());
             textViewComment.setText(comment.getText());
 
-            imageViewHot.setVisibility(comment.isHot() ? View.VISIBLE : View.GONE);
+            imageViewHot.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+
+            textViewDate.setText(comment.getDate());
         }
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        notifyItemInserted(comments.size() - 1);
     }
 
     @Override
     public CommentRowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.comment_item_row, parent, false);
+        View view = inflater.inflate(R.layout.comment_item_row_2, parent, false);
         return new CommentRowViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CommentRowViewHolder holder, int position) {
-        holder.setDataIntoView(context, comments.get(position));
+        holder.setDataIntoView(context, comments.get(position), position);
     }
 
     @Override

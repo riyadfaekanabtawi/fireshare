@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.Comment;
+import com.betomaluje.android.fireshare.models.User;
+import com.betomaluje.android.fireshare.utils.RoundedTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -63,12 +65,14 @@ public class CommentPagerAdapter extends PagerAdapter {
 
         Comment comment = comments.get(position);
 
-        Picasso.with(context).load(comment.getUserImgUrl()).fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
+        Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
+                .transform(new RoundedTransformation(8, 0))
+                .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
 
-        textViewUserName.setText(comment.getUserName());
+        textViewUserName.setText(comment.getUser().getName());
         textViewComment.setText(comment.getText());
 
-        imageViewHot.setVisibility(comment.isHot() ? View.VISIBLE : View.GONE);
+        imageViewHot.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
 
         container.addView(itemView);
 

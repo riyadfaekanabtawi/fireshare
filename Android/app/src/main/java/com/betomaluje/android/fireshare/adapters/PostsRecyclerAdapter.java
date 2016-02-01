@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.betomaluje.android.fireshare.R;
+import com.betomaluje.android.fireshare.interfaces.OnPostClicked;
 import com.betomaluje.android.fireshare.models.Post;
 import com.betomaluje.android.fireshare.viewholders.PostRowViewHolder;
 
@@ -20,6 +21,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<Post> posts;
+    private OnPostClicked onPostClicked;
 
     public PostsRecyclerAdapter(Context context, ArrayList<Post> posts) {
         this.context = context;
@@ -27,10 +29,19 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.inflater = LayoutInflater.from(context);
     }
 
+    public void setOnPostClicked(OnPostClicked onPostClicked) {
+        this.onPostClicked = onPostClicked;
+    }
+
+    public void addPost(Post post) {
+        posts.add(0, post);
+        notifyItemInserted(0);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.post_item_row, parent, false);
-        return new PostRowViewHolder(context, view);
+        return new PostRowViewHolder(context, view, onPostClicked);
     }
 
     @Override

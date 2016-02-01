@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.transition.Explode;
 import android.transition.Slide;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,15 +22,19 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.services.ServiceManager;
+import com.betomaluje.android.fireshare.utils.UserPreferences;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
+
+    private final String TAG = LoginActivity.class.getSimpleName();
 
     public static final String VIEW_TAG_1 = "view1";
     public static final String VIEW_TAG_2 = "view2";
@@ -61,8 +66,26 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().hide();
+        if (!UserPreferences.getInstance().using(LoginActivity.this).isNew()) {
+            Log.e(TAG, "not new user");
 
+            //check if we must do login again (after 30 days)
+            if (UserPreferences.getInstance().using(LoginActivity.this).mustLogin()) {
+                Log.e(TAG, "date expired...so must login");
+                initApp();
+            } else {
+                Log.e(TAG, "everything cool");
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
+            }
+
+        } else {
+            Log.e(TAG, "new user");
+            initApp();
+        }
+    }
+
+    private void initApp() {
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
 
@@ -160,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void error(String error) {
                     super.error(error);
+                    Toast.makeText(LoginActivity.this, "Los datos ingresados no corresponden a nuestros registros", Toast.LENGTH_LONG).show();
                 }
             });
         }

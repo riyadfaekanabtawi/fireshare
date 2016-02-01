@@ -34,13 +34,58 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="home"
-                    android:textSize="18sp"
-                    android:textStyle="italic|bold" />
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButton_cancel"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@android:color/transparent"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/imageButton_cancel"
+                        android:layout_toLeftOf="@+id/imageButton_send"
+                        android:layout_toRightOf="@+id/imageButton_cancel"
+                        android:layout_toStartOf="@+id/imageButton_send"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:text="home"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="italic|bold" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton_send"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@android:color/transparent"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
 
@@ -75,7 +120,6 @@
                 android:layout_toEndOf="@+id/imageView_userProfile"
                 android:layout_toRightOf="@+id/imageView_userProfile"
                 android:gravity="center_vertical"
-                android:text="Alberto Maluje"
                 android:textColor="#4a4a4a"
                 android:textStyle="bold" />
 
@@ -107,10 +151,21 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
