@@ -8,17 +8,40 @@
 
 import UIKit
 
-class HomeTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
+class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
 
-    
     @IBOutlet var post_title_label: UILabel!
+    @IBOutlet var tableView_height: NSLayoutConstraint!
+    @IBOutlet var post_user_name_label: UILabel!
     @IBOutlet var timeLabel: UILabel!
     var array_comments:[Comments] = []
-    @IBOutlet var commentTableView: UITableView!
+    @IBOutlet var commentTableView: UICollectionView!
     @IBOutlet var user_owner_avatar: UIImageView!
+    
+    @IBOutlet var first_user: UIImageView!
+    @IBOutlet var second_user: UIImageView!
+    @IBOutlet var third_user: UIImageView!
+    @IBOutlet var first_User_width: NSLayoutConstraint!
+    @IBOutlet var second_User_width: NSLayoutConstraint!
+    @IBOutlet var third_User_width: NSLayoutConstraint!
+     @IBOutlet var footerHeight: NSLayoutConstraint!
+    @IBOutlet var commentCountLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.first_user.layer.cornerRadius = 2
+        self.first_user.layer.masksToBounds = true
+        
+        self.second_user.layer.cornerRadius = 2
+        self.second_user.layer.masksToBounds = true
+        
+        self.third_user.layer.cornerRadius = 2
+        self.third_user.layer.masksToBounds = true
+        self.user_owner_avatar.layer.cornerRadius = 2
+        self.user_owner_avatar.layer.masksToBounds = true
+        self.commentCountLabel.font = UIFont(name: FONT_BOLD, size: self.commentCountLabel.font.pointSize)
         
         self.post_title_label.font = UIFont(name: FONT_REGULAR, size: self.post_title_label.font.pointSize)
     }
@@ -31,52 +54,174 @@ class HomeTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSour
 
     
     func displayPost(post:Posts){
-    
-        self.post_title_label.text = post.post_title
         
-        self.array_comments = post.comments as! [Comments]
-    
-    
-        if self.array_comments.count == 0{
+        if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue <= 0 && post.seconds_since.integerValue > 0{
+            
+            self.timeLabel.text = "Hace \(post.seconds_since)sec"
+            
+        }
         
+        if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
+            
+            self.timeLabel.text = "Hace \(post.minutes_since) min"
+            
+        }
+        
+        
+        if post.hours_since.integerValue > 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
+            
+            
+            
+            self.timeLabel.text = "Hace \(post.hours_since) hs"
+            
+        }
+        
+        if post.days_since.integerValue > 0 && post.hours_since.integerValue > 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
+            
+            
+            
+            self.timeLabel.text = "Hace \(post.days_since) días"
+            
+        }
+        
+
+        if (post.comments.count == 0){
+        
+        self.footerHeight.constant = 0
         
         }else{
+        self.footerHeight.constant = 34
         
-        self.commentTableView.reloadData()
+        }
+        self.post_title_label.text = post.post_title
+        self.post_user_name_label.text = post.post_user.name
+      
+    
+        self.user_owner_avatar.sd_setImageWithURL(NSURL(string: post.post_user.avatar_url))
+    
         
+        self.array_comments = post.comments as! [Comments]
+        
+        if post.comments.count != 0{
+         self.commentTableView.reloadData()
+       
         }
     
     }
+ 
+
+   
+
+ 
     
-    
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("comment", forIndexPath: indexPath) as! CommentsTableViewCell
-        
-        
-        let comment = self.array_comments[indexPath.row]
-        cell.displayComment(comment)
-        
-        return cell
-        
-    }
-    
-    
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
-    }
-    
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-       return self.array_comments.count
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("comments", forIndexPath: indexPath) as! CommentCollectionViewCell
+         let comment = self.array_comments[indexPath.row]
+        
+        
+       
+        if self.array_comments.count != 0{
+        
+            if self.array_comments.count == 3{
+                self.first_User_width.constant = 20
+                self.second_User_width.constant = 20
+                self.third_User_width.constant = 20
+                
+                self.first_user.sd_setImageWithURL(NSURL(string: self.array_comments[0].user_owner.avatar_url))
+                self.second_user.sd_setImageWithURL(NSURL(string: self.array_comments[1].user_owner.avatar_url))
+                self.third_user.sd_setImageWithURL(NSURL(string: self.array_comments[2].user_owner.avatar_url))
+                
+            }else if self.array_comments.count == 2{
+                self.first_User_width.constant = 20
+                self.second_User_width.constant = 20
+                self.third_User_width.constant = 0
+                self.first_user.sd_setImageWithURL(NSURL(string: self.array_comments[0].user_owner.avatar_url))
+                self.second_user.sd_setImageWithURL(NSURL(string: self.array_comments[1].user_owner.avatar_url))
+                
+            }else if self.array_comments.count == 1{
+                self.first_User_width.constant = 20
+                self.second_User_width.constant = 0
+                self.third_User_width.constant = 0
+                
+                self.first_user.sd_setImageWithURL(NSURL(string: self.array_comments[0].user_owner.avatar_url))
+                
+            }else  if self.array_comments.count >= 3{
+                self.first_User_width.constant = 20
+                self.second_User_width.constant = 20
+                self.third_User_width.constant = 20
+                
+                self.first_user.sd_setImageWithURL(NSURL(string: self.array_comments[0].user_owner.avatar_url))
+                self.second_user.sd_setImageWithURL(NSURL(string: self.array_comments[1].user_owner.avatar_url))
+                self.third_user.sd_setImageWithURL(NSURL(string: self.array_comments[2].user_owner.avatar_url))
+                
+            }
+            
+            
+            self.commentCountLabel.text = "+ \(self.array_comments.count)"
+            
+            
+            cell.displayComment(comment)
+            cell.layoutIfNeeded()
+            if (indexPath.row == 0){
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.first_user.alpha = 1
+                    self.second_user.alpha = 0.5
+                    self.third_user.alpha = 0.5
+                    
+                    cell.fireIcon.alpha = 1
+                })
+            }else if (indexPath.row == 1){
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.first_user.alpha = 0.5
+                    self.second_user.alpha = 1
+                    self.third_user.alpha = 0.5
+                    cell.fireIcon.alpha = 0
+                    
+                })
+            }else if(indexPath.row == 2){
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.first_user.alpha = 0.5
+                    self.second_user.alpha = 0.5
+                    self.third_user.alpha = 1
+                    cell.fireIcon.alpha = 0
+                    
+                })
+            }else{
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    cell.fireIcon.alpha = 0
+                    self.first_user.alpha = 0.5
+                    self.second_user.alpha = 0.5
+                    self.third_user.alpha = 0.5
+                })
+                
+            }
+            
+
+        }
+        
+        
+        return cell
+        
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        
+         return CGSizeMake(self.frame.size.width-40, 160)
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+     return self.array_comments.count
+        
     }
 }

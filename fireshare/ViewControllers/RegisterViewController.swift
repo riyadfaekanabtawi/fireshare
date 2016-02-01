@@ -75,16 +75,38 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
     */
     
     @IBAction func selectUserImageTouchUpInside(sender: UIButton) {
+        self.avatar_placeholder.transform = CGAffineTransformMakeScale(0.01, 0.01);
         
-        self.imagePicker.allowsEditing = false
-        self.imagePicker.sourceType = .PhotoLibrary
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.30, initialSpringVelocity: 6.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            self.avatar_placeholder.transform = CGAffineTransformIdentity;
+            
+            }) { (Bool) -> Void in
+                
+                self.imagePicker.allowsEditing = false
+                self.imagePicker.sourceType = .PhotoLibrary
+                
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                
+                
+        }
         
-        presentViewController(self.imagePicker, animated: true, completion: nil)
+ 
         
     }
        @IBAction func registerUserTouchUpInside(sender: UIButton) {
         
         
+        self.registerUIButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.30, initialSpringVelocity: 6.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+               self.registerUIButton.transform = CGAffineTransformIdentity;
+            
+            }) { (Bool) -> Void in
+                
+                
+                
+                
+        }
      
         
         if (self.user_email_text_field.text == "" || self.user_name_text_field.text == "" || self.user_password_confirmation_text_field.text == "" || self.user_password_text_field.text == "" || self.user_avatar.image == nil){

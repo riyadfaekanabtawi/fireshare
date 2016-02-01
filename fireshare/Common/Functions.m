@@ -505,4 +505,30 @@
         return uuidString;
     }
 }
+
+
+
++(UIImage *)CreateGradientInView:(CGRect )bounds withStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor{
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = bounds;
+    gradient.colors = @[(id)startColor.CGColor,
+                        (id)endColor.CGColor];
+    gradient.locations = @[@0.0, @0.77, @1.0];
+    
+    
+    UIGraphicsBeginImageContext(gradient.bounds.size);
+    [gradient renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *gradientImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    
+    return gradientImage;
+    
+    
+}
+
+
+
 @end

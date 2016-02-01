@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Users.h"
 @interface Comments : NSObject
 -(Comments *)initWithDictionary:(NSDictionary *)dictionary;
 @property NSNumber *comment_id;
 @property NSString *comment_content;
-
+@property Users *user_owner;
 
 @end

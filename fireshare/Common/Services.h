@@ -11,6 +11,7 @@
 @interface Services : NSObject
 
 
++(void)deleteComment:(NSNumber *)comment_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 
 +(void)getAllPosts:(void (^)(id)) handler  orErrorHandler:(void (^)(NSError *)) errorHandler;
 +(void)getRecipesCardsWithHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
@@ -18,6 +19,7 @@
 +(void)getUserInfoWithId:(NSNumber *)user_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 
 +(void)getActivities:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
+
 +(void)getRecipeWithID:(NSNumber *)recipe_id andHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 //POST
 
@@ -32,4 +34,18 @@
 +(void)createPostForUser:(NSNumber *)user_id andTitleOfPost:(NSString *)title AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 
 +(void)RegisterUserWithUsername:(NSString *)user_name andPassword:(NSString *)password andPasswordConfirmation:(NSString *)password_confirmation andEmailAddress:(NSString *)email andPicture:(NSString *)picture andDeviceToken:(NSString *)device_token AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
+
+
+
+
+
+
++(void)AddLikeForComment:(NSNumber *)user_id commentID:(NSNumber *)comment_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler;
+
++(void)removeLikeFromComment:(NSNumber *)user_id commentID:(NSNumber *)comment_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler;
+
+
++(void)removeLikeFromPost:(NSNumber *)user_id postID:(NSNumber *)post_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler;
+
++(void)addLikeToPost:(NSNumber *)user_id postID:(NSNumber *)post_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler;
 @end

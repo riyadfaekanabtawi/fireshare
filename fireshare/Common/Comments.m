@@ -14,7 +14,10 @@
     
     if (self) {
         
-    
+        self.comment_id = [dictionary objectForKey:@"id"];
+        self.comment_content = replaceNSNullValue([dictionary objectForKey:@"content"]);
+        
+        self.user_owner = [[Users alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
         
     }
     

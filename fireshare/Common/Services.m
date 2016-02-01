@@ -178,6 +178,40 @@
 }
 
 
++(void)deleteComment:(NSNumber *)comment_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
+    
+    NSDictionary *p = @{
+                        
+                        @"id" : comment_id};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    
+    [manager GET:[NSString stringWithFormat:@"%@deleteComment",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        
+        
+        
+        handler(responseObject);
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
+
 
 +(void)RegisterUserWithUsername:(NSString *)user_name andPassword:(NSString *)password andPasswordConfirmation:(NSString *)password_confirmation andEmailAddress:(NSString *)email andPicture:(NSString *)picture andDeviceToken:(NSString *)device_token AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
     
@@ -276,6 +310,135 @@
         
         
         handler(post);
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
+
+
+
++(void)addLikeToPost:(NSNumber *)user_id postID:(NSNumber *)post_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    NSDictionary *p = @{@"id_user":user_id,
+                        @"id_post":post_id
+                        
+                        };
+    [manager POST:[NSString stringWithFormat:@"%@like",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+ 
+        
+        handler(@"OK");
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
++(void)removeLikeFromPost:(NSNumber *)user_id postID:(NSNumber *)post_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    NSDictionary *p = @{@"id_user":user_id,
+                        @"id_post":post_id
+                        
+                        };
+    [manager POST:[NSString stringWithFormat:@"%@dislike",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        handler(@"OK");
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
+
+
++(void)removeLikeFromComment:(NSNumber *)user_id commentID:(NSNumber *)comment_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    NSDictionary *p = @{@"id_user":user_id,
+                        @"id_comment":comment_id
+                        
+                        };
+    [manager POST:[NSString stringWithFormat:@"%@dislikeComment",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        handler(@"OK");
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
++(void)AddLikeForComment:(NSNumber *)user_id commentID:(NSNumber *)comment_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    NSDictionary *p = @{@"id_user":user_id,
+                        @"id_comment":comment_id
+                        
+                        };
+    [manager POST:[NSString stringWithFormat:@"%@likeComment",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        handler(@"OK");
         
         
         

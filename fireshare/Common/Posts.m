@@ -8,19 +8,24 @@
 
 #import "Posts.h"
 #import "Comments.h"
-@implementation Posts
+@implementation Posts{
+
+ NSDateFormatter *dateFormatter;
+
+}
 
 
 -(Posts *)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
-    
+    dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     if (self) {
         
         self.post_title = [dictionary objectForKey:@"title"];
         self.post_id = [dictionary objectForKey:@"id"];
         self.post_likes = [dictionary objectForKey:@"likes"];
         self.post_date = [dictionary objectForKey:@"device_token"];
-        //self.post_user =
+        self.post_user = [[Users alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
      
         
         NSMutableArray *array = [NSMutableArray new];
@@ -33,6 +38,18 @@
         }
         
         self.comments = array;
+        
+        NSDate *dateA = replaceNSNullValue([dateFormatter dateFromString:[dictionary objectForKey:@"created_at"]]);
+        
+        
+        
+        
+        
+        self.seconds_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate:dateA])];
+        self.minutes_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate: dateA])/60];
+        self.hours_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate: dateA])/3600];
+        self.days_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate: dateA])/86400];
+        
         
     }
     

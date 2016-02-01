@@ -25,6 +25,9 @@
 
 @property (weak, nonatomic) IBOutlet UIView *usernameView;
 
+@property (weak, nonatomic) IBOutlet UIView *loginButtonView;
+@property (weak, nonatomic) IBOutlet UIView *registerButtonView;
+
 @property (weak, nonatomic) IBOutlet UILabel *iniciarSesionLabel;
 @property (weak, nonatomic) IBOutlet UIView *passwordView;
 

@@ -205,8 +205,15 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 
 -(IBAction)Go:(id)sender{
+     self.loginButtonView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+[UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.30 initialSpringVelocity:6.00 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+     self.loginButtonView.transform = CGAffineTransformIdentity;
     
-
+} completion:^(BOOL finished) {
+    
+    
+    
+}];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     if(![self.username.text isEqualToString:@""]&&![self.password.text isEqualToString:@""]){
@@ -466,7 +473,18 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 
 -(IBAction)signUpTouchUpInside:(id)sender{
-    [self performSegueWithIdentifier:@"signup" sender:self];
+    
+    self.registerButtonView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.30 initialSpringVelocity:6.00 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        self.registerButtonView.transform = CGAffineTransformIdentity;
+        
+    } completion:^(BOOL finished) {
+       [self performSegueWithIdentifier:@"signup" sender:self]; 
+        
+        
+    }];
+    
+    
     
     
 }
@@ -501,6 +519,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     }];
     
 }
+
+
 
 
 
