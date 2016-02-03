@@ -13,8 +13,6 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -31,7 +29,7 @@ public class PostManager {
         params.put("id", userId);
         params.put("title", text);
 
-        FireShareRestClient.post("/recipe/create", params, new JsonHttpResponseHandler() {
+        FireShareRestClient.post("recipe/create", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -56,7 +54,7 @@ public class PostManager {
     }
 
     public static void getPosts(final ServiceManagerHandler<ArrayList<Post>> callback) {
-        FireShareRestClient.get("/posts", null, new JsonHttpResponseHandler() {
+        FireShareRestClient.get("posts", null, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -87,18 +85,69 @@ public class PostManager {
         });
     }
 
-    public static void likePost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
-        Map<String, String> user = new HashMap<>();
-        user.put("id", userId);
-
-        Map<String, String> post = new HashMap<>();
-        post.put("id", postId);
-
+    public static void getPost(String postId, final ServiceManagerHandler<Post> callback) {
         RequestParams params = new RequestParams();
-        params.put("user", user);
-        params.put("post", post);
+        params.put("id", postId);
 
-        FireShareRestClient.post("/like", params, new JsonHttpResponseHandler() {
+        FireShareRestClient.get("postDetail", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    //error
+                    try {
+                        callback.error(response.getString("Description"));
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.loaded(new Gson().fromJson(response.toString(), Post.class));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void like(String userId, String postId, final ServiceManagerHandler<Post> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id_user", userId);
+        params.put("id_post", postId);
+
+        FireShareRestClient.post("like", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    //error
+                    try {
+                        callback.error(response.getString("Description"));
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.loaded(new Gson().fromJson(response.toString(), Post.class));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void dislike(String userId, String postId, final ServiceManagerHandler<Post> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id_user", userId);
+        params.put("id_post", postId);
+
+        FireShareRestClient.post("dislike", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

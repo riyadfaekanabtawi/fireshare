@@ -130,7 +130,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toggleToolbarControls(false);
-                //hack to hide the keyboard
                 SystemUtils.hideKeyboard(HomeActivity.this);
             }
         });
@@ -150,13 +149,26 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        fillPosts();
-
         textViewUserName.setText(user.getName());
+
+        imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+
+                //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this, v, "postView");
+                //ActivityCompat.startActivity(HomeActivity.this, intent, options.toBundle());
+                startActivity(intent);
+
+                //now we send it to the event bus
+                //BusStation.postOnMain(producePost());
+                BusStation.postOnMain(produceUser());
+            }
+        });
 
         Picasso.with(HomeActivity.this).load(user.getUserImage())
                 .transform(new RoundedTransformation(8, 0))
-                .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
+                .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
         BusStation.getBus().register(this);
     }
@@ -218,7 +230,8 @@ public class HomeActivity extends AppCompatActivity {
 
             AnimatorSet set = new AnimatorSet();
             set.playTogether(tx1, ty1, tx2, ty2);
-            set.setDuration(500);
+            set.setDuration(400);
+            set.setStartDelay(200);
             set.setInterpolator(new OvershootInterpolator());
             set.addListener(new AnimationEndListener(imageButtonSend, imageButtonCancel, true));
             set.start();
@@ -232,7 +245,8 @@ public class HomeActivity extends AppCompatActivity {
 
             AnimatorSet set = new AnimatorSet();
             set.playTogether(tx1, ty1, tx2, ty2);
-            set.setDuration(500);
+            set.setDuration(400);
+            set.setStartDelay(200);
             set.setInterpolator(new OvershootInterpolator());
             set.addListener(new AnimationEndListener(imageButtonSend, imageButtonCancel, false));
             set.start();
@@ -265,6 +279,7 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(HomeActivity.this, PostActivity.class);
             Bundle b = new Bundle();
             b.putInt("mStartingPosition", position);
+            b.putString("postId", String.valueOf(post.getId()));
             intent.putExtras(b);
 
             //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this, v, "postView");
@@ -273,7 +288,7 @@ public class HomeActivity extends AppCompatActivity {
 
             selectedPost = post;
             //now we send it to the event bus
-            BusStation.postOnMain(producePost());
+            //BusStation.postOnMain(producePost());
             BusStation.postOnMain(produceUser());
         }
     };
@@ -290,13 +305,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private void postText() {
         editTextPost.clearFocus();
-        SystemUtils.hideKeyboard(HomeActivity.this);
         posting = true;
 
         String text = editTextPost.getText().toString();
 
         if (!text.isEmpty()) {
             Log.e("HOME", "Post text");
+            SystemUtils.hideKeyboard(HomeActivity.this);
+
             serviceManager.createPost(String.valueOf(user.getId()), text, new ServiceManager.ServiceManagerHandler<Post>() {
                 @Override
                 public void loaded(Post data) {
@@ -330,6 +346,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         if (adapter != null)
             adapter.notifyDataSetChanged();
+
+        if (recyclerView != null) {
+            fillPosts();
+        }
     }
 
     @Override

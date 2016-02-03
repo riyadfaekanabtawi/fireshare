@@ -18,7 +18,6 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|enterAlways">
 
@@ -32,7 +31,19 @@
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+                app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:text="post"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="italic|bold" />
+
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -47,8 +58,8 @@
 
         <ImageView
             android:id="@+id/imageView_userProfile"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -97,6 +108,7 @@
             android:layout_alignStart="@+id/imageView_userProfile"
             android:layout_below="@+id/imageView_userProfile"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
             android:textColor="#4a4a4a"
             android:textSize="22sp" />
@@ -143,14 +155,23 @@
             android:textColor="@android:color/black"
             android:textColorHint="#d9d9d9" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_send"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/icon_send_write"
             android:layout_alignParentTop="true" />
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </android.support.design.widget.CoordinatorLayout>

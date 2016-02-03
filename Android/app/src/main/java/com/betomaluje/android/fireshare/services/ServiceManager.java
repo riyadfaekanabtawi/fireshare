@@ -55,8 +55,16 @@ public class ServiceManager {
         PostManager.getPosts(callback);
     }
 
+    public void getPost(String postId, final ServiceManagerHandler<Post> callback) {
+        PostManager.getPost(postId, callback);
+    }
+
     public void likePost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
-        PostManager.likePost(userId, postId, callback);
+        PostManager.like(userId, postId, callback);
+    }
+
+    public void dilikePost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
+        PostManager.dislike(userId, postId, callback);
     }
 
     /*
@@ -64,6 +72,14 @@ public class ServiceManager {
      */
     public void createComment(String userId, String postId, String text, final ServiceManagerHandler<Comment> callback) {
         CommentManager.createComment(userId, postId, text, callback);
+    }
+
+    public void likeComment(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
+        CommentManager.like(userId, idComment, callback);
+    }
+
+    public void dislikeComment(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
+        CommentManager.dislike(userId, idComment, callback);
     }
 
     public static abstract class ServiceManagerHandler<T> {

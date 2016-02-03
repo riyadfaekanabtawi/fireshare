@@ -59,7 +59,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
         public void setDataIntoView(Context context, Comment comment, int position) {
             Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                     .transform(new RoundedTransformation(8, 0))
-                    .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
+                    .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
             textViewUserName.setText(comment.getUser().getName());
             textViewComment.setText(comment.getText());

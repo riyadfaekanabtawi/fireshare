@@ -11,9 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +57,11 @@ public class PostActivity extends AppCompatActivity {
     @Bind(R.id.editText_comment)
     EditText editTextComment;
 
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+
     @Bind(R.id.button_send)
-    Button buttonSend;
+    ImageButton buttonSend;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -89,8 +93,12 @@ public class PostActivity extends AppCompatActivity {
         mStartingPosition = 0;
 
         Bundle b = getIntent().getExtras();
-        if (b != null && b.containsKey("mStartingPosition")) {
-            mStartingPosition = b.getInt("mStartingPosition", 0);
+        if (b != null) {
+
+            if (b.containsKey("mStartingPosition"))
+                mStartingPosition = b.getInt("mStartingPosition", 0);
+
+            getPost(b.getString("postId", ""));
         }
 
         if (savedInstanceState == null) {
@@ -154,28 +162,47 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    @Subscribe
-    public void getPost(Post post) {
-        this.post = post;
+    public void getPost(String postId) {
+        if (postId.isEmpty())
+            return;
 
-        if (imageViewUserProfile != null)
-            Picasso.with(PostActivity.this).load(post.getUser().getUserImage())
-                    .transform(new RoundedTransformation(8, 0))
-                    .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
+        progressBar.setVisibility(View.VISIBLE);
 
-        if (textViewUserName != null)
-            textViewUserName.setText(post.getUser().getName());
+        ServiceManager.getInstance(PostActivity.this).getPost(postId, new ServiceManager.ServiceManagerHandler<Post>() {
+            @Override
+            public void loaded(Post data) {
+                super.loaded(data);
+                post = data;
 
-        if (textViewDate != null)
-            textViewDate.setText(post.getDate());
+                if (imageViewUserProfile != null)
+                    Picasso.with(PostActivity.this).load(post.getUser().getUserImage())
+                            .transform(new RoundedTransformation(8, 0))
+                            .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
-        if (textViewPostText != null)
-            textViewPostText.setText(post.getText());
+                if (textViewUserName != null)
+                    textViewUserName.setText(post.getUser().getName());
 
-        if (recyclerViewComments != null) {
-            adapter = new CommentRecyclerAdapter(PostActivity.this, post.getComments());
-            recyclerViewComments.setAdapter(adapter);
-        }
+                if (textViewDate != null)
+                    textViewDate.setText(post.getDate());
+
+                if (textViewPostText != null)
+                    textViewPostText.setText(post.getText());
+
+                if (recyclerViewComments != null) {
+                    adapter = new CommentRecyclerAdapter(PostActivity.this, post.getComments());
+                    recyclerViewComments.setAdapter(adapter);
+                }
+
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void error(String error) {
+                super.error(error);
+
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Subscribe

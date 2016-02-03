@@ -68,10 +68,11 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
     public PostRowViewHolder(Context context, final View itemView, OnPostClicked onPostClicked) {
         super(itemView);
         this.context = context;
-        this.onPostClicked = onPostClicked;
+        if (onPostClicked != null)
+            this.onPostClicked = onPostClicked;
+
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(this);
-        //viewPagerComments.setOnClickListener(this);
         viewPagerComments.setOnTouchListener(new View.OnTouchListener() {
             float oldX = 0, newX = 0, sens = 5;
 
@@ -104,7 +105,7 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
         this.post = post;
         Picasso.with(context).load(post.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                 .transform(new RoundedTransformation(8, 0))
-                .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageViewUserProfile);
+                .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
         textViewUserName.setText(post.getUser().getName());
         textViewDate.setText(post.getDate());
@@ -189,7 +190,7 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
         imageView.setLayoutParams(params);
         Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                 .transform(new RoundedTransformation(8, 0))
-                .fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(imageView);
+                .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageView);
 
         if (position == 0)
             ViewCompat.setAlpha(imageView, 1f);

@@ -70,4 +70,61 @@ public class CommentManager {
         });
     }
 
+    public static void like(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id_user", userId);
+        params.put("id_comment", idComment);
+
+        FireShareRestClient.post("likeComment", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    //error
+                    try {
+                        callback.error(response.getString("Description"));
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.loaded(new Gson().fromJson(response.toString(), Comment.class));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void dislike(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id_user", userId);
+        params.put("id_comment", idComment);
+
+        FireShareRestClient.post("dislikeComment", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    //error
+                    try {
+                        callback.error(response.getString("Description"));
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.loaded(new Gson().fromJson(response.toString(), Comment.class));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
 }
