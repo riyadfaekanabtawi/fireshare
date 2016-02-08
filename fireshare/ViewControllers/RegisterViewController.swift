@@ -19,10 +19,21 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
     @IBOutlet var user_password_confirmation_text_field: UITextField!
     @IBOutlet var registerUIButton: UIView!
     @IBOutlet var registerLabel: UILabel!
-    
+    var alert:SCLAlertView!
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        
+        self.user_email_text_field.placeholder = NSLocalizedString("email", comment: "")
+        self.user_name_text_field.placeholder = NSLocalizedString("username", comment: "")
+        self.user_password_text_field.placeholder = NSLocalizedString("password", comment: "")
+        self.user_password_confirmation_text_field.placeholder = NSLocalizedString("confirm password", comment: "")
+        self.registerLabel.text = NSLocalizedString("Register", comment: "")
+        
+        
         imagePicker.delegate = self
         self.registerUIButton.layer.cornerRadius = 2
         self.registerUIButton.layer.masksToBounds = true
@@ -110,9 +121,15 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
      
         
         if (self.user_email_text_field.text == "" || self.user_name_text_field.text == "" || self.user_password_confirmation_text_field.text == "" || self.user_password_text_field.text == "" || self.user_avatar.image == nil){
-            let alert = UIAlertController(title: "Ooops!", message: "Tienes que completar todos los campos y elejir una foto de perfil para poder registrarte.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+       
+            
+            
+            self.alert = SCLAlertView()
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+            
+            self.alert.hideWhenBackgroundViewIsTapped = true
+            self.alert.showCloseButton = false
+            self.alert.showError(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("You have to fill all the fields and choose a profile picturre to finish Registration",comment:""))
         
         }else{
             
@@ -143,19 +160,30 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
                     }, orErrorHandler: { (err) -> Void in
                         
                       
+                   
                         
-                        let alert = UIAlertController(title: "Ooops!", message: "A user with the same email already exists, please try another email", preferredStyle: UIAlertControllerStyle.Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.alert = SCLAlertView()
+                        self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
                         
+                        self.alert.hideWhenBackgroundViewIsTapped = true
+                        self.alert.showCloseButton = false
+                        self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("A user with the same email already exists, please try another email",comment:""))
                         
                 })
 
             
             }else{
-                let alert = UIAlertController(title: "Ooops!", message: "Your email is not a valid email, please try a proper email address", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                
+                self.alert = SCLAlertView()
+                self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                
+                self.alert.hideWhenBackgroundViewIsTapped = true
+                self.alert.showCloseButton = false
+                self.alert.showError(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("Your email is not a valid email, please try a proper email address",comment:""))
+                
+                
+                
+     
             
             }
             
@@ -199,5 +227,26 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
         
         self.navigationController?.popViewControllerAnimated(true)
         
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y = 0
+            
+            self.view.frame.origin.y -= keyboardSize.height
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y += keyboardSize.height
+        }
+    }
+    
+    func OKSinTextPost(){
+    
+    self.alert.hideView()
     }
 }

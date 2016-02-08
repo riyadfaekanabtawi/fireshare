@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *password;
 
 @property (weak, nonatomic) IBOutlet UILabel *donthave;
+@property (weak, nonatomic) IBOutlet UILabel *registerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *signupLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *mark;

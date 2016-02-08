@@ -469,9 +469,9 @@
     CABasicAnimation* shake = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     
     
-    shake.fromValue = [NSNumber numberWithFloat:-0.1];
+    shake.fromValue = [NSNumber numberWithFloat:-0.3];
     
-    shake.toValue = [NSNumber numberWithFloat:+0.1];
+    shake.toValue = [NSNumber numberWithFloat:+0.3];
     
     shake.duration = 0.1;
     

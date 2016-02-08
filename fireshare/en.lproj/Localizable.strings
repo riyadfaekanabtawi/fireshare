@@ -1,0 +1,85 @@
+/* 
+  Localizable.strings
+  fireshare
+
+  Created by Riyad Anabtawi on 2/8/16.
+  Copyright © 2016 Riyad Anabtawi. All rights reserved.
+*/
+
+
+/*
+ Localizable.strings
+ fireshare
+ 
+ Created by Riyad Anabtawi on 2/8/16.
+ Copyright © 2016 Riyad Anabtawi. All rights reserved.
+ */
+
+
+"Wrong email or password. Please try again." = "Wrong email or password. Please try again.";
+
+"Field cannot be empty." = "Field cannot be empty.";
+
+
+"Failed to get your location." = "Failed to get your location.";
+
+"Location services are off" = "Location services are off";
+
+"To use background location you must turn on 'Always' in the Location Services Settings" = "To use background location you must turn on 'Always' in the Location Services Settings";
+
+"Background location is not enabled" = "Background location is not enabled";
+
+"You have to fill all the fields and choose a profile picturre to finish Registration" = "You have to fill all the fields and choose a profile picturre to finish Registration";
+
+"A user with the same email already exists, please try another email" = "A user with the same email already exists, please try another email";
+
+
+"Your email is not a valid email, please try a proper email address" = "Your email is not a valid email, please try a proper email address";
+
+"Yes" =  "Yes";
+"Write your frase here..." = "Write your frase here...";
+
+
+"You have to write something before posting" = "You have to write something before posting";
+
+
+"0 characters" = "0 characters";
+
+"Are you sure you want to denounce %@ for posting: '%@' ?" = "Are you sure you want to denounce %@ for posting: '%@' ?";
+
+"You have succesfully denounced %@ for posting: '%@' ?" = "You have succesfully denounced %@ for posting: '%@'";
+
+
+"Are you sure you want to denounce %@ for commenting: '%@' ?" = "Are you sure you want to denounce %@ for commenting: '%@' ?";
+
+"You have succesfully denounced %@ for commenting: '%@' ?" = "You have succesfully denounced %@ for commenting: '%@'";
+
+
+"Denounce" = "Denounce";
+
+"Success" = "Success";
+"Exit FireShare" = "Exit FireShare";
+
+"confirm password" = "repetir contraseña";
+
+"Are you sure you want to logout?" = "Are you sure you want to leave?";
+
+"Log in" = "Log in";
+"username" = "username";
+"password" = "password";
+"%@ characters" = "%@ characters";
+"No" = "No";
+"100 characters" = "100 characters";
+
+"Write your comment" = "Write your comment";
+"You have to write something before posting" = "You have to write something before posting";
+
+"Dont have an account yet?" = "Dont have an account yet?";
+"Register" = "Register";
+"%@ sec ago" = "%@ sec ago";
+"%@ min ago" = "%@ min ago";
+"%@ hs ago" = "%@ hs ago";
+"%@ days ago" = "%@ days ago";
+
+
+"There was an error while fetching your location. Please try again." = "There was an error while fetching your location. Please try again.";

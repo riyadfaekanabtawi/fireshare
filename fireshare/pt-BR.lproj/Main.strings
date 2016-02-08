@@ -1,0 +1,78 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2HB-zV-jxg"; */
+"2HB-zV-jxg.text" = "Label";
+
+/* Class = "UILabel"; text = "EN ESTOS MOMENTOS NO PODEMOS CARGAR LOS POST"; ObjectID = "A9e-vk-B47"; */
+"A9e-vk-B47.text" = "EN ESTOS MOMENTOS NO PODEMOS CARGAR LOS POST";
+
+/* Class = "UILabel"; text = "Regsiter"; ObjectID = "BHK-1t-wGS"; */
+"BHK-1t-wGS.text" = "Regsiter";
+
+/* Class = "UILabel"; text = "Dont have an account yet?"; ObjectID = "BrU-sD-WAc"; */
+"BrU-sD-WAc.text" = "Dont have an account yet?";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "C02-3m-Qvo"; */
+"C02-3m-Qvo.placeholder" = "username";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Ct7-Lc-PI7"; */
+"Ct7-Lc-PI7.text" = "Label";
+
+/* Class = "UILabel"; text = "Log in"; ObjectID = "Es0-H2-mRi"; */
+"Es0-H2-mRi.text" = "Log in";
+
+/* Class = "UITextField"; placeholder = "email"; ObjectID = "EtE-sg-Bxr"; */
+"EtE-sg-Bxr.placeholder" = "email";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "FRJ-oI-yO3"; */
+"FRJ-oI-yO3.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "FsB-cV-Hl2"; */
+"FsB-cV-Hl2.placeholder" = "password";
+
+/* Class = "UILabel"; text = "+36"; ObjectID = "HYT-xE-ivY"; */
+"HYT-xE-ivY.text" = "+36";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "JJb-ZC-0ga"; */
+"JJb-ZC-0ga.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "Kbo-vy-cef"; */
+"Kbo-vy-cef.placeholder" = "password";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "L8P-Wc-vEG"; */
+"L8P-Wc-vEG.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "MOL-Yr-z3Z"; */
+"MOL-Yr-z3Z.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "SqB-GW-tAY"; */
+"SqB-GW-tAY.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "Vg6-kw-lNi"; */
+"Vg6-kw-lNi.placeholder" = "username";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Y63-0c-0MG"; */
+"Y63-0c-0MG.text" = "Label";
+
+/* Class = "UILabel"; text = "Register"; ObjectID = "bwP-um-Anb"; */
+"bwP-um-Anb.text" = "Register";
+
+/* Class = "UILabel"; text = "Toca para reintentar"; ObjectID = "d7L-qa-yoO"; */
+"d7L-qa-yoO.text" = "Toca para reintentar";
+
+/* Class = "UITextView"; text = "Write your frase here..."; ObjectID = "h6C-1j-KhD"; */
+"h6C-1j-KhD.text" = "Write your frase here...";
+
+/* Class = "UILabel"; text = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO"; ObjectID = "keC-2h-Pry"; */
+"keC-2h-Pry.text" = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO";
+
+/* Class = "UITextField"; placeholder = "Write your comment"; ObjectID = "oAs-M7-a4t"; */
+"oAs-M7-a4t.placeholder" = "Write your comment";
+
+/* Class = "UITextField"; placeholder = "confirm password"; ObjectID = "oZT-fb-wrC"; */
+"oZT-fb-wrC.placeholder" = "confirm password";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qEM-2g-hof"; */
+"qEM-2g-hof.text" = "Label";
+
+/* Class = "UILabel"; text = "100 characters"; ObjectID = "upT-vc-fmw"; */
+"upT-vc-fmw.text" = "100 characters";

@@ -1,0 +1,75 @@
+/* 
+  Localizable.strings
+  fireshare
+
+  Created by Riyad Anabtawi on 2/8/16.
+  Copyright © 2016 Riyad Anabtawi. All rights reserved.
+*/
+
+
+"Wrong email or password. Please try again." = "Email o contraseña incorrecto. Por favor intente nuevamente";
+
+"Field cannot be empty." = "El campo no puede estar vacío";
+
+
+"Failed to get your location." = "Error al obtener su ubicacón";
+
+"Location services are off" = "Los servicios de ubicacón estan apagados";
+
+"To use background location you must turn on 'Always' in the Location Services Settings" = "Para usar la ubicacion por atras debe apretar 'Siempre' en las configaraciones de los servicios de ubicación";
+
+"Background location is not enabled" = "Unicacón por atras no está activada";
+
+"You have to fill all the fields and choose a profile picturre to finish Registration" = "Tienes que completar todos los campos y elejir una foto de perfil para poder registrarte.";
+
+"A user with the same email already exists, please try another email" = "Un usuario con el mismo email ya existe por favor intente con otra cuenta de email.";
+
+
+"Your email is not a valid email, please try a proper email address" = "El e-mail elejido no es una dirección valida de email, porfavor intente nuevamente";
+"Yes" =  "Si";
+
+"Write your frase here..." = "Escribe tu frase aquí...";
+
+
+"You have to write something before posting" = "Tienes que escribir algo antes de postear.";
+
+
+"0 characters" = "0 caracteres";
+"Log in" = "Iniciar sesión";
+"Dont have an account yet?" = "No tienes una cuenta todavía?";
+"No" = "No";
+"Register" = "Regístrate";
+"Exit FireShare" = "Salir de FireShare";
+"100 characters" = "100 caracteres";
+"Write your comment" = "Escribe tu comentario";
+"Are you sure you want to logout?" = "¿Estas seguro que quieres salir?";
+"confirm password" = "repetir contraseña";
+"username" = "nombre usuario";
+"password" = "contraseña";
+
+"%@ characters" = "%@ caracteres";
+
+
+"You have to write something before posting" = "Tienes que escribir algo antes de comentar.";
+
+"There was an error while fetching your location. Please try again." = "Hubo un error al encontrar su ubicación. Porfavor intente nuevamente.";
+
+"%@ sec ago" = "Hace %@ sec";
+"%@ min ago" =  "Hace %@ min";
+"%@ hs ago" = "Hace %@ hs";
+"%@ days ago" = "Hace %@ días";
+
+
+"Are you sure you want to denounce %@ for posting: '%@' ?" = "Estás seguro que quieres denunciar a %@ por postear: '%@'?";
+
+"You have succesfully denounced %@ for posting: '%@'" = "Has denunciado satisfactoriamente a %@ por postear: '%@'";
+
+"Are you sure you want to denounce %@ for commenting: '%@' ?" = "Estás seguro que quieres denunciar a %@ por comentar: '%@'?";
+
+"You have succesfully denounced %@ for commenting: '%@' ?" = "Has denunciado satisfactoriamente a %@ por comentar: '%@'";
+
+
+
+"Denounce" = "Denunciar";
+
+"Success" = "Éxito";

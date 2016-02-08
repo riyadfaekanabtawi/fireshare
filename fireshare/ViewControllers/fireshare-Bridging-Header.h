@@ -10,3 +10,9 @@
 #import "Comments.h"
 #import "UIImageView+WebCache.h"
 #import "SWRevealViewController.h"
+
+#import "GAIFields.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"

@@ -11,6 +11,9 @@
 @interface AppDelegate ()
 
 @end
+static NSString *const kTrackingId = @"UA-65636271-1";
+
+
 
 @implementation AppDelegate
 

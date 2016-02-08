@@ -45,8 +45,9 @@
     [self animateLogin ];
     self.username.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.username.font.pointSize];
     self.password.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.password.font.pointSize];
-    
-    self.iniciarSesionLabel.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.signupLabel.font.pointSize];
+    self.donthave.font = [UIFont fontWithName:FONT_REGULAR size:self.donthave.font.pointSize];
+    self.registerLabel.font = [UIFont fontWithName:FONT_BOLD size:self.registerLabel.font.pointSize];
+    self.iniciarSesionLabel.font = [UIFont fontWithName:FONT_BOLD_ITALIC size:self.iniciarSesionLabel.font.pointSize];
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
     [self.view layoutIfNeeded];
     slideIndex = 0;
@@ -54,27 +55,32 @@
     //------------------------
     // Estilos
     //------------------------
-    UIImage *image = [UIImage imageNamed:@"logo-movistar"];
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:image];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+  
     
     
-        [super viewDidLoad];
+    [super viewDidLoad];
     
     
 
+    self.username.placeholder = NSLocalizedString(@"username", @"");
+    self.password.placeholder = NSLocalizedString(@"password", @"");
+    self.registerLabel.text = NSLocalizedString(@"Register", @"");
+    self.donthave.text = NSLocalizedString(@"Dont have an account yet?", @"");
     
+    self.signupLabel.text = NSLocalizedString(@"Log in", @"");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 
+    if(![defaults objectForKey:@"FirstTimeTerms"]){
+        [self performSegueWithIdentifier:@"terms" sender:self];
+        return;
+    }
+    
+    
+    
     if([defaults objectForKey:@"user_main"]){
         [self performSegueWithIdentifier:@"home" sender:self];
         
-    }else{
-
-    
-    
     }
     
 
@@ -222,7 +228,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
         NSDictionary *p = @{
                             
-                            @"name" : self.username.text,@"password" : self.password.text};
+                            @"name" : self.username.text,@"password" : self.password.text,@"device_token":[defaults objectForKey:@"tokenPush"]};
         
         
         
@@ -239,10 +245,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         
         [manager POST:[NSString stringWithFormat:@"%@user/login",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
+            [self.username resignFirstResponder];
+            [self.password resignFirstResponder];
             
             if ([[responseObject objectForKey:@"Result"] isEqualToString:@"Error"]){
           
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Wrong email or password. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
                
                 
                 UIAlertAction* ok = [UIAlertAction
@@ -272,7 +280,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Wrong email or password. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
             
             
             UIAlertAction* ok = [UIAlertAction
@@ -312,7 +320,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     if ([textField.text isEqualToString:@""])
     {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Field cannot be empty." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Field cannot be empty.", nil) preferredStyle:UIAlertControllerStyleAlert];
         
         
         UIAlertAction* ok = [UIAlertAction
@@ -352,7 +360,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Failed to get your location." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Failed to get your location.", nil) preferredStyle:UIAlertControllerStyleAlert];
     
     
     UIAlertAction* ok = [UIAlertAction
@@ -436,8 +444,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     // If the status is denied or only granted for when in use, display an alert
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusDenied) {
         NSString *title;
-        title = (status == kCLAuthorizationStatusDenied) ? @"Location services are off" : @"Background location is not enabled";
-        NSString *message = @"To use background location you must turn on 'Always' in the Location Services Settings";
+        title = (status == kCLAuthorizationStatusDenied) ? NSLocalizedString(@"Location services are off", nil) : NSLocalizedString(@"Background location is not enabled", nil);
+        NSString *message = NSLocalizedString(@"To use background location you must turn on 'Always' in the Location Services Settings", nil);
         
      
         
@@ -520,7 +528,31 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
 }
 
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    return YES;
+}
 
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
+    [self.view endEditing:YES];
+    return YES;
+}
+
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    // Assign new frame to your view
+    [self.view setFrame:CGRectMake(0,-110,self.view.frame.size.width,self.view.frame.size.height)]; //here taken -20 for example i.e. your view will be scrolled to -20. change its value according to your requirement.
+    
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    [self.view setFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+}
 
 
 

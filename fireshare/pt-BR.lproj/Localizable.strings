@@ -1,0 +1,103 @@
+/* 
+  Localizable.strings
+  fireshare
+
+  Created by Riyad Anabtawi on 2/8/16.
+  Copyright © 2016 Riyad Anabtawi. All rights reserved.
+*/
+
+
+/*
+ Localizable.strings
+ fireshare
+ 
+ Created by Riyad Anabtawi on 2/8/16.
+ Copyright © 2016 Riyad Anabtawi. All rights reserved.
+ */
+
+
+"Wrong email or password. Please try again." = "Email ou senha incorretos. Por favor, tente novamente.";
+
+"Field cannot be empty." = "O campo não pode estar vazio.";
+
+
+"Failed to get your location." = "Falha ao obter a sua localização.";
+
+"Location services are off" = "Os serviços de localização estão desligados";
+
+"To use background location you must turn on 'Always' in the Location Services Settings" = "Para usar a localização em segundo plano tem que activar  'Sempre' em Configurações, Serviços de localização";
+
+"Background location is not enabled" = "Localização de fundo não está habilitada";
+
+"You have to fill all the fields and choose a profile picturre to finish Registration" = "Você tem que preencher todos os campos e escolher uma foto de perfil para se registrar";
+
+"A user with the same email already exists, please try another email" = "Um usuário com o mesmo e-mail já existe, por favor tente outro e-mail";
+
+
+"Your email is not a valid email, please try a proper email address" = "Seu e-mail não é um e-mail válido, por favor tente um endereço de e-mail adequado";
+
+"Yes" =  "Sim";
+
+"No" = "Não";
+
+"Write your frase here..." = "Escreva a sua frase aqui...";
+
+
+"You have to write something before posting" = "Você tem que escrever alguma coisa antes de postar";
+
+
+"0 characters" = "0 letras";
+
+
+"Exit FireShare" = "Sair de FireShare";
+
+"confirm password" = "repetir senha";
+
+"Are you sure you want to logout?" = "Tem certeza que quer sair?";
+
+"Log in" = "Log in";
+
+
+"username" = "nome de usuario";
+
+"password" = "senha";
+
+"%@ characters" = "%@ letras";
+
+"100 characters" = "100 letras";
+
+"Write your comment" = "Escreva seu comentario";
+
+"You have to write something before commenting." = "Você tem que escrever alguma coisa antes de comentar.";
+
+
+"There was an error while fetching your location. Please try again." = "Ocorreu um erro enquanto buscavamos sua localização. Por favor, tente novamente.";
+
+
+"Dont have an account yet?" = "Não tem uma conta ainda?";
+"Register" = "Registro";
+
+
+"%@ sec ago" = "Faz %@ seg";
+"%@ min ago" = "Faz %@ min";
+"%@ hs ago" = "Faz %@ hs";
+"%@ days ago" = "Faz %@ días";
+
+
+
+"Are you sure you want to denounce %@ for posting: '%@' ?" = "Você tem certeza que quer denunciar a %@ por postear: '%@'?";
+
+"You have succesfully denounced %@ for posting: '%@'" = "Você denunció satisfatoriamente a %@ por postear: '%@'";
+
+"Are you sure you want to denounce %@ for commenting: '%@' ?" = "Você tem certeza que quer denunciar a %@ por comentar: '%@'?";
+
+"You have succesfully denounced %@ for commenting: '%@' ?" = "Você denunció satisfatoriamente a %@ por comentar: '%@'";
+
+
+
+"Denounce" = "Denunciar";
+
+"Success" = "Sucesso";
+
+
+

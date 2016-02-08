@@ -42,7 +42,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         self.user_owner_avatar.layer.cornerRadius = 2
         self.user_owner_avatar.layer.masksToBounds = true
         self.commentCountLabel.font = UIFont(name: FONT_BOLD, size: self.commentCountLabel.font.pointSize)
-        
+        self.timeLabel.font = UIFont(name: FONT_REGULAR, size: self.timeLabel.font.pointSize)
         self.post_title_label.font = UIFont(name: FONT_REGULAR, size: self.post_title_label.font.pointSize)
     }
 
@@ -53,17 +53,17 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
     }
 
     
-    func displayPost(post:Posts){
+    func displayPost(post:Posts, atindex:NSIndexPath){
         
         if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue <= 0 && post.seconds_since.integerValue > 0{
             
-            self.timeLabel.text = "Hace \(post.seconds_since)sec"
+            self.timeLabel.text = String(format: NSLocalizedString("%@ sec ago", comment: ""), post.seconds_since)
             
         }
         
         if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
             
-            self.timeLabel.text = "Hace \(post.minutes_since) min"
+            self.timeLabel.text = String(format: NSLocalizedString("%@ min ago", comment: ""), post.minutes_since)
             
         }
         
@@ -72,7 +72,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
             
             
             
-            self.timeLabel.text = "Hace \(post.hours_since) hs"
+            self.timeLabel.text = String(format: NSLocalizedString("%@ hs ago", comment: ""), post.hours_since)
             
         }
         
@@ -80,7 +80,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
             
             
             
-            self.timeLabel.text = "Hace \(post.days_since) días"
+            self.timeLabel.text = String(format: NSLocalizedString("%@ days ago", comment: ""), post.days_since)
             
         }
         
@@ -93,19 +93,27 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         self.footerHeight.constant = 34
         
         }
-        self.post_title_label.text = post.post_title
+        self.post_title_label.text = post.post_title + "..."
         self.post_user_name_label.text = post.post_user.name
       
     
-        self.user_owner_avatar.sd_setImageWithURL(NSURL(string: post.post_user.avatar_url))
-    
-        
-        self.array_comments = post.comments as! [Comments]
-        
-        if post.comments.count != 0{
-         self.commentTableView.reloadData()
        
+        self.user_owner_avatar.image = UIImage(named: "user.png")
+        self.user_owner_avatar.sd_setImageWithURL(NSURL(string: post.post_user.avatar_url)) { (image, err, SDImageCacheType, url) -> Void in
+            if (image != nil){
+                
+                self.user_owner_avatar.image = image
+                
+            }else{
+                self.user_owner_avatar.image = UIImage(named: "user.png")
+            }
+            
+            
+            
         }
+        self.array_comments = post.comments as! [Comments]
+        self.commentTableView.reloadData()
+    
     
     }
  
@@ -167,7 +175,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
             
             
             cell.displayComment(comment)
-            cell.layoutIfNeeded()
+       
             if (indexPath.row == 0){
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.first_user.alpha = 1

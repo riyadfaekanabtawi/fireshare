@@ -39,16 +39,18 @@
         
         self.comments = array;
         
-        NSDate *dateA = replaceNSNullValue([dateFormatter dateFromString:[dictionary objectForKey:@"created_at"]]);
+        NSString* now = [dateFormatter stringFromDate:[NSDate date]];
+        
+        NSDate *dateNow = [dateFormatter dateFromString:now];
+        
+        NSDate *dateA =     [[dateFormatter dateFromString:[dictionary objectForKey:@"created_at"]] dateByAddingTimeInterval:-3600*1];
         
         
         
-        
-        
-        self.seconds_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate:dateA])];
-        self.minutes_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate: dateA])/60];
-        self.hours_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate: dateA])/3600];
-        self.days_since = [NSNumber numberWithInt:fabs([[NSDate date] timeIntervalSinceDate: dateA])/86400];
+        self.seconds_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate:dateA])];
+        self.minutes_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/60];
+        self.hours_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/3600];
+        self.days_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/86400];
         
         
     }

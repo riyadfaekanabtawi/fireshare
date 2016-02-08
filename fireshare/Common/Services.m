@@ -17,11 +17,11 @@
 
 
 
-+(void)getAllPosts:(void (^)(id)) handler  orErrorHandler:(void (^)(NSError *)) errorHandler {
++(void)getAllPostsforScope:(NSString *)scope andHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
     
     
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@posts",BASE_URL]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@posts",BASE_URL,scope]];
     
     
     [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
@@ -33,6 +33,28 @@
         
        
         handler([NSArray arrayWithArray:media]);
+    } orErrorHandler:^(NSError *err) {
+        errorHandler(err);
+    }];
+}
+
+
+
++(void)getPostDetailWithID:(NSNumber *)post_id andHandler:(void (^)(id)) handler  orErrorHandler:(void (^)(NSError *)) errorHandler {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    Users *user = [NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:@"user_main"]];
+    
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@postDetail?id_post=%@&id_user=%@",BASE_URL,post_id,user.user_id]];
+    
+    
+    [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
+        Posts * post = [[Posts alloc] initWithDictionary:streamsData];
+        
+        
+        handler(post);
     } orErrorHandler:^(NSError *err) {
         errorHandler(err);
     }];
@@ -211,6 +233,72 @@
 }
 
 
++(void)denouncePost:(NSNumber *)post_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
+    
+    NSDictionary *p = @{
+                        
+                        @"id" : post_id};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    
+    [manager GET:[NSString stringWithFormat:@"%@denouncePost",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        
+        
+        
+        handler(responseObject);
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
++(void)denounceComment:(NSNumber *)comment_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
+    
+    NSDictionary *p = @{
+                        
+                        @"id" : comment_id};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    
+    [manager GET:[NSString stringWithFormat:@"%@denounceComment",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        
+        
+        
+        handler(responseObject);
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
+
 
 
 +(void)RegisterUserWithUsername:(NSString *)user_name andPassword:(NSString *)password andPasswordConfirmation:(NSString *)password_confirmation andEmailAddress:(NSString *)email andPicture:(NSString *)picture andDeviceToken:(NSString *)device_token AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
@@ -220,8 +308,8 @@
     
     int i = arc4random() % 1000;
     NSNumber *number = [NSNumber numberWithInt:i];
-    
-    NSDictionary *p = @{@"user":@{@"email" : email,@"name" : user_name,@"password" : password,@"password_confirmation":password_confirmation},@"image":@{@"id" :number,@"created_at" :[NSDate date],@"updated_at" :[NSDate date],@"image_url" :picture,@"filename" :[NSString stringWithFormat:@"User-%@.jpg",number],@"content_type" :@"image/jpg"}};
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *p = @{@"user":@{@"email" : email,@"name" : user_name,@"password" : password,@"password_confirmation":password_confirmation,@"device_token":[defaults objectForKey:@"tokenPush"]},@"image":@{@"id" :number,@"created_at" :[NSDate date],@"updated_at" :[NSDate date],@"image_url" :picture,@"filename" :[NSString stringWithFormat:@"User-%@.jpg",number],@"content_type" :@"image/jpg"}};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.securityPolicy.allowInvalidCertificates = YES;
     
@@ -255,15 +343,22 @@
 }
 
 
-+(void)createPostForUser:(NSNumber *)user_id andTitleOfPost:(NSString *)title AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
++(void)createPostForUser:(NSNumber *)user_id andTitleOfPost:(NSString *)title andAdress:(NSString *)address andLatitude:(CGFloat )latitude andLongitude:(CGFloat )longitude andCountry:(NSString *)country AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
 
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.securityPolicy.allowInvalidCertificates = YES;
     
+    
+    
+    NSNumber *lat = [NSNumber numberWithFloat:latitude];
+     NSNumber *longi = [NSNumber numberWithFloat:longitude];
     NSDictionary *p = @{@"id":user_id,
-                        @"title":title
-                        
+                        @"title":title,
+                        @"address":address,
+                        @"latitude":lat,
+                        @"longitude":longi,
+                        @"country":country
                         };
     [manager POST:[NSString stringWithFormat:@"%@recipe/create",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -343,7 +438,14 @@
         
  
         
-        handler(@"OK");
+        if ([responseObject objectForKey:@"Result"]){
+            handler(@"ERROR");
+            
+        }else{
+            
+            handler(@"OK");
+        }
+        
         
         
         
@@ -360,6 +462,43 @@
 }
 
 
+
++(void)checkCommentISLiked:(NSNumber *)user_id commentID:(NSNumber *)comment_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    
+    NSDictionary *p = @{@"id_user":user_id,
+                        @"id_comment":comment_id
+                        
+                        };
+    
+    [manager GET:[NSString stringWithFormat:@"%@check_if_liked_comment",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        handler([responseObject objectForKey:@"Result"]);
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
+
+
+
 +(void)removeLikeFromPost:(NSNumber *)user_id postID:(NSNumber *)post_id AndHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
     
     
@@ -374,7 +513,13 @@
         
         
         
-        handler(@"OK");
+        if ([responseObject objectForKey:@"Result"]){
+            handler(@"ERROR");
+            
+        }else{
+            
+            handler(@"OK");
+        }
         
         
         
@@ -407,7 +552,14 @@
         
         
         
-        handler(@"OK");
+        if ([responseObject objectForKey:@"Result"]){
+            handler(@"ERROR");
+            
+        }else{
+            
+            handler(@"OK");
+        }
+        
         
         
         
@@ -437,8 +589,14 @@
     [manager POST:[NSString stringWithFormat:@"%@likeComment",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         
+        if ([responseObject objectForKey:@"Result"]){
+        handler(@"ERROR");
+        
+        }else{
         
         handler(@"OK");
+        }
+        
         
         
         
