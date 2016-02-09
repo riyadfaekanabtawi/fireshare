@@ -11,14 +11,10 @@ import UIKit
 class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
   
     
-    @IBOutlet var errorIcon: UIImageView!
-    @IBOutlet var errorView: UIView!
-    @IBOutlet var errorTitle: UILabel!
-    @IBOutlet var reintentarLabel: UILabel!
-    @IBOutlet var errorSubtitle: UILabel!
+ 
     
     @IBOutlet var viewTitle: UILabel!
-    
+    var alert:SCLAlertView!
     @IBOutlet var posts_tableView: UITableView!
     @IBOutlet var go_back_Button: UIButton!
     @IBOutlet var navView: UIImageView!
@@ -40,11 +36,7 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
         let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
         tracker.send(build)
         
-        self.errorView.alpha = 0;
-        
-        self.errorSubtitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorSubtitle.font.pointSize)
-        self.errorTitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorTitle.font.pointSize)
-        self.reintentarLabel.font = UIFont(name: FONT_REGULAR, size: self.reintentarLabel.font.pointSize)
+   
         self.frasesCountLabel.font = UIFont(name: FONT_LIGHT, size: self.frasesCountLabel.font.pointSize)
         self.viewTitle.font = UIFont(name: FONT_BOLD, size: self.viewTitle.font.pointSize)
         self.callUserProfileService()
@@ -153,7 +145,7 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func callUserProfileService(){
-    
+    self.alert.hideView()
     Services.getUserInfoWithId(self.user.user_id, andHandler: { (response) -> Void in
         
         self.user = response as! Users
@@ -196,23 +188,21 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func showError(){
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            
-            
-            self.errorView.alpha = 1;
-        })
+        self.alert = SCLAlertView()
+        self.alert.addButton("Tap to refresh", target:self, selector:Selector("callUserProfileService"))
+        
+        self.alert.hideWhenBackgroundViewIsTapped = true
+        self.alert.showCloseButton = false
+        self.alert.showError("Ooops", subTitle: NSLocalizedString("OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT. AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" , comment: ""))
         
     }
     
     
     func hideError(){
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            
-            
-            self.errorView.alpha = 0;
-        })
+        self.alert.hideView()
         
     }
+    
     
     
     

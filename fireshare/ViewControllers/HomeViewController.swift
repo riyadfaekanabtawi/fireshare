@@ -14,14 +14,11 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     var posts_array:[Posts] = []
     var selectedUser:Users!
     @IBOutlet var posts_tableView: UITableView!
-    @IBOutlet var errorIcon: UIImageView!
-    @IBOutlet var errorView: UIView!
-    @IBOutlet var errorTitle: UILabel!
-    @IBOutlet var reintentarLabel: UILabel!
+
     var alert = SCLAlertView()
     var LatitudeString:String!
     var LongitudeString:String!
-    @IBOutlet var errorSubtitle: UILabel!
+   
     var preventAnimation = Set<NSIndexPath>()
      @IBOutlet var user_main_avatar: UIImageView!
     @IBOutlet var user_main_name: UILabel!
@@ -42,11 +39,9 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
        self.count_caracterrsLabel.text = NSLocalizedString("100 characters", comment:"")
         self.frase_text_field.text = NSLocalizedString("Write your phrase here...", comment:"")
-        self.errorSubtitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorSubtitle.font.pointSize)
-        self.errorTitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorTitle.font.pointSize)
-        self.reintentarLabel.font = UIFont(name: FONT_REGULAR, size: self.reintentarLabel.font.pointSize)
+        
         self.count_caracterrsLabel.font = UIFont(name: FONT_BOLD_ITALIC, size: self.count_caracterrsLabel.font.pointSize)
-        self.errorView.alpha = 0.0
+
         self.user_main_avatar.layer.cornerRadius = 2
         self.user_main_avatar.layer.masksToBounds = true
         self.user_main_name.font = UIFont(name: FONT_BOLD, size: self.user_main_name.font.pointSize)
@@ -113,22 +108,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
  
   
-      @IBAction func reintentarTouchUpInside(sender: UIButton) {
-        self.errorIcon.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        
-        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.00, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-            
-            self.errorIcon.transform = CGAffineTransformMakeScale(1, 1)
-            
-            
-            }) { (Bool) -> Void in
-                
-                self.callhomeService()
-                
-        }
-
-
-    }
+  
     
   @IBAction func psot(sender: UIButton) {
     
@@ -330,6 +310,9 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     
     func callhomeService(){
+        
+         self.alert.hideView()
+    
         let locManager = CLLocationManager()
         locManager.requestWhenInUseAuthorization()
         
@@ -408,21 +391,18 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     }
     
     func showError(){
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            
-            
-            self.errorView.alpha = 1;
-        })
+        self.alert = SCLAlertView()
+        self.alert.addButton("Tap to refresh", target:self, selector:Selector("callhomeService"))
+        
+        self.alert.hideWhenBackgroundViewIsTapped = true
+        self.alert.showCloseButton = false
+        self.alert.showError("Ooops", subTitle: NSLocalizedString("OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT. AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" , comment: ""))
     
     }
     
     
     func hideError(){
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            
-            
-            self.errorView.alpha = 0;
-        })
+           self.alert.hideView()
     
     }
     
