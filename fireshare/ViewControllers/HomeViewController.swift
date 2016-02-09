@@ -8,10 +8,11 @@
 
 import UIKit
 import CoreLocation
-class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate {
+class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate {
 
     var locationManager = CLLocationManager()
     var posts_array:[Posts] = []
+    var selectedUser:Users!
     @IBOutlet var posts_tableView: UITableView!
     @IBOutlet var errorIcon: UIImageView!
     @IBOutlet var errorView: UIView!
@@ -40,7 +41,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
         
        self.count_caracterrsLabel.text = NSLocalizedString("100 characters", comment:"")
-        self.frase_text_field.text = NSLocalizedString("Write your frase here...", comment:"")
+        self.frase_text_field.text = NSLocalizedString("Write your phrase here...", comment:"")
         self.errorSubtitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorSubtitle.font.pointSize)
         self.errorTitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorTitle.font.pointSize)
         self.reintentarLabel.font = UIFont(name: FONT_REGULAR, size: self.reintentarLabel.font.pointSize)
@@ -148,7 +149,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
         }) { (Bool) -> Void in
             
-            if self.frase_text_field.text == NSLocalizedString("Write your frase here..." , comment: "") || self.frase_text_field.text == ""{
+            if self.frase_text_field.text == NSLocalizedString("Write your phrase here..." , comment: "") || self.frase_text_field.text == ""{
          
                 self.alert = SCLAlertView()
                 self.alert.addButton("OK", target:self, selector:Selector("OKSinTextPost"))
@@ -195,7 +196,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                                 
                                 tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Create Post", label: "Create Post", value: nil).build() as [NSObject : AnyObject])
                                 self.frase_text_field.text = ""
-                                self.frase_text_field.text = NSLocalizedString("Write your frase here...", comment:"")
+                                self.frase_text_field.text = NSLocalizedString("Write your phrase here...", comment:"")
                                 self.frase_text_field.textColor = UIColor(red: 217.0/255.0, green: 217.0/255.0, blue: 217.0/255.0, alpha: 1.0)
                                 self.frase_text_field.resignFirstResponder()
                                 self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
@@ -214,6 +215,8 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                     
                 }else{
                 
+                    
+                    self.showError()
                     self.alert = SCLAlertView()
                     self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
                     
@@ -261,11 +264,23 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
             
             controller.post = self.selectedPost
         }
+        
+        
+        
+        if segue.identifier == "user"{
+        
+        let controller = segue.destinationViewController as! ProfileViewController
+            
+        controller.user = self.selectedUser
+        
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("home", forIndexPath: indexPath) as! HomeTableViewCell
+        
+        cell.delegate = self
         cell.displayPost(self.posts_array[indexPath.row], atindex: indexPath)
   
      
@@ -422,7 +437,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         
-        if textView.text == NSLocalizedString("Write your frase here...", comment:""){
+        if textView.text == NSLocalizedString("Write your phrase here...", comment:""){
             
             textView.text = ""
       
@@ -497,6 +512,26 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     func cancelarAlertLogout(){
     
     self.alert.hideView()
+    
+    }
+    
+    
+    
+    func showUser(user: Users) {
+        self.selectedUser = user
+        
+        self.performSegueWithIdentifier("user", sender: self)
+    }
+    
+    
+    @IBAction func myProfileUpInside(sender: UIButton) {
+    
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as!NSData)as!Users
+        self.selectedUser = user
+        
+        self.performSegueWithIdentifier("user", sender: self)
     
     }
 }

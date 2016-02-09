@@ -40,13 +40,19 @@
 
 "No" = "Não";
 
-"Write your frase here..." = "Escreva a sua frase aqui...";
+"Write your phrase here..." = "Escreva a sua frase aqui...";
 
 
 "You have to write something before posting" = "Você tem que escrever alguma coisa antes de postar";
 
-
+"%@ phrases" = "%@ frases";
 "0 characters" = "0 letras";
+
+"Tap to refresh" = "Toca para reintentar";
+
+"AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" = "EN ESTOS MOMENTOS NO PODEMOS CARGAR LOS POST";
+
+"OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO";
 
 
 "Exit FireShare" = "Sair de FireShare";

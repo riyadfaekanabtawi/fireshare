@@ -125,7 +125,9 @@
     
     [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
         
-        handler(streamsData);
+        
+        Users *user = [[Users alloc] initWithDictionary:streamsData];
+        handler(user);
     } orErrorHandler:^(NSError *err) {
         errorHandler(err);
     }];

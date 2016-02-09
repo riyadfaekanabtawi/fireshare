@@ -11,6 +11,12 @@
 
 "Field cannot be empty." = "El campo no puede estar vacío";
 
+"Tap to refresh" = "Toca para reintentar";
+
+"AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" = "EN ESTOS MOMENTOS NO PODEMOS CARGAR LOS POST";
+
+"OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO";
+
 
 "Failed to get your location." = "Error al obtener su ubicacón";
 
@@ -18,7 +24,7 @@
 
 "To use background location you must turn on 'Always' in the Location Services Settings" = "Para usar la ubicacion por atras debe apretar 'Siempre' en las configaraciones de los servicios de ubicación";
 
-"Background location is not enabled" = "Unicacón por atras no está activada";
+"Background location is not enabled" = "La Ubicación no está activada";
 
 "You have to fill all the fields and choose a profile picturre to finish Registration" = "Tienes que completar todos los campos y elejir una foto de perfil para poder registrarte.";
 
@@ -28,11 +34,11 @@
 "Your email is not a valid email, please try a proper email address" = "El e-mail elejido no es una dirección valida de email, porfavor intente nuevamente";
 "Yes" =  "Si";
 
-"Write your frase here..." = "Escribe tu frase aquí...";
+"Write your phrase here..." = "Escribe tu frase aquí...";
 
 
 "You have to write something before posting" = "Tienes que escribir algo antes de postear.";
-
+"%@ phrases" = "%@ frases";
 
 "0 characters" = "0 caracteres";
 "Log in" = "Iniciar sesión";

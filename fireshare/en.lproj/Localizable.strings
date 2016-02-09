@@ -20,6 +20,11 @@
 
 "Field cannot be empty." = "Field cannot be empty.";
 
+"Tap to refresh" = "Tap to refresh";
+
+"AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" = "AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS";
+
+"OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT";
 
 "Failed to get your location." = "Failed to get your location.";
 
@@ -37,12 +42,12 @@
 "Your email is not a valid email, please try a proper email address" = "Your email is not a valid email, please try a proper email address";
 
 "Yes" =  "Yes";
-"Write your frase here..." = "Write your frase here...";
+"Write your phrase here..." = "Write your phrase here...";
 
 
 "You have to write something before posting" = "You have to write something before posting";
 
-
+"%@ phrases" = "%@ phrases";
 "0 characters" = "0 characters";
 
 "Are you sure you want to denounce %@ for posting: '%@' ?" = "Are you sure you want to denounce %@ for posting: '%@' ?";

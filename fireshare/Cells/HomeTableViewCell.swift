@@ -7,9 +7,17 @@
 //
 
 import UIKit
+protocol HomeCellDelegate{
+    func showUser(user:Users)
+    
+    
+}
+
 
 class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
 
+    
+    var delegate:HomeCellDelegate! = nil
     @IBOutlet var post_title_label: UILabel!
     @IBOutlet var tableView_height: NSLayoutConstraint!
     @IBOutlet var post_user_name_label: UILabel!
@@ -17,7 +25,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
     var array_comments:[Comments] = []
     @IBOutlet var commentTableView: UICollectionView!
     @IBOutlet var user_owner_avatar: UIImageView!
-    
+    var selectedPost:Posts!
     @IBOutlet var first_user: UIImageView!
     @IBOutlet var second_user: UIImageView!
     @IBOutlet var third_user: UIImageView!
@@ -55,6 +63,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
     
     func displayPost(post:Posts, atindex:NSIndexPath){
         
+        self.selectedPost = post
         if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue <= 0 && post.seconds_since.integerValue > 0{
             
             self.timeLabel.text = String(format: NSLocalizedString("%@ sec ago", comment: ""), post.seconds_since)
@@ -231,5 +240,12 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         
      return self.array_comments.count
         
+    }
+    
+    
+      @IBAction func selectUserTouchUpInside(sender: UIButton) {
+        
+        
+        self.delegate.showUser(self.selectedPost.post_user)
     }
 }

@@ -50,6 +50,7 @@
 		EB2626421C698E2700A8A7AA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626411C698E2700A8A7AA /* SystemConfiguration.framework */; };
 		EB2626441C698E3700A8A7AA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626431C698E3700A8A7AA /* libz.tbd */; };
 		EB2626461C698E4D00A8A7AA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */; };
+		EB2626481C6A1C5200A8A7AA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2626471C6A1C5200A8A7AA /* ProfileViewController.swift */; };
 		EB34F49A1C3D6AAD004B6AB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F4991C3D6AAD004B6AB2 /* main.m */; };
 		EB34F49D1C3D6AAD004B6AB2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F49C1C3D6AAD004B6AB2 /* AppDelegate.m */; };
 		EB34F4A31C3D6AAD004B6AB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB34F4A11C3D6AAD004B6AB2 /* Main.storyboard */; };
@@ -247,6 +248,7 @@
 		EB2626411C698E2700A8A7AA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EB2626431C698E3700A8A7AA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		EB2626471C6A1C5200A8A7AA /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EB34F4951C3D6AAD004B6AB2 /* fireshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fireshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB34F4991C3D6AAD004B6AB2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB34F49B1C3D6AAD004B6AB2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -637,6 +639,7 @@
 				EBFCCE9A1C5A527600095B58 /* TipInCellAnimator.swift */,
 				EB0490A41C60325E00FA53C8 /* PostDetailViewController.swift */,
 				EB2626051C69131B00A8A7AA /* TermsViewController.swift */,
+				EB2626471C6A1C5200A8A7AA /* ProfileViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1047,6 +1050,7 @@
 				EB34F5081C3D6B30004B6AB2 /* SDWebImagePrefetcher.m in Sources */,
 				EB34F5091C3D6B30004B6AB2 /* UIButton+WebCache.m in Sources */,
 				EB34F5121C3D6B30004B6AB2 /* Login.m in Sources */,
+				EB2626481C6A1C5200A8A7AA /* ProfileViewController.swift in Sources */,
 				EB34F5041C3D6B30004B6AB2 /* SDWebImageDecoder.m in Sources */,
 				EB34F5151C3D6B44004B6AB2 /* HomeViewController.swift in Sources */,
 				EB34F50F1C3D6B30004B6AB2 /* UIImageView+WebCache.m in Sources */,

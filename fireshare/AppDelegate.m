@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "fireshare-Swift.h"
 @interface AppDelegate ()
-
+@property(nonatomic, copy) void (^dispatchHandler)(GAIDispatchResult result);
 @end
 static NSString *const kTrackingId = @"UA-65636271-1";
 
@@ -47,6 +47,23 @@ static NSString *const kTrackingId = @"UA-65636271-1";
     }
     
     //[GMSServices provideAPIKey:@"AIzaSyDOEg2ad98Ay7w5SPSemKYmZ_8sGK-5qR4"];
+    
+    //Analytics
+    NSLog(@"[GOOGLE]///////INIT Google Analytics///////");
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    
+    // Optional: set Logger to VERBOSE for debug information.
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    
+    // Initialize tracker. Replace with your tracking ID.
+    [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
+    
+    
+    
     return YES;
 }
 
