@@ -205,7 +205,9 @@ class CommentCollectionViewCell: UICollectionViewCell {
         self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarDenounce"))
         self.alert.hideWhenBackgroundViewIsTapped = true
         self.alert.showCloseButton = false
-        self.alert.showWarning(NSLocalizedString("Denounce",comment:""), subTitle: String(format: NSLocalizedString("Are you sure you want to denounce %@ for commenting: '%@' ?", comment: ""), self.current_comment.user_owner.name,self.current_comment.comment_content))
+   
+        
+        self.alert.showWarning(NSLocalizedString("Denounce",comment:""), subTitle: String(format: NSLocalizedString("Are you sure you want to denounce %@ for commenting: '%@' ?", comment: ""),self.current_comment.user_owner.name ,self.current_comment.comment_content))
         
     }
     

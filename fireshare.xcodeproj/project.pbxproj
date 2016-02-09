@@ -37,6 +37,14 @@
 		EB26261B1C69191200A8A7AA /* heartBOn.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626161C69191200A8A7AA /* heartBOn.png */; };
 		EB26261C1C69191200A8A7AA /* heartBOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626171C69191200A8A7AA /* heartBOn@2x.png */; };
 		EB2626291C694CEB00A8A7AA /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626281C694CEB00A8A7AA /* libGoogleAnalyticsServices.a */; };
+		EB26262E1C69528900A8A7AA /* SBTVLoaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB26262C1C69528900A8A7AA /* SBTVLoaderView.m */; };
+		EB26262F1C69528900A8A7AA /* SBTVLoaderView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB26262D1C69528900A8A7AA /* SBTVLoaderView_iPhone.xib */; };
+		EB2626331C69531300A8A7AA /* fire2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626301C69531300A8A7AA /* fire2.png */; };
+		EB2626341C69531300A8A7AA /* fire2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626311C69531300A8A7AA /* fire2@2x.png */; };
+		EB2626351C69531300A8A7AA /* fire2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626321C69531300A8A7AA /* fire2@3x.png */; };
+		EB2626391C69543600A8A7AA /* fire1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626361C69543600A8A7AA /* fire1.png */; };
+		EB26263A1C69543600A8A7AA /* fire1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626371C69543600A8A7AA /* fire1@2x.png */; };
+		EB26263B1C69543600A8A7AA /* fire1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626381C69543600A8A7AA /* fire1@3x.png */; };
 		EB34F49A1C3D6AAD004B6AB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F4991C3D6AAD004B6AB2 /* main.m */; };
 		EB34F49D1C3D6AAD004B6AB2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F49C1C3D6AAD004B6AB2 /* AppDelegate.m */; };
 		EB34F4A31C3D6AAD004B6AB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB34F4A11C3D6AAD004B6AB2 /* Main.storyboard */; };
@@ -220,6 +228,15 @@
 		EB2626261C694CAD00A8A7AA /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		EB2626271C694CAD00A8A7AA /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		EB2626281C694CEB00A8A7AA /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		EB26262B1C69528900A8A7AA /* SBTVLoaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTVLoaderView.h; sourceTree = "<group>"; };
+		EB26262C1C69528900A8A7AA /* SBTVLoaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTVLoaderView.m; sourceTree = "<group>"; };
+		EB26262D1C69528900A8A7AA /* SBTVLoaderView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SBTVLoaderView_iPhone.xib; sourceTree = "<group>"; };
+		EB2626301C69531300A8A7AA /* fire2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire2.png; sourceTree = "<group>"; };
+		EB2626311C69531300A8A7AA /* fire2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire2@2x.png"; sourceTree = "<group>"; };
+		EB2626321C69531300A8A7AA /* fire2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire2@3x.png"; sourceTree = "<group>"; };
+		EB2626361C69543600A8A7AA /* fire1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire1.png; sourceTree = "<group>"; };
+		EB2626371C69543600A8A7AA /* fire1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire1@2x.png"; sourceTree = "<group>"; };
+		EB2626381C69543600A8A7AA /* fire1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire1@3x.png"; sourceTree = "<group>"; };
 		EB34F4951C3D6AAD004B6AB2 /* fireshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fireshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB34F4991C3D6AAD004B6AB2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB34F49B1C3D6AAD004B6AB2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -428,6 +445,16 @@
 			path = analitics;
 			sourceTree = "<group>";
 		};
+		EB26262A1C69528900A8A7AA /* LoaderView */ = {
+			isa = PBXGroup;
+			children = (
+				EB26262B1C69528900A8A7AA /* SBTVLoaderView.h */,
+				EB26262C1C69528900A8A7AA /* SBTVLoaderView.m */,
+				EB26262D1C69528900A8A7AA /* SBTVLoaderView_iPhone.xib */,
+			);
+			path = LoaderView;
+			sourceTree = "<group>";
+		};
 		EB34F48C1C3D6AAC004B6AB2 = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +475,7 @@
 		EB34F4971C3D6AAD004B6AB2 /* fireshare */ = {
 			isa = PBXGroup;
 			children = (
+				EB26262A1C69528900A8A7AA /* LoaderView */,
 				EB2626281C694CEB00A8A7AA /* libGoogleAnalyticsServices.a */,
 				EB26261D1C694CAD00A8A7AA /* analitics */,
 				EB4F670A1C67AE8500823D6E /* AlertView */,
@@ -596,6 +624,12 @@
 		EB34F5221C3D6FC3004B6AB2 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				EB2626361C69543600A8A7AA /* fire1.png */,
+				EB2626371C69543600A8A7AA /* fire1@2x.png */,
+				EB2626381C69543600A8A7AA /* fire1@3x.png */,
+				EB2626301C69531300A8A7AA /* fire2.png */,
+				EB2626311C69531300A8A7AA /* fire2@2x.png */,
+				EB2626321C69531300A8A7AA /* fire2@3x.png */,
 				EB2626131C69191200A8A7AA /* heartBOff.png */,
 				EB2626141C69191200A8A7AA /* heartBOff@2x.png */,
 				EB2626151C69191200A8A7AA /* heartBOff@3x.png */,
@@ -824,6 +858,7 @@
 				EBFCCE911C5947D000095B58 /* backWrite.png in Resources */,
 				EB0490B31C6117BF00FA53C8 /* backWriteBig.png in Resources */,
 				EB76D10B1C4558D1003E4732 /* Icon-60@3x.png in Resources */,
+				EB26262F1C69528900A8A7AA /* SBTVLoaderView_iPhone.xib in Resources */,
 				EB8A24DA1C65602C0052BA69 /* logout@3x.png in Resources */,
 				EB0490B51C6117BF00FA53C8 /* backWriteBig@3x.png in Resources */,
 				EB76D10E1C4558D1003E4732 /* Icon-83.5@2x.png in Resources */,
@@ -843,11 +878,13 @@
 				EB0490A31C5FD81500FA53C8 /* iconSend@3x.png in Resources */,
 				EB0490BB1C61182E00FA53C8 /* rectangle99@3x.png in Resources */,
 				EB0490AC1C61178F00FA53C8 /* iconSendWrite@2x.png in Resources */,
+				EB26263B1C69543600A8A7AA /* fire1@3x.png in Resources */,
 				EB34F52C1C3D6FC3004B6AB2 /* back.png in Resources */,
 				EBCA1D361C6387EF00ED705C /* iconDownOn@3x.png in Resources */,
 				EB76D10F1C4558D1003E4732 /* Icon-Small.png in Resources */,
 				EBCA1D411C638A6700ED705C /* fire_fill@2x.png in Resources */,
 				EB34F5391C3D6FF6004B6AB2 /* add photo@2x.png in Resources */,
+				EB2626331C69531300A8A7AA /* fire2.png in Resources */,
 				EB76D1181C458411003E4732 /* fire@2x.png in Resources */,
 				EB98482A1C6150F9008BC7E6 /* icon_reload.png in Resources */,
 				EB76D0F81C455883003E4732 /* Icon-Small.png in Resources */,
@@ -868,6 +905,7 @@
 				EB76D0F61C455883003E4732 /* Icon-76@2x.png in Resources */,
 				EB26260D1C6917FD00A8A7AA /* heartOff.png in Resources */,
 				EB76D0F71C455883003E4732 /* Icon-83.5@2x.png in Resources */,
+				EB2626391C69543600A8A7AA /* fire1.png in Resources */,
 				EB76D0D91C454E80003E4732 /* shapeShapeShape@2x.png in Resources */,
 				EB76D0F01C455883003E4732 /* Icon-40.png in Resources */,
 				EB76D1111C4558D1003E4732 /* Icon-Small@3x.png in Resources */,
@@ -885,6 +923,7 @@
 				EB76D11F1C458470003E4732 /* iconMenu@3x.png in Resources */,
 				EBCA1D371C6387EF00ED705C /* iconUpOff.png in Resources */,
 				EB8A24D91C65602C0052BA69 /* logout@2x.png in Resources */,
+				EB26263A1C69543600A8A7AA /* fire1@2x.png in Resources */,
 				EB76D0F31C455883003E4732 /* Icon-60@2x.png in Resources */,
 				EB76D1091C4558D1003E4732 /* Icon-40@3x.png in Resources */,
 				EBCA1D341C6387EF00ED705C /* iconDownOn.png in Resources */,
@@ -914,6 +953,8 @@
 				EB76D1101C4558D1003E4732 /* Icon-Small@2x.png in Resources */,
 				EB2625FC1C68D89200A8A7AA /* Localizable.strings in Resources */,
 				EB0490B91C61182E00FA53C8 /* rectangle99.png in Resources */,
+				EB2626351C69531300A8A7AA /* fire2@3x.png in Resources */,
+				EB2626341C69531300A8A7AA /* fire2@2x.png in Resources */,
 				EB0490B41C6117BF00FA53C8 /* backWriteBig@2x.png in Resources */,
 				EB0490AD1C61178F00FA53C8 /* iconSendWrite@3x.png in Resources */,
 				EB0490A11C5FD81500FA53C8 /* iconSend.png in Resources */,
@@ -953,6 +994,7 @@
 				EB34F50D1C3D6B30004B6AB2 /* UIImage+WebP.m in Sources */,
 				EB34F4B41C3D6AF1004B6AB2 /* Functions.m in Sources */,
 				EB34F4FA1C3D6B30004B6AB2 /* AFSecurityPolicy.m in Sources */,
+				EB26262E1C69528900A8A7AA /* SBTVLoaderView.m in Sources */,
 				EB34F4B51C3D6AF1004B6AB2 /* Services.m in Sources */,
 				EB34F4F71C3D6B30004B6AB2 /* AFHTTPRequestOperationManager.m in Sources */,
 				EB34F4FB1C3D6B30004B6AB2 /* AFURLConnectionOperation.m in Sources */,

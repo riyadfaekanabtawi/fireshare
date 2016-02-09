@@ -182,7 +182,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                         if placemarks!.count > 0 {
                             let pm = placemarks![0]
                             print(pm.locality)
-                            Services.createPostForUser(user.user_id, andTitleOfPost: self.frase_text_field.text, andAdress: pm.locality! + ", " + pm.country!, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude),andCountry:pm.country, andHandler: { (response) -> Void in
+                            Services.createPostForUser(user.user_id, andTitleOfPost: self.frase_text_field.text + "...", andAdress: pm.locality! + ", " + pm.country!, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude),andCountry:pm.country, andHandler: { (response) -> Void in
                                 
                                 
                                 self.frase_text_field.text = ""
@@ -319,7 +319,12 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         
         if (currentLocation != nil){
+            let loader = SBTVLoaderView()
             
+            let window = UIApplication.sharedApplication().keyWindow
+            let sub =   (window?.subviews[0])! as UIView
+            
+            Functions.fillContainerView(sub, withView: loader)
             let longitude :CLLocationDegrees = currentLocation.coordinate.longitude
             let latitude :CLLocationDegrees = currentLocation.coordinate.latitude
             
@@ -337,6 +342,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 if placemarks!.count > 0 {
                     let pm = placemarks![0]
                     print(pm.locality)
+                    
+                    
                     Services.getAllPostsforScope(pm.country, andHandler: { (response) -> Void in
                         
                         self.hideError()
@@ -347,6 +354,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                             self.posts_tableView.reloadData()
                             
                         }
+                        
+                        loader.removeFromSuperview()
                         }) { (err) -> Void in
                             
                             self.showError()
@@ -354,7 +363,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                     }                    
                 }
                 else {
-                    
+                     loader.removeFromSuperview()
                 }
             })
             

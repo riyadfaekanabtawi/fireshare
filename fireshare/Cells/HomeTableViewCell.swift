@@ -93,7 +93,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         self.footerHeight.constant = 34
         
         }
-        self.post_title_label.text = post.post_title + "..."
+        self.post_title_label.text = post.post_title
         self.post_user_name_label.text = post.post_user.name
       
     

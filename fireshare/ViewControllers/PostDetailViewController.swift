@@ -47,7 +47,7 @@ class PostDetailViewController: UIViewController,UICollectionViewDataSource,UICo
         self.navView.image = image
         
         
-        self.post_title.text = self.post.post_title + "..."
+        self.post_title.text = self.post.post_title
         
         self.post_user_avatar.image = UIImage(named: "user.png")
         self.post_user_avatar.sd_setImageWithURL(NSURL(string: self.post.post_user.avatar_url)) { (image, err, SDImageCacheType, url) -> Void in
