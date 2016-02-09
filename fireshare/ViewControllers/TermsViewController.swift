@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TermsViewController: UIViewController {
+class TermsViewController: GAITrackedViewController {
 
     
     
@@ -20,6 +20,13 @@ class TermsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tracker  = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value:"Vista Terminos y Condiciones")
+        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+        tracker.send(build)
+        
+        
         
         self.terms_accept_button.titleLabel?.font = UIFont(name: FONT_REGULAR, size: (self.terms_accept_button.titleLabel?.font.pointSize)!)
         

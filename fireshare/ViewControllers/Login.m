@@ -60,6 +60,9 @@
     
     [super viewDidLoad];
     
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:@"Vista Principal" value:@"Vista Login"];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
 
     self.username.placeholder = NSLocalizedString(@"username", @"");
@@ -211,6 +214,18 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 
 -(IBAction)Go:(id)sender{
+    
+    
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+   
+    //[tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Authentication"
+                                                          action:@"Login"
+                                                           label:@"Login"
+                                                           value:nil]build]];
+    
+    
+    
      self.loginButtonView.transform = CGAffineTransformMakeScale(0.01, 0.01);
 [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.30 initialSpringVelocity:6.00 options:UIViewAnimationOptionAllowUserInteraction animations:^{
      self.loginButtonView.transform = CGAffineTransformIdentity;

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
+class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
    
     let imagePicker = UIImagePickerController()
     @IBOutlet var user_avatar: UIImageView!
@@ -25,6 +25,12 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        let tracker  = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value:"Vista Registro")
+        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+        tracker.send(build)
+        
         
         
         self.user_email_text_field.placeholder = NSLocalizedString("email", comment: "")
@@ -148,7 +154,9 @@ class RegisterViewController: UIViewController,UIImagePickerControllerDelegate,U
                 }
                 
                 Services.RegisterUserWithUsername(self.user_name_text_field.text, andPassword: self.user_password_text_field.text, andPasswordConfirmation: self.user_password_confirmation_text_field.text, andEmailAddress: self.user_email_text_field.text, andPicture: base64String, andDeviceToken:device_token, andHandler: { (response) -> Void in
-                  
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    
+                    tracker.send(GAIDictionaryBuilder.createEventWithCategory("Aunthentication", action: "Register", label: "Register", value: nil).build() as [NSObject : AnyObject])
                     
                     self.user_email_text_field.text = ""
                     self.user_name_text_field.text = ""

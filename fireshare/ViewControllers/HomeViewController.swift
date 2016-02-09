@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreLocation
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate {
+class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate {
 
     var locationManager = CLLocationManager()
     var posts_array:[Posts] = []
@@ -31,6 +31,14 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     var selectedPost:Posts!
    
     override func viewDidLoad() {
+        
+        let tracker  = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value:"Vista Home")
+        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+        tracker.send(build)
+        
+        
+        
        self.count_caracterrsLabel.text = NSLocalizedString("100 characters", comment:"")
         self.frase_text_field.text = NSLocalizedString("Write your frase here...", comment:"")
         self.errorSubtitle.font = UIFont(name: FONT_BOLD_ITALIC, size: self.errorSubtitle.font.pointSize)
@@ -123,7 +131,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
   @IBAction func psot(sender: UIButton) {
     
-  
+   
     
 
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -183,8 +191,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                             let pm = placemarks![0]
                             print(pm.locality)
                             Services.createPostForUser(user.user_id, andTitleOfPost: self.frase_text_field.text + "...", andAdress: pm.locality! + ", " + pm.country!, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude),andCountry:pm.country, andHandler: { (response) -> Void in
+                                let tracker = GAI.sharedInstance().defaultTracker
                                 
-                                
+                                tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Create Post", label: "Create Post", value: nil).build() as [NSObject : AnyObject])
                                 self.frase_text_field.text = ""
                                 self.frase_text_field.text = NSLocalizedString("Write your frase here...", comment:"")
                                 self.frase_text_field.textColor = UIColor(red: 217.0/255.0, green: 217.0/255.0, blue: 217.0/255.0, alpha: 1.0)
@@ -468,6 +477,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
 
     func logout(){
       self.alert.hideView()
+        let tracker = GAI.sharedInstance().defaultTracker
+        
+        tracker.send(GAIDictionaryBuilder.createEventWithCategory("Authentication", action: "Logout", label: "Logout", value: nil).build() as [NSObject : AnyObject])
         let defaults = NSUserDefaults.standardUserDefaults()
         
         defaults.removeObjectForKey("user_main")

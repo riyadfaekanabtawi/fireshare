@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostDetailViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,CommentDelegate {
+class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,CommentDelegate {
 
     
     @IBOutlet var comments_tableView: UICollectionView!
@@ -26,6 +26,15 @@ class PostDetailViewController: UIViewController,UICollectionViewDataSource,UICo
     var post:Posts!
     
     override func viewDidLoad() {
+        
+        
+        let tracker  = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value:"Vista Detalle Post")
+        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+        tracker.send(build)
+        
+        
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -181,6 +190,9 @@ class PostDetailViewController: UIViewController,UICollectionViewDataSource,UICo
                 
                 
                 Services.createCommentForPost(self.post.post_id, byUser: user.user_id, andComment: self.commentTextField.text, andHandler: { (response) -> Void in
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    
+                    tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Comment Post", label: "Comment Post", value: nil).build() as [NSObject : AnyObject])
                     self.commentTextField.text = ""
                     self.commentTextField.placeholder = NSLocalizedString("Write your comment", comment: "")
                     self.commentTextField.resignFirstResponder()
@@ -258,7 +270,9 @@ class PostDetailViewController: UIViewController,UICollectionViewDataSource,UICo
      
         Functions.shakeView(sender)
         Services.deletePost(self.post.post_id, andHandler: { (response) -> Void in
+            let tracker = GAI.sharedInstance().defaultTracker
             
+            tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Delete Post", label: "Delete Post", value: nil).build() as [NSObject : AnyObject])
             
             self.navigationController?.popViewControllerAnimated(true)
             }) { (err) -> Void in
@@ -284,7 +298,9 @@ class PostDetailViewController: UIViewController,UICollectionViewDataSource,UICo
         
         self.alert.hideView()
         Services.denouncePost(self.post.post_id, andHandler: { (response) -> Void in
+            let tracker = GAI.sharedInstance().defaultTracker
             
+            tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Denounce Post", label: "Denounce Post", value: nil).build() as [NSObject : AnyObject])
             self.alert = SCLAlertView()
             self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("cancelarDenounce"))
             self.alert.hideWhenBackgroundViewIsTapped = true

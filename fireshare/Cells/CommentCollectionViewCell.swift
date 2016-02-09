@@ -156,7 +156,9 @@ class CommentCollectionViewCell: UICollectionViewCell {
                 let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
                 
                 Services.AddLikeForComment(user.user_id, commentID: self.current_comment.comment_id, andHandler: { (response) -> Void in
+                    let tracker = GAI.sharedInstance().defaultTracker
                     
+                    tracker.send(GAIDictionaryBuilder.createEventWithCategory("Comment", action: "Like Comment", label: "Like Comment", value: nil).build() as [NSObject : AnyObject])
                    self.delegate.CommentRefreshDetail()
                     }) { (err) -> Void in
                         
@@ -183,7 +185,9 @@ class CommentCollectionViewCell: UICollectionViewCell {
                 let defaults = NSUserDefaults.standardUserDefaults()
                 let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
                 Services.removeLikeFromComment(user.user_id, commentID: self.current_comment.comment_id, andHandler: { (response) -> Void in
+                    let tracker = GAI.sharedInstance().defaultTracker
                     
+                    tracker.send(GAIDictionaryBuilder.createEventWithCategory("Comment", action: "UnLike Comment", label: "UnLike Comment", value: nil).build() as [NSObject : AnyObject])
                      self.delegate.CommentRefreshDetail()
                     
                     }) { (err) -> Void in
@@ -216,6 +220,13 @@ class CommentCollectionViewCell: UICollectionViewCell {
         self.alert.hideView()
         Services.denounceComment(self.current_comment.comment_id, andHandler: { (response) -> Void in
             
+            
+            let tracker = GAI.sharedInstance().defaultTracker
+            
+            tracker.send(GAIDictionaryBuilder.createEventWithCategory("Comment", action: "Denounce Comment", label: "Denounce Comment", value: nil).build() as [NSObject : AnyObject])
+            
+            
+            
             self.alert = SCLAlertView()
             self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("cancelarDenounce"))
             self.alert.hideWhenBackgroundViewIsTapped = true
@@ -241,6 +252,12 @@ class CommentCollectionViewCell: UICollectionViewCell {
         
         Functions.shakeView(sender)
         Services.deleteComment(self.current_comment.comment_id, andHandler: { (response) -> Void in
+            
+            let tracker = GAI.sharedInstance().defaultTracker
+            
+            tracker.send(GAIDictionaryBuilder.createEventWithCategory("Comment", action: "Delete Comment", label: "Delete Comment", value: nil).build() as [NSObject : AnyObject])
+            
+            
             self.delegate.CommentRefreshDetail()
             
             }) { (err) -> Void in

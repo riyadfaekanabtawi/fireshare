@@ -45,6 +45,11 @@
 		EB2626391C69543600A8A7AA /* fire1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626361C69543600A8A7AA /* fire1.png */; };
 		EB26263A1C69543600A8A7AA /* fire1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626371C69543600A8A7AA /* fire1@2x.png */; };
 		EB26263B1C69543600A8A7AA /* fire1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2626381C69543600A8A7AA /* fire1@3x.png */; };
+		EB26263E1C698E1100A8A7AA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB26263D1C698E1100A8A7AA /* AdSupport.framework */; };
+		EB2626401C698E1B00A8A7AA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB26263F1C698E1B00A8A7AA /* CoreData.framework */; };
+		EB2626421C698E2700A8A7AA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626411C698E2700A8A7AA /* SystemConfiguration.framework */; };
+		EB2626441C698E3700A8A7AA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626431C698E3700A8A7AA /* libz.tbd */; };
+		EB2626461C698E4D00A8A7AA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */; };
 		EB34F49A1C3D6AAD004B6AB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F4991C3D6AAD004B6AB2 /* main.m */; };
 		EB34F49D1C3D6AAD004B6AB2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F49C1C3D6AAD004B6AB2 /* AppDelegate.m */; };
 		EB34F4A31C3D6AAD004B6AB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB34F4A11C3D6AAD004B6AB2 /* Main.storyboard */; };
@@ -237,6 +242,11 @@
 		EB2626361C69543600A8A7AA /* fire1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire1.png; sourceTree = "<group>"; };
 		EB2626371C69543600A8A7AA /* fire1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire1@2x.png"; sourceTree = "<group>"; };
 		EB2626381C69543600A8A7AA /* fire1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire1@3x.png"; sourceTree = "<group>"; };
+		EB26263D1C698E1100A8A7AA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		EB26263F1C698E1B00A8A7AA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		EB2626411C698E2700A8A7AA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		EB2626431C698E3700A8A7AA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EB34F4951C3D6AAD004B6AB2 /* fireshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fireshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB34F4991C3D6AAD004B6AB2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB34F49B1C3D6AAD004B6AB2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -420,6 +430,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB2626461C698E4D00A8A7AA /* libsqlite3.tbd in Frameworks */,
+				EB2626441C698E3700A8A7AA /* libz.tbd in Frameworks */,
+				EB2626421C698E2700A8A7AA /* SystemConfiguration.framework in Frameworks */,
+				EB2626401C698E1B00A8A7AA /* CoreData.framework in Frameworks */,
+				EB26263E1C698E1100A8A7AA /* AdSupport.framework in Frameworks */,
 				EB4F67091C679ED900823D6E /* CoreLocation.framework in Frameworks */,
 				EB2626291C694CEB00A8A7AA /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
@@ -458,6 +473,11 @@
 		EB34F48C1C3D6AAC004B6AB2 = {
 			isa = PBXGroup;
 			children = (
+				EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */,
+				EB2626431C698E3700A8A7AA /* libz.tbd */,
+				EB2626411C698E2700A8A7AA /* SystemConfiguration.framework */,
+				EB26263F1C698E1B00A8A7AA /* CoreData.framework */,
+				EB26263D1C698E1100A8A7AA /* AdSupport.framework */,
 				EB4F67081C679ED900823D6E /* CoreLocation.framework */,
 				EB34F4971C3D6AAD004B6AB2 /* fireshare */,
 				EB34F4961C3D6AAD004B6AB2 /* Products */,

@@ -62,7 +62,9 @@
 
 #define IS_IPHONE_6Plus ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )736 ) < DBL_EPSILON )
 
-
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAI.h"
 
 //Encriptation
 

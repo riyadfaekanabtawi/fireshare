@@ -11,7 +11,7 @@
 #define TIME_STEP 5.0f
 @protocol LoginDelegate;
 
-@interface Login : UIViewController<UIAlertViewDelegate,UITextFieldDelegate>
+@interface Login : GAITrackedViewController<UIAlertViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, weak) id<LoginDelegate> delegate;
 
