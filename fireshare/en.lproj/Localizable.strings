@@ -52,6 +52,8 @@
 
 "Are you sure you want to denounce %@ for posting: '%@' ?" = "Are you sure you want to denounce %@ for posting: '%@' ?";
 
+"It seems there are no posts near you. Be the first to post a new phrase." = "It seems there are no posts near you. Be the first to post a new phrase.";
+
 "You have succesfully denounced %@ for posting: '%@' ?" = "You have succesfully denounced %@ for posting: '%@'";
 
 

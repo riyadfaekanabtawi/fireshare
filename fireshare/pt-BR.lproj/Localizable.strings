@@ -107,6 +107,8 @@
 
 
 "Are you sure you want to denounce %@ for commenting: '%@' ?" = "Você tem certeza que quer denunciar a %@ por comentar: '%@'?";
+"It seems there are no posts near you. Be the first to post a new phrase." = "Parece que não tem posts perto de você. Seja o primero em escrever uma nova frase.";
+
 
 "You have succesfully denounced %@ for commenting: '%@' ?" = "Você denunció satisfatoriamente a %@ por comentar: '%@'";
 

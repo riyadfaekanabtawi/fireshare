@@ -387,6 +387,14 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                             self.refreshControl.endRefreshing()
                             self.posts_tableView.reloadData()
                             
+                        }else{
+                            self.alert = SCLAlertView()
+                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                            
+                            self.alert.hideWhenBackgroundViewIsTapped = true
+                            self.alert.showCloseButton = false
+                            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("It seems there are no posts near you. Be the first to post a new phrase.",comment:""))
+                        
                         }
                         
                       

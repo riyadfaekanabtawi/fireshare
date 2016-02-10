@@ -33,6 +33,7 @@
 
 "Wrong username or password. Please try again." = "Nombre de usuario o contraseña incorrectos, intenta nuevamente.";
 
+"It seems there are no posts near you. Be the first to post a new phrase." = "Al parecer no hay posts cercanos a ti. Se el primero en postear una nueva frase";
 
 "Your email is not a valid email, please try a proper email address" = "El e-mail elejido no es una dirección valida de email, porfavor intente nuevamente";
 "Yes" =  "Si";
