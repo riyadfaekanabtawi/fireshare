@@ -17,7 +17,7 @@
 
 "OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO";
 
-"Username does not exist. Please try another one or register.." = "El nombre de usuario no existe, intente con otro o regístrate.";
+"Email does not exist. Please try another one or register.." = "El email no existe, intente con otro o regístrate.";
 
 "Failed to get your location." = "Error al obtener su ubicacón";
 
@@ -31,7 +31,7 @@
 
 "A user with the same email already exists, please try another email" = "Un usuario con el mismo email ya existe por favor intente con otra cuenta de email.";
 
-"Wrong username or password. Please try again." = "Nombre de usuario o contraseña incorrectos, intenta nuevamente.";
+"Wrong email or password. Please try again." = "Email o contraseña incorrectos, intenta nuevamente.";
 
 "It seems there are no posts near you. Be the first to post a new phrase." = "Al parecer no hay posts cercanos a ti. Se el primero en postear una nueva frase";
 

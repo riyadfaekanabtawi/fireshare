@@ -101,9 +101,9 @@
 "You have succesfully denounced %@ for posting: '%@'" = "Você denunció satisfatoriamente a %@ por postear: '%@'";
 
 
-"Username does not exist. Please try another one or register.." = "O nome de usuario não existe, tente com utro o registre-se.";
+"Email does not exist. Please try another one or register.." = "O email não existe, tente com utro o registre-se.";
 
-"Wrong username or password. Please try again." = "Nome de usuario ou senha incorretos, tente novamente.";
+"Wrong email or password. Please try again." = "Email ou senha incorretos, tente novamente.";
 
 
 "Are you sure you want to denounce %@ for commenting: '%@' ?" = "Você tem certeza que quer denunciar a %@ por comentar: '%@'?";

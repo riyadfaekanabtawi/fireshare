@@ -28,10 +28,7 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     var selectedPost:Posts!
     
     override func viewDidAppear(animated: Bool) {
-        let tracker  = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value:"Vista Detalle Usuario")
-        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
-        tracker.send(build)
+    
         
         
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -52,7 +49,10 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        let tracker  = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value:"Vista Detalle Usuario")
+        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+        tracker.send(build)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRectMake(0, -20, self.view.frame.size.width, 64)

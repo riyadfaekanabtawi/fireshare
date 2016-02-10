@@ -66,7 +66,7 @@
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
 
-    self.username.placeholder = NSLocalizedString(@"username", @"");
+    self.username.placeholder = NSLocalizedString(@"email", @"");
     self.password.placeholder = NSLocalizedString(@"password", @"");
     self.registerLabel.text = NSLocalizedString(@"Register", @"");
     self.donthave.text = NSLocalizedString(@"Dont have an account yet?", @"");
@@ -272,7 +272,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
         NSDictionary *p = @{
                             
-                            @"name" : self.username.text,@"password" : self.password.text,@"device_token":[defaults objectForKey:@"tokenPush"]};
+                            @"email" : self.username.text,@"password" : self.password.text,@"device_token":[defaults objectForKey:@"tokenPush"]};
         
         
         
@@ -292,10 +292,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             [self.username resignFirstResponder];
             [self.password resignFirstResponder];
             
-            if ([[responseObject objectForKey:@"Description"] isEqualToString:@"Username does not match password"]){
+            if ([[responseObject objectForKey:@"Description"] isEqualToString:@"Email does not match password"]){
                 
                 
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong username or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 
                 UIAlertAction* ok = [UIAlertAction
@@ -315,9 +315,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                 
              
                 
-            }else if([[responseObject objectForKey:@"Description"] isEqualToString:@"We could not find any users with that name."]){
+            }else if([[responseObject objectForKey:@"Description"] isEqualToString:@"We could not find any users with that email."]){
             
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Username does not exist. Please try another one or register.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Email does not exist. Please try another one or register.", nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 
                 UIAlertAction* ok = [UIAlertAction

@@ -44,7 +44,7 @@
 "Yes" =  "Yes";
 "Write your phrase here..." = "Write your phrase here...";
 
-"Wrong username or password. Please try again." = "Wrong username or password. Please try again.";
+"Wrong email or password. Please try again." = "Wrong email or password. Please try again.";
 "You have to write something before posting" = "You have to write something before posting";
 
 "%@ phrases" = "%@ phrases";
@@ -76,7 +76,7 @@
 "password" = "password";
 "%@ characters" = "%@ characters";
 "No" = "No";
-"Username does not exist. Please try another one or register.." = "Username does not exist. Please try another one or register.";
+"Email does not exist. Please try another one or register.." = "Email does not exist. Please try another one or register.";
 "100 characters" = "100 characters";
 "New Version" = "New Version";
 "Cancel" = "Cancel";

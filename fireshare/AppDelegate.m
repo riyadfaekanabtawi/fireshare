@@ -11,7 +11,7 @@
 @interface AppDelegate ()
 @property(nonatomic, copy) void (^dispatchHandler)(GAIDispatchResult result);
 @end
-static NSString *const kTrackingId = @"UA-65636271-1";
+static NSString *const kTrackingId = @"UA-73548513-1";
 
 
 
