@@ -14,10 +14,10 @@
 @property NSNumber *post_likes;
 @property NSString *post_title;
 @property NSString *post_date;
-@property NSNumber *minutes_since;
-@property NSNumber *hours_since;
-@property NSNumber *days_since;
-@property NSNumber *seconds_since;
+@property CGFloat minutes_since;
+@property CGFloat hours_since;
+@property CGFloat days_since;
+@property CGFloat seconds_since;
 @property Users *post_user;
 
 @property NSArray *comments;

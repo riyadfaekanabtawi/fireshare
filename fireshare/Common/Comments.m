@@ -23,18 +23,27 @@
         self.comment_content = replaceNSNullValue([dictionary objectForKey:@"content"]);
         
         self.user_owner = [[Users alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
+        self.voted_string = [dictionary objectForKey:@"voted_string"];
+       
         NSString* now = [dateFormatter stringFromDate:[NSDate date]];
         
-        NSDate *dateNow = [dateFormatter dateFromString:now];
         
-        NSDate *dateA =     [[dateFormatter dateFromString:[dictionary objectForKey:@"created_at"]] dateByAddingTimeInterval:-3600*2];
+        NSString *dateNowString= [now stringByReplacingOccurrencesOfString:@"+0000"  withString:@""];
         
-    
-        self.voted_string = [dictionary objectForKey:@"voted_string"];
-        self.seconds_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate:dateA])];
-        self.minutes_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/60];
-        self.hours_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/3600];
-        self.days_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/86400];
+        
+        
+        NSDate *dateNow = [dateFormatter dateFromString:dateNowString];
+        
+        
+        NSString *dateServiceString= [[dictionary objectForKey:@"created_at"] stringByReplacingOccurrencesOfString:@"Z"  withString:@""];
+        NSDate *dateA =     [[dateFormatter dateFromString:dateServiceString] dateByAddingTimeInterval:-3600*3];
+        
+        
+        
+        self.seconds_since = [dateNow timeIntervalSinceDate:dateA];
+        self.minutes_since = round(self.seconds_since/60);
+        self.hours_since = round(self.seconds_since/3600);
+        self.days_since =round(self.seconds_since/86400);
         
     }
     

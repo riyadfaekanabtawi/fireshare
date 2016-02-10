@@ -21,7 +21,7 @@
 "Field cannot be empty." = "Field cannot be empty.";
 
 "Tap to refresh" = "Tap to refresh";
-
+"Update" = "Update";
 "AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" = "AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS";
 
 "OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT";
@@ -44,7 +44,7 @@
 "Yes" =  "Yes";
 "Write your phrase here..." = "Write your phrase here...";
 
-
+"Wrong username or password. Please try again." = "Wrong username or password. Please try again.";
 "You have to write something before posting" = "You have to write something before posting";
 
 "%@ phrases" = "%@ phrases";
@@ -59,14 +59,14 @@
 
 "You have succesfully denounced %@ for commenting: '%@' ?" = "You have succesfully denounced %@ for commenting: '%@'";
 
-
+"You have to type iin your password and confirm it befor updating." = "You have to type iin your password and confirm it befor updating.";
 "Denounce" = "Denounce";
 
 "Success" = "Success";
 "Exit FireShare" = "Exit FireShare";
 
-"confirm password" = "repetir contraseña";
-
+"confirm password" = "confirm password";
+"Pull to refresh" = "Pull to refresh";
 "Are you sure you want to logout?" = "Are you sure you want to leave?";
 
 "Log in" = "Log in";
@@ -74,17 +74,25 @@
 "password" = "password";
 "%@ characters" = "%@ characters";
 "No" = "No";
+"Username does not exist. Please try another one or register.." = "Username does not exist. Please try another one or register.";
 "100 characters" = "100 characters";
-
+"New Version" = "New Version";
+"Cancel" = "Cancel";
+"A new version of this app is available" = "A new version of this app is available";
 "Write your comment" = "Write your comment";
 "You have to write something before posting" = "You have to write something before posting";
 
 "Dont have an account yet?" = "Dont have an account yet?";
 "Register" = "Register";
-"%@ sec ago" = "%@ sec ago";
-"%@ min ago" = "%@ min ago";
-"%@ hs ago" = "%@ hs ago";
-"%@ days ago" = "%@ days ago";
+"%.0f sec ago" = "Hace %.0f sec";
+
+"%.0f min ago" =  "%.0f min ago";
+
+"%.0fhs ago" = "%.0f hs ago";
+
+"%.0f days ago" = "%.0f days ago";
+
+"%.0f weeks" = "%@ weeks";
 
 
 "There was an error while fetching your location. Please try again." = "There was an error while fetching your location. Please try again.";

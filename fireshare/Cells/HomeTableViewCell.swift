@@ -64,33 +64,29 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
     func displayPost(post:Posts, atindex:NSIndexPath){
         
         self.selectedPost = post
-        if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue <= 0 && post.seconds_since.integerValue > 0{
+        if  post.seconds_since < 60{
             
-            self.timeLabel.text = String(format: NSLocalizedString("%@ sec ago", comment: ""), post.seconds_since)
+            self.timeLabel.text = String(format: NSLocalizedString("Just now", comment: ""))
             
-        }
+        }else if  post.minutes_since < 60{
+            
+            self.timeLabel.text = String(format: NSLocalizedString("%.0f min ago", comment: ""), post.minutes_since)
+          
+        }else if post.hours_since < 24{
+            
+            
+            
+            self.timeLabel.text = String(format: NSLocalizedString("%.0f hs ago", comment: ""), post.hours_since)
+            
+        }else if  post.days_since < 7{
+            
+            
+            
+            self.timeLabel.text = String(format: NSLocalizedString("%.0f days ago", comment: ""), post.days_since)
+            
+        }else{
+         self.timeLabel.text = String(format: NSLocalizedString("%.0f weeks", comment: ""), post.days_since/7)
         
-        if post.hours_since.integerValue <= 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
-            
-            self.timeLabel.text = String(format: NSLocalizedString("%@ min ago", comment: ""), post.minutes_since)
-            
-        }
-        
-        
-        if post.hours_since.integerValue > 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
-            
-            
-            
-            self.timeLabel.text = String(format: NSLocalizedString("%@ hs ago", comment: ""), post.hours_since)
-            
-        }
-        
-        if post.days_since.integerValue > 0 && post.hours_since.integerValue > 0 && post.minutes_since.integerValue > 0 && post.seconds_since.integerValue > 0{
-            
-            
-            
-            self.timeLabel.text = String(format: NSLocalizedString("%@ days ago", comment: ""), post.days_since)
-            
         }
         
 

@@ -18,7 +18,7 @@
 -(Posts *)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
     if (self) {
         
         self.post_title = [dictionary objectForKey:@"title"];
@@ -41,16 +41,23 @@
         
         NSString* now = [dateFormatter stringFromDate:[NSDate date]];
         
-        NSDate *dateNow = [dateFormatter dateFromString:now];
         
-        NSDate *dateA =     [[dateFormatter dateFromString:[dictionary objectForKey:@"created_at"]] dateByAddingTimeInterval:-3600*1];
-        
+        NSString *dateNowString= [now stringByReplacingOccurrencesOfString:@"+0000"  withString:@""];
         
         
-        self.seconds_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate:dateA])];
-        self.minutes_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/60];
-        self.hours_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/3600];
-        self.days_since = [NSNumber numberWithInt:fabs([dateNow timeIntervalSinceDate: dateA])/86400];
+        
+        NSDate *dateNow = [dateFormatter dateFromString:dateNowString];
+        
+        
+        NSString *dateServiceString= [[dictionary objectForKey:@"created_at"] stringByReplacingOccurrencesOfString:@"Z"  withString:@""];
+        NSDate *dateA =     [[dateFormatter dateFromString:dateServiceString] dateByAddingTimeInterval:-3600*3];
+        
+        
+        
+        self.seconds_since = [dateNow timeIntervalSinceDate:dateA];
+        self.minutes_since = round(self.seconds_since/60);
+        self.hours_since = round(self.seconds_since/3600);
+        self.days_since =round(self.seconds_since/86400);
         
         
     }

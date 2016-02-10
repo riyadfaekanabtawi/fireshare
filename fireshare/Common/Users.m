@@ -18,7 +18,7 @@
         self.email = [dictionary objectForKey:@"email"];
         self.device_token = [dictionary objectForKey:@"device_token"];
         if ([dictionary objectForKey:@"avatar_file_name"]){
-         self.avatar_url = [NSString stringWithFormat:@"%@assets/users/%@/medium/%@",BASE_URL,self.user_id,[dictionary objectForKey:@"avatar_file_name"]];
+         self.avatar_url = [NSString stringWithFormat:@"%@assets/users/%@/original/%@",BASE_URL,self.user_id,[dictionary objectForKey:@"avatar_file_name"]];
         
         }else{
          self.avatar_url = [NSString stringWithFormat:@"%@%@",BASE_URL,[dictionary objectForKey:@"avatar"]];

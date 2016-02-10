@@ -10,6 +10,7 @@ import UIKit
 
 class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,CommentDelegate {
 
+    @IBOutlet var denounceButton: UIButton!
     
     @IBOutlet var comments_tableView: UICollectionView!
     @IBOutlet var go_back_Button: UIButton!
@@ -22,7 +23,7 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
     @IBOutlet var commentTextField: UITextField!
     
     var alert:SCLAlertView!
-    var array_of_comments:[Comments] = []
+    var array_of_comments:[AnyObject] = []
     var post:Posts!
     
     override func viewDidLoad() {
@@ -153,7 +154,7 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
             cell.fireIcon_width.constant = 0
             cell.layoutIfNeeded()
         }
-        cell.displayComment(self.array_of_comments[indexPath.row])
+        cell.displayComment(self.array_of_comments[indexPath.row] as! Comments)
         
         return cell
     }
@@ -196,7 +197,23 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
                     self.commentTextField.text = ""
                     self.commentTextField.placeholder = NSLocalizedString("Write your comment", comment: "")
                     self.commentTextField.resignFirstResponder()
-                    self.refresh()
+                    
+                    let post = response as! Comments
+                    
+                    let arrayMutable = NSMutableArray()
+                    arrayMutable.addObject(post)
+                    arrayMutable.addObjectsFromArray(self.array_of_comments)
+                    
+                    var array = [AnyObject]()
+                    
+                    array = arrayMutable as [AnyObject]
+                    self.array_of_comments = array
+                    
+                    self.comments_tableView.reloadData()
+                    
+                    
+                    
+               
                     
                     
                     }) { (err) -> Void in
@@ -284,14 +301,21 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
     }
     
     @IBAction func denounceTouchUpInside(sender: UIButton) {
+        self.denounceButton.transform = CGAffineTransformMakeScale(0.01, 0.01)
         
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.00, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            
+            self.denounceButton.transform = CGAffineTransformMakeScale(1, 1)
+            
+            
+            }) { (Bool) -> Void in
         self.alert = SCLAlertView()
         self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("denunciar"))
         self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarDenounce"))
         self.alert.hideWhenBackgroundViewIsTapped = true
         self.alert.showCloseButton = false
         self.alert.showWarning(NSLocalizedString("Denounce",comment:""), subTitle: String(format: NSLocalizedString("Are you sure you want to denounce %@ for posting: '%@' ?", comment: ""), self.post.post_user.name,self.post.post_title))
-        
+        }
     }
     
     func denunciar(){

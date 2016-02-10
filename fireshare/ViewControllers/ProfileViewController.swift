@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     @IBOutlet var posts_tableView: UITableView!
     @IBOutlet var go_back_Button: UIButton!
     @IBOutlet var navView: UIImageView!
+    @IBOutlet var updateButton: UIButton!
     @IBOutlet var post_user_avatar: UIImageView!
     @IBOutlet var post_user_name: UILabel!
     @IBOutlet var frasesCountLabel: UILabel!
@@ -27,19 +28,31 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     var selectedPost:Posts!
     
     override func viewDidAppear(animated: Bool) {
-        self.callUserProfileService()
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
         let tracker  = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value:"Vista Detalle Usuario")
         let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
         tracker.send(build)
         
-   
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        let _user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as!NSData)as!Users
+        
+        if self.user.user_id == _user.user_id{
+            
+            self.updateButton.hidden = false
+            
+        }else{
+            
+            self.updateButton.hidden = true
+        }
         self.frasesCountLabel.font = UIFont(name: FONT_LIGHT, size: self.frasesCountLabel.font.pointSize)
         self.viewTitle.font = UIFont(name: FONT_BOLD, size: self.viewTitle.font.pointSize)
         self.callUserProfileService()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRectMake(0, -20, self.view.frame.size.width, 64)
@@ -131,6 +144,17 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
         controller.post = self.selectedPost
         
         }
+        
+        if segue.identifier == "update"{
+        
+        let controller = segue.destinationViewController as! RegisterViewController
+            let defaults = NSUserDefaults.standardUserDefaults()
+            
+            let _user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as!NSData)as!Users
+        controller.isUpdating = true
+        controller.userUpdating = _user
+        
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -145,7 +169,7 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func callUserProfileService(){
-    self.alert.hideView()
+    
     Services.getUserInfoWithId(self.user.user_id, andHandler: { (response) -> Void in
         
         self.user = response as! Users
@@ -221,6 +245,22 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
                 
         }
 
+    }
+    
+    
+    @IBAction func updateTouchUpInside(sender: UIButton) {
+        self.updateButton.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.00, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            
+            self.updateButton.transform = CGAffineTransformMakeScale(1, 1)
+            
+            
+            }) { (Bool) -> Void in
+                
+            self.performSegueWithIdentifier("update", sender: self)
+        }
+        
+       
     }
     /*
     // MARK: - Navigation

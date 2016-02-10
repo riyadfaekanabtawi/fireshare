@@ -51,6 +51,9 @@
 		EB2626441C698E3700A8A7AA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626431C698E3700A8A7AA /* libz.tbd */; };
 		EB2626461C698E4D00A8A7AA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */; };
 		EB2626481C6A1C5200A8A7AA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2626471C6A1C5200A8A7AA /* ProfileViewController.swift */; };
+		EB26264D1C6AA69D00A8A7AA /* update_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EB26264A1C6AA69D00A8A7AA /* update_icon.png */; };
+		EB26264E1C6AA69D00A8A7AA /* update_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB26264B1C6AA69D00A8A7AA /* update_icon@2x.png */; };
+		EB26264F1C6AA69D00A8A7AA /* update_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB26264C1C6AA69D00A8A7AA /* update_icon@3x.png */; };
 		EB34F49A1C3D6AAD004B6AB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F4991C3D6AAD004B6AB2 /* main.m */; };
 		EB34F49D1C3D6AAD004B6AB2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F49C1C3D6AAD004B6AB2 /* AppDelegate.m */; };
 		EB34F4A31C3D6AAD004B6AB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB34F4A11C3D6AAD004B6AB2 /* Main.storyboard */; };
@@ -249,6 +252,9 @@
 		EB2626431C698E3700A8A7AA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EB2626451C698E4D00A8A7AA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EB2626471C6A1C5200A8A7AA /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		EB26264A1C6AA69D00A8A7AA /* update_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = update_icon.png; sourceTree = "<group>"; };
+		EB26264B1C6AA69D00A8A7AA /* update_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "update_icon@2x.png"; sourceTree = "<group>"; };
+		EB26264C1C6AA69D00A8A7AA /* update_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "update_icon@3x.png"; sourceTree = "<group>"; };
 		EB34F4951C3D6AAD004B6AB2 /* fireshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fireshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB34F4991C3D6AAD004B6AB2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB34F49B1C3D6AAD004B6AB2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -701,6 +707,9 @@
 				EB0490B11C6117BF00FA53C8 /* backWriteBig@2x.png */,
 				EB0490B21C6117BF00FA53C8 /* backWriteBig@3x.png */,
 				EB0490A61C61178F00FA53C8 /* iconSendWrite.png */,
+				EB26264A1C6AA69D00A8A7AA /* update_icon.png */,
+				EB26264B1C6AA69D00A8A7AA /* update_icon@2x.png */,
+				EB26264C1C6AA69D00A8A7AA /* update_icon@3x.png */,
 				EB0490A71C61178F00FA53C8 /* iconSendWrite@2x.png */,
 				EB0490A81C61178F00FA53C8 /* iconSendWrite@3x.png */,
 				EB0490A91C61178F00FA53C8 /* user.png */,
@@ -889,6 +898,7 @@
 				EB98482B1C6150F9008BC7E6 /* icon_reload@2x.png in Resources */,
 				EB2626121C6917FD00A8A7AA /* heartOn@3x.png in Resources */,
 				EB76D1171C458411003E4732 /* fire.png in Resources */,
+				EB26264D1C6AA69D00A8A7AA /* update_icon.png in Resources */,
 				EBCA1D401C638A6700ED705C /* fire_fill.png in Resources */,
 				EB34F4FF1C3D6B30004B6AB2 /* .gitignore in Resources */,
 				EBCA1D421C638A6700ED705C /* fire_fill@3x.png in Resources */,
@@ -938,6 +948,7 @@
 				EB26260E1C6917FD00A8A7AA /* heartOff@2x.png in Resources */,
 				EBFCCE8A1C59457200095B58 /* icon_refresh_top@2x.png in Resources */,
 				EBCA1D301C6387EF00ED705C /* iconDenunciarOn@3x.png in Resources */,
+				EB26264F1C6AA69D00A8A7AA /* update_icon@3x.png in Resources */,
 				EB76D1071C4558D1003E4732 /* Icon-40.png in Resources */,
 				EB34F4A51C3D6AAD004B6AB2 /* Assets.xcassets in Resources */,
 				EB0490AB1C61178F00FA53C8 /* iconSendWrite.png in Resources */,
@@ -997,6 +1008,7 @@
 				EB76D11D1C458470003E4732 /* iconMenu.png in Resources */,
 				EB76D11E1C458470003E4732 /* iconMenu@2x.png in Resources */,
 				EB2626111C6917FD00A8A7AA /* heartOn@2x.png in Resources */,
+				EB26264E1C6AA69D00A8A7AA /* update_icon@2x.png in Resources */,
 				EB34F4A31C3D6AAD004B6AB2 /* Main.storyboard in Resources */,
 				EB76D10D1C4558D1003E4732 /* Icon-76@2x.png in Resources */,
 				EBCA1D2B1C6387EF00ED705C /* iconDenunciarOff.png in Resources */,

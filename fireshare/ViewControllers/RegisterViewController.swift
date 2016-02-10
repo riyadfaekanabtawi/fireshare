@@ -12,6 +12,7 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
    
     let imagePicker = UIImagePickerController()
     @IBOutlet var user_avatar: UIImageView!
+    var isUpdating = false
     @IBOutlet var avatar_placeholder: UIImageView!
     @IBOutlet var user_name_text_field: UITextField!
     @IBOutlet var user_email_text_field: UITextField!
@@ -19,25 +20,46 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
     @IBOutlet var user_password_confirmation_text_field: UITextField!
     @IBOutlet var registerUIButton: UIView!
     @IBOutlet var registerLabel: UILabel!
+    @IBOutlet var goBackButton: UIButton!
+    
     var alert:SCLAlertView!
+    var userUpdating:Users!
  
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
-        let tracker  = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value:"Vista Registro")
-        let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
-        tracker.send(build)
+     
         
         
+        if self.isUpdating{
+            let tracker  = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value:"Vista Actualizar Info")
+            let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+            tracker.send(build)
+            self.user_avatar.sd_setImageWithURL(NSURL(string: self.userUpdating.avatar_url.stringByReplacingOccurrencesOfString("original", withString: "small", options: NSStringCompareOptions.LiteralSearch, range: nil)))
+            self.user_email_text_field.text = self.userUpdating.email
+            self.user_name_text_field.text = self.userUpdating.name
+            self.user_password_text_field.placeholder = NSLocalizedString("password", comment: "")
+            self.user_password_confirmation_text_field.placeholder = NSLocalizedString("confirm password", comment: "")
+            self.registerLabel.text = NSLocalizedString("Update", comment: "")
+        }else{
+            let tracker  = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value:"Vista Registro")
+            let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
+            tracker.send(build)
+            
+            self.user_email_text_field.text = ""
+            self.user_name_text_field.text = ""
+            self.user_email_text_field.placeholder = NSLocalizedString("email", comment: "")
+            self.user_name_text_field.placeholder = NSLocalizedString("username", comment: "")
+            self.user_password_text_field.placeholder = NSLocalizedString("password", comment: "")
+            self.user_password_confirmation_text_field.placeholder = NSLocalizedString("confirm password", comment: "")
+            self.registerLabel.text = NSLocalizedString("Register", comment: "")
         
-        self.user_email_text_field.placeholder = NSLocalizedString("email", comment: "")
-        self.user_name_text_field.placeholder = NSLocalizedString("username", comment: "")
-        self.user_password_text_field.placeholder = NSLocalizedString("password", comment: "")
-        self.user_password_confirmation_text_field.placeholder = NSLocalizedString("confirm password", comment: "")
-        self.registerLabel.text = NSLocalizedString("Register", comment: "")
+        }
+        
         
         
         imagePicker.delegate = self
@@ -135,7 +157,14 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
             
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
-            self.alert.showError(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("You have to fill all the fields and choose a profile picturre to finish Registration",comment:""))
+            
+            if self.isUpdating{
+             self.alert.showError(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("You have to type iin your password and confirm it befor updating.",comment:""))
+            }else{
+             self.alert.showError(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("You have to fill all the fields and choose a profile picturre to finish Registration",comment:""))
+            
+            }
+           
         
         }else{
             
@@ -152,32 +181,76 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
                     device_token = "0"
                     
                 }
-                
-                Services.RegisterUserWithUsername(self.user_name_text_field.text, andPassword: self.user_password_text_field.text, andPasswordConfirmation: self.user_password_confirmation_text_field.text, andEmailAddress: self.user_email_text_field.text, andPicture: base64String, andDeviceToken:device_token, andHandler: { (response) -> Void in
-                    let tracker = GAI.sharedInstance().defaultTracker
-                    
-                    tracker.send(GAIDictionaryBuilder.createEventWithCategory("Aunthentication", action: "Register", label: "Register", value: nil).build() as [NSObject : AnyObject])
-                    
-                    self.user_email_text_field.text = ""
-                    self.user_name_text_field.text = ""
-                    self.user_password_confirmation_text_field.text = ""
-                    self.user_password_text_field.text = ""
-                    self.performSegueWithIdentifier("home", sender: self)
-                  
-                    
-                    }, orErrorHandler: { (err) -> Void in
+                if self.isUpdating{
+                    Services.UpdateUserWithUsername(self.user_name_text_field.text, andPassword: self.user_password_text_field.text, andPasswordConfirmation: self.user_password_confirmation_text_field.text, andEmailAddress: self.user_email_text_field.text, andPicture: base64String, andDeviceToken:device_token, andID:self.userUpdating.user_id,andHandler: { (response) -> Void in
+                        let tracker = GAI.sharedInstance().defaultTracker
                         
+                        tracker.send(GAIDictionaryBuilder.createEventWithCategory("Aunthentication", action: "Update", label: "Update", value: nil).build() as [NSObject : AnyObject])
+                        
+                        self.user_email_text_field.text = ""
+                        self.user_name_text_field.text = ""
+                        self.user_password_confirmation_text_field.text = ""
+                        self.user_password_text_field.text = ""
+                        self.navigationController?.popViewControllerAnimated(true)
+                        
+                        
+                        }, orErrorHandler: { (err) -> Void in
+                            
                       
-                   
+                            
+                    })
+                }else{
+                    Services.RegisterUserWithUsername(self.user_name_text_field.text, andPassword: self.user_password_text_field.text, andPasswordConfirmation: self.user_password_confirmation_text_field.text, andEmailAddress: self.user_email_text_field.text, andPicture: base64String, andDeviceToken:device_token, andHandler: { (response) -> Void in
                         
-                        self.alert = SCLAlertView()
-                        self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                        if ((response as? String) != nil){
+                            self.alert = SCLAlertView()
+                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                            
+                            self.alert.hideWhenBackgroundViewIsTapped = true
+                            self.alert.showCloseButton = false
+                            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("A user with the same email already exists, please try another email",comment:""))
                         
-                        self.alert.hideWhenBackgroundViewIsTapped = true
-                        self.alert.showCloseButton = false
-                        self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("A user with the same email already exists, please try another email",comment:""))
+                        }else{
                         
-                })
+                            let tracker = GAI.sharedInstance().defaultTracker
+                            
+                            tracker.send(GAIDictionaryBuilder.createEventWithCategory("Aunthentication", action: "Register", label: "Register", value: nil).build() as [NSObject : AnyObject])
+                            
+                            
+                            let defaults = NSUserDefaults.standardUserDefaults()
+                            
+                            let user = response as! Users
+                            
+                            let dataUser = NSKeyedArchiver.archivedDataWithRootObject(user)
+                            
+                            defaults.setObject(dataUser, forKey: "user_main")
+                            
+                            defaults.synchronize()
+                            self.user_email_text_field.text = ""
+                            self.user_name_text_field.text = ""
+                            self.user_password_confirmation_text_field.text = ""
+                            self.user_password_text_field.text = ""
+                            self.performSegueWithIdentifier("home", sender: self)
+                        }
+                      
+                        
+                        
+                        }, orErrorHandler: { (err) -> Void in
+                            
+                            
+                            
+                            
+                            self.alert = SCLAlertView()
+                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                            
+                            self.alert.hideWhenBackgroundViewIsTapped = true
+                            self.alert.showCloseButton = false
+                            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("A user with the same email already exists, please try another email",comment:""))
+                            
+                    })
+                
+                }
+             
 
             
             }else{
@@ -233,7 +306,18 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
     
     @IBAction func goBackTouchUpInside(sender: UIButton) {
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.goBackButton.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.00, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            
+            self.goBackButton.transform = CGAffineTransformMakeScale(1, 1)
+            
+            
+            }) { (Bool) -> Void in
+                
+                self.navigationController?.popViewControllerAnimated(true)
+                
+        }
         
     }
     

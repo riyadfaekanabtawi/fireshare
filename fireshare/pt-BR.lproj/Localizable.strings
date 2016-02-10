@@ -48,11 +48,14 @@
 "%@ phrases" = "%@ frases";
 "0 characters" = "0 letras";
 
-"Tap to refresh" = "Toca para reintentar";
+"Tap to refresh" = "Toque para atualizar";
+"Update" = "Atualizar";
+"You have to type iin your password and confirm it befor updating." = "Você tem que escrever sua senha e confirma-la para que assim se atualize sua informação.";
 
-"AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" = "EN ESTOS MOMENTOS NO PODEMOS CARGAR LOS POST";
+"Pull to refresh" = "Puxe para atualizar";
+"AT THIS MOMENT WE ARE UNABLE TO LOAD ANY POSTS" = "NESTE MOMENTO NÃO CONSEGUIMOS CARREGAR NEHUM POST";
 
-"OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO";
+"OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OOPS, PARECE QUE TEMOS UM CURTO CIRCUITO";
 
 
 "Exit FireShare" = "Sair de FireShare";
@@ -84,22 +87,32 @@
 "Register" = "Registro";
 
 
-"%@ sec ago" = "Faz %@ seg";
-"%@ min ago" = "Faz %@ min";
-"%@ hs ago" = "Faz %@ hs";
-"%@ days ago" = "Faz %@ días";
+"Just now" = "Faz uns instantes";
+"%.0f min ago" = "Faz %.0f min";
+"%.0f hs ago" = "Faz %.0f hs";
+"%.0f days ago" = "Faz %.0f días";
+
+"%.0f weeks" = "%@ semanas";
 
 
-
+"Cancel" = "Cancelar";
 "Are you sure you want to denounce %@ for posting: '%@' ?" = "Você tem certeza que quer denunciar a %@ por postear: '%@'?";
 
 "You have succesfully denounced %@ for posting: '%@'" = "Você denunció satisfatoriamente a %@ por postear: '%@'";
+
+
+"Username does not exist. Please try another one or register.." = "O nome de usuario não existe, tente com utro o registre-se.";
+
+"Wrong username or password. Please try again." = "Nome de usuario ou senha incorretos, tente novamente.";
+
 
 "Are you sure you want to denounce %@ for commenting: '%@' ?" = "Você tem certeza que quer denunciar a %@ por comentar: '%@'?";
 
 "You have succesfully denounced %@ for commenting: '%@' ?" = "Você denunció satisfatoriamente a %@ por comentar: '%@'";
 
+"New Version" = "Nova Verção";
 
+"A new version of this app is available" = "A uma nova verção desste app disponivel";
 
 "Denounce" = "Denunciar";
 

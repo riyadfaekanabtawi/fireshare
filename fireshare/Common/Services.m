@@ -21,7 +21,7 @@
     
     
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@posts",BASE_URL,scope]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@posts?address=%@",BASE_URL,scope]];
     
     
     [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
@@ -115,6 +115,29 @@
         errorHandler(err);
     }];
 }
+
++(void)getVersionWithHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler{
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/getVersion",BASE_URL]];
+    
+    
+    [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
+        
+        
+        
+        
+        
+        handler(streamsData);
+        
+    } orErrorHandler:^(NSError *err) {
+        
+        errorHandler(err);
+        
+        
+    }];
+    
+}
+
 
 +(void)getUserInfoWithId:(NSNumber *)user_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
     
@@ -318,8 +341,54 @@
     
     [manager POST:[NSString stringWithFormat:@"%@user/register",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        if ([responseObject objectForKey:@"Result"]){
         
-        Users *user = [[Users alloc] initWithDictionary:[responseObject objectForKey:@"user"]];
+        handler(@"Error");
+        }else{
+            Users *user = [[Users alloc] initWithDictionary:responseObject];
+            
+            
+            handler(user);
+        
+        }
+       
+        
+        
+        
+        
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
+    }];
+}
+
+
++(void)UpdateUserWithUsername:(NSString *)user_name andPassword:(NSString *)password andPasswordConfirmation:(NSString *)password_confirmation andEmailAddress:(NSString *)email andPicture:(NSString *)picture andDeviceToken:(NSString *)device_token andID:(NSNumber *)user_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    int i = arc4random() % 1000;
+    NSNumber *number = [NSNumber numberWithInt:i];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *p = @{@"user":@{@"id":user_id,@"email":email,@"name" : user_name,@"password" : password,@"password_confirmation":password_confirmation,@"device_token":[defaults objectForKey:@"tokenPush"]},@"image":@{@"id" :number,@"created_at" :[NSDate date],@"updated_at" :[NSDate date],@"image_url" :picture,@"filename" :[NSString stringWithFormat:@"User-%@.jpg",number],@"content_type" :@"image/jpg"}};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    
+    [manager POST:[NSString stringWithFormat:@"%@user/update",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        Users *user = [[Users alloc] initWithDictionary:responseObject];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         NSData *user_data = [NSKeyedArchiver archivedDataWithRootObject:user];
@@ -402,11 +471,11 @@
         
         
         
-        Posts *post = [[Posts alloc] initWithDictionary:responseObject];
+        Comments *comment = [[Comments alloc] initWithDictionary:responseObject];
         
         
         
-        handler(post);
+        handler(comment);
         
         
         

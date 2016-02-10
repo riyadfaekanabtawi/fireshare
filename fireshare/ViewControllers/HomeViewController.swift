@@ -11,10 +11,10 @@ import CoreLocation
 class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate {
 
     var locationManager = CLLocationManager()
-    var posts_array:[Posts] = []
+    var posts_array:[AnyObject] = []
     var selectedUser:Users!
     @IBOutlet var posts_tableView: UITableView!
-
+    @IBOutlet var sigoutButton: UIButton!
     var alert = SCLAlertView()
     var LatitudeString:String!
     var LongitudeString:String!
@@ -27,7 +27,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
      @IBOutlet var navView: UIImageView!
     @IBOutlet var frase_text_field: UITextView!
     var selectedPost:Posts!
-   
+   var refreshControl:UIRefreshControl!
     override func viewDidLoad() {
         
         let tracker  = GAI.sharedInstance().defaultTracker
@@ -35,10 +35,12 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
         tracker.send(build)
         
-        
-        
-       self.count_caracterrsLabel.text = NSLocalizedString("100 characters", comment:"")
-        self.frase_text_field.text = NSLocalizedString("Write your phrase here...", comment:"")
+        self.refresh()
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Pull to refresh", comment: ""))
+        self.refreshControl.addTarget(self, action: "callhomeService", forControlEvents: UIControlEvents.ValueChanged)
+        self.posts_tableView.addSubview(refreshControl)
+     
         
         self.count_caracterrsLabel.font = UIFont(name: FONT_BOLD_ITALIC, size: self.count_caracterrsLabel.font.pointSize)
 
@@ -46,30 +48,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         self.user_main_avatar.layer.masksToBounds = true
         self.user_main_name.font = UIFont(name: FONT_BOLD, size: self.user_main_name.font.pointSize)
         self.frase_text_field.font = UIFont(name: FONT_LIGHT, size: self.frase_text_field.font!.pointSize)
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
-
-        
-     
-        
-        self.user_main_avatar.image = UIImage(named: "user.png")
-        self.user_main_avatar.sd_setImageWithURL(NSURL(string: user.avatar_url)) { (image, err, SDImageCacheType, url) -> Void in
-            if (image != nil){
-                
-                self.user_main_avatar.image = image
-                
-            }else{
-                self.user_main_avatar.image = UIImage(named: "user.png")
-            }
-            
-            
-            
-        }
-
-        
-        
-        self.user_main_name.text = user.name
+       
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
        
@@ -97,15 +76,46 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
 
        
-      self.callhomeService()
+  
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.count_caracterrsLabel.text = NSLocalizedString("100 characters", comment:"")
+        self.frase_text_field.text = NSLocalizedString("Write your phrase here...", comment:"")
+        self.refresh()
+        
+            }
+    
+    
+    func refresh(){
+    
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
+        
+        
+        
+        
+        self.user_main_avatar.image = UIImage(named: "user.png")
+        self.user_main_avatar.sd_setImageWithURL(NSURL(string: user.avatar_url)) { (image, err, SDImageCacheType, url) -> Void in
+            if (image != nil){
+                
+                self.user_main_avatar.image = image
+                
+            }else{
+                self.user_main_avatar.image = UIImage(named: "user.png")
+            }
+            
+            
+            
+        }
+        
+        
+        
+        self.user_main_name.text = user.name
         self.callhomeService()
+
     }
-    
-    
-    
  
   
   
@@ -172,6 +182,8 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                             let pm = placemarks![0]
                             print(pm.locality)
                             Services.createPostForUser(user.user_id, andTitleOfPost: self.frase_text_field.text + "...", andAdress: pm.locality! + ", " + pm.country!, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude),andCountry:pm.country, andHandler: { (response) -> Void in
+                                
+                                
                                 let tracker = GAI.sharedInstance().defaultTracker
                                 
                                 tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Create Post", label: "Create Post", value: nil).build() as [NSObject : AnyObject])
@@ -180,7 +192,24 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                                 self.frase_text_field.textColor = UIColor(red: 217.0/255.0, green: 217.0/255.0, blue: 217.0/255.0, alpha: 1.0)
                                 self.frase_text_field.resignFirstResponder()
                                 self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
-                                self.callhomeService()
+                                
+                              
+                                
+                                
+                              //  let arrayOfPosts = self.posts_array
+                                
+                                let post = response as! Posts
+                                
+                                let arrayMutable = NSMutableArray()
+                                arrayMutable.addObject(post)
+                                arrayMutable.addObjectsFromArray(self.posts_array)
+                                
+                                var array = [AnyObject]()
+                                
+                                array = arrayMutable as [AnyObject]
+                                self.posts_array = array
+                                
+                                self.posts_tableView.reloadData()
                                 }, orErrorHandler: { (err) -> Void in
                                     
                                     
@@ -261,7 +290,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("home", forIndexPath: indexPath) as! HomeTableViewCell
         
         cell.delegate = self
-        cell.displayPost(self.posts_array[indexPath.row], atindex: indexPath)
+        cell.displayPost(self.posts_array[indexPath.row] as! Posts, atindex: indexPath)
   
      
         return cell
@@ -270,8 +299,10 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let post = self.posts_array[indexPath.row] as! Posts
         
-        if self.posts_array[indexPath.row].comments.count != 0{
+        
+        if post.comments.count != 0{
             
             return 260
         }else{
@@ -282,8 +313,8 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
      
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        self.selectedPost = self.posts_array[indexPath.row]
+  
+        self.selectedPost = self.posts_array[indexPath.row]  as! Posts
      
         self.performSegueWithIdentifier("postDetail", sender: self)
         
@@ -326,12 +357,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         }
         
         if (currentLocation != nil){
-            let loader = SBTVLoaderView()
-            
-            let window = UIApplication.sharedApplication().keyWindow
-            let sub =   (window?.subviews[0])! as UIView
-            
-            Functions.fillContainerView(sub, withView: loader)
+           
             let longitude :CLLocationDegrees = currentLocation.coordinate.longitude
             let latitude :CLLocationDegrees = currentLocation.coordinate.latitude
             
@@ -358,24 +384,28 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                         self.frase_text_field.resignFirstResponder()
                         self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
                         if self.posts_array.count != 0{
+                            self.refreshControl.endRefreshing()
                             self.posts_tableView.reloadData()
                             
                         }
                         
-                        loader.removeFromSuperview()
+                      
                         }) { (err) -> Void in
-                            
+                            self.refreshControl.endRefreshing()
+                            self.posts_tableView.reloadData()
                             self.showError()
                             
                     }                    
                 }
                 else {
-                     loader.removeFromSuperview()
+                     self.showError()
+                    self.refreshControl.endRefreshing()
+                    self.posts_tableView.reloadData()
                 }
             })
             
         }else{
-            
+            self.refreshControl.endRefreshing()
             self.alert = SCLAlertView()
             self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
             
@@ -391,6 +421,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     }
     
     func showError(){
+        self.refreshControl.endRefreshing()
         self.alert = SCLAlertView()
         self.alert.addButton("Tap to refresh", target:self, selector:Selector("callhomeService"))
         
@@ -414,6 +445,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
     }
 
+
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         
@@ -428,7 +460,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
       
-        
+       
         let currentCharacterCount = textView.text?.characters.count ?? 0
         if (range.length + range.location > currentCharacterCount){
             return false
@@ -453,21 +485,35 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
             self.frase_text_field.textColor = UIColor(red: 74.0/255.0, green: 74.0/255.0, blue: 74.0/255.0, alpha: 1.0)
             self.count_caracterrsLabel.text = NSLocalizedString("\(variable) characters",comment:"")
         }
+        
+        if text == "\n"{
+            
+            textView.text = NSLocalizedString("Write your phrase here...", comment:"")
+            self.count_caracterrsLabel.text = NSLocalizedString("100 characters",comment:"")
+            self.frase_text_field.textColor = UIColor(red: 217.0/255.0, green: 217.0/255.0, blue: 217.0/255.0, alpha: 1.0)
+            textView.resignFirstResponder()
+        }
         return newLength <= 100
         
     }
     
     
     @IBAction func logoutTouchUpInside(sender: UIButton) {
-        
-        
-        self.alert = SCLAlertView()
-        self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("logout"))
-        self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarAlertLogout"))
-          self.alert.hideWhenBackgroundViewIsTapped = true
-         self.alert.showCloseButton = false
-        self.alert.showWarning(NSLocalizedString("Exit FireShare",comment:""), subTitle: NSLocalizedString("Are you sure you want to logout?",comment:""))
-
+        self.sigoutButton.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.00, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            
+            self.sigoutButton.transform = CGAffineTransformMakeScale(1, 1)
+      
+}) { (Bool) -> Void in
+    
+    self.alert = SCLAlertView()
+    self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("logout"))
+    self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarAlertLogout"))
+    self.alert.hideWhenBackgroundViewIsTapped = true
+    self.alert.showCloseButton = false
+    self.alert.showWarning(NSLocalizedString("Exit FireShare",comment:""), subTitle: NSLocalizedString("Are you sure you want to logout?",comment:""))
+    
+     }
 }
 
     func logout(){
@@ -476,7 +522,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
         tracker.send(GAIDictionaryBuilder.createEventWithCategory("Authentication", action: "Logout", label: "Logout", value: nil).build() as [NSObject : AnyObject])
         let defaults = NSUserDefaults.standardUserDefaults()
-        
+        defaults.removeObjectForKey("DATE_LOGIN")
         defaults.removeObjectForKey("user_main")
         defaults.synchronize()
         self.navigationController?.popToRootViewControllerAnimated(true)

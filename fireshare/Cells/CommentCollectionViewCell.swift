@@ -23,6 +23,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
     @IBOutlet var trashIcon_width: NSLayoutConstraint!
     var alert = SCLAlertView()
     @IBOutlet var unlikeButton: UIButton!
+    @IBOutlet var denounceButton: UIButton!
      @IBOutlet var fireIcon_width: NSLayoutConstraint!
     @IBOutlet var timeTrailing: NSLayoutConstraint!
     @IBOutlet var comment_content: UILabel!
@@ -85,35 +86,31 @@ class CommentCollectionViewCell: UICollectionViewCell {
         }
      
         if ( self.date_label != nil){
-        if comment.hours_since.integerValue <= 0 && comment.minutes_since.integerValue <= 0 && comment.seconds_since.integerValue > 0{
-            
-            self.date_label.text = String(format: NSLocalizedString("%@ sec ago", comment: ""), comment.seconds_since)
-            
-            
-        }
-        
-        if comment.hours_since.integerValue <= 0 && comment.minutes_since.integerValue > 0 && comment.seconds_since.integerValue > 0{
-            
-            self.date_label.text = String(format: NSLocalizedString("%@ min ago", comment: ""), comment.minutes_since)
-            
-        }
-        
-        
-        if comment.hours_since.integerValue > 0 && comment.minutes_since.integerValue > 0 && comment.seconds_since.integerValue > 0{
-            
-            
-            
-            self.date_label.text = String(format: NSLocalizedString("%@ hs ago", comment: ""), comment.hours_since)
-            
-        }
-        
-        if comment.days_since.integerValue > 0 && comment.hours_since.integerValue > 0 && comment.minutes_since.integerValue > 0 && comment.seconds_since.integerValue > 0{
-            
-            
-            
-            self.date_label.text = String(format: NSLocalizedString("%@ days ago", comment: ""), comment.days_since)
-            
-        }
+            if  comment.seconds_since < 60{
+                
+                self.date_label.text = String(format: NSLocalizedString("Just now", comment: ""))
+                
+            }else if  comment.minutes_since < 60{
+                
+                self.date_label.text = String(format: NSLocalizedString("%.0f min ago", comment: ""), comment.minutes_since)
+                
+            }else if comment.hours_since < 24{
+                
+                
+                
+                self.date_label.text = String(format: NSLocalizedString("%.0f hs ago", comment: ""), comment.hours_since)
+                
+            }else if  comment.days_since < 7{
+                
+                
+                
+                self.date_label.text = String(format: NSLocalizedString("%.0f days ago", comment: ""), comment.days_since)
+                
+            }else{
+                self.date_label.text = String(format: NSLocalizedString("%.0f weeks", comment: ""), comment.days_since/7)
+                
+            }
+
         
         }
         
@@ -203,7 +200,14 @@ class CommentCollectionViewCell: UICollectionViewCell {
 
     
     @IBAction func denounceTouchUpInside(sender: UIButton) {
-     
+        self.denounceButton.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.00, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            
+            self.denounceButton.transform = CGAffineTransformMakeScale(1, 1)
+            
+            
+            }) { (Bool) -> Void in
         self.alert = SCLAlertView()
         self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("denunciar"))
         self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarDenounce"))
@@ -212,6 +216,10 @@ class CommentCollectionViewCell: UICollectionViewCell {
    
         
         self.alert.showWarning(NSLocalizedString("Denounce",comment:""), subTitle: String(format: NSLocalizedString("Are you sure you want to denounce %@ for commenting: '%@' ?", comment: ""),self.current_comment.user_owner.name ,self.current_comment.comment_content))
+    
+            
+        }
+
         
     }
     

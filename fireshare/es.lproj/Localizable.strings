@@ -17,6 +17,7 @@
 
 "OOPS, IT SEEMS WE HAVE A SHORT CIRCUIT" = "OUCH, PARECE QUE HUBO UN CORTOCIRCUITO";
 
+"Username does not exist. Please try another one or register.." = "El nombre de usuario no existe, intente con otro o regístrate.";
 
 "Failed to get your location." = "Error al obtener su ubicacón";
 
@@ -30,13 +31,15 @@
 
 "A user with the same email already exists, please try another email" = "Un usuario con el mismo email ya existe por favor intente con otra cuenta de email.";
 
+"Wrong username or password. Please try again." = "Nombre de usuario o contraseña incorrectos, intenta nuevamente.";
+
 
 "Your email is not a valid email, please try a proper email address" = "El e-mail elejido no es una dirección valida de email, porfavor intente nuevamente";
 "Yes" =  "Si";
-
+"You have to type iin your password and confirm it befor updating." = "Tienes que escribir tu contraseña y confirmarla para poder actualizar tu información.";
 "Write your phrase here..." = "Escribe tu frase aquí...";
 
-
+"Pull to refresh" = "Estira para refrescar";
 "You have to write something before posting" = "Tienes que escribir algo antes de postear.";
 "%@ phrases" = "%@ frases";
 
@@ -60,13 +63,22 @@
 
 "There was an error while fetching your location. Please try again." = "Hubo un error al encontrar su ubicación. Porfavor intente nuevamente.";
 
-"%@ sec ago" = "Hace %@ sec";
-"%@ min ago" =  "Hace %@ min";
-"%@ hs ago" = "Hace %@ hs";
-"%@ days ago" = "Hace %@ días";
+"Just now" = "Hace unos instantes";
 
+"%.0f min ago" =  "Hace %.0f min";
 
+"%.0f hs ago" = "Hace %.0f hs";
+
+"%.0f days ago" = "Hace %.0f días";
+
+"%.0f weeks" = "%.0f semanas";
+
+"Update" = "Actualizar";
 "Are you sure you want to denounce %@ for posting: '%@' ?" = "Estás seguro que quieres denunciar a %@ por postear: '%@'?";
+"New Version" = "Nueva Versión";
+
+"A new version of this app is available" = "Existe una nueva versión de esta app disponible";
+"Cancel" = "Cancelar";
 
 "You have succesfully denounced %@ for posting: '%@'" = "Has denunciado satisfactoriamente a %@ por postear: '%@'";
 

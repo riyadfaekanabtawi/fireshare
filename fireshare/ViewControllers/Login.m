@@ -13,7 +13,7 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "Services.h"
 
-
+#import "fireshare-Swift.h"
 #import "Functions.h"
 @import CoreLocation;
 
@@ -25,9 +25,10 @@
 
 @implementation Login {
     NSTimer *timer;
+    SCLAlertView *alert;
     NSInteger slideIndex;
     NSArray *slides;
-   
+    NSURL *_appURLLink;
     NSTimer *_faceAnimationTimer;
 }
 
@@ -79,16 +80,74 @@
         return;
     }
     
-    
-    
-    if([defaults objectForKey:@"user_main"]){
-        [self performSegueWithIdentifier:@"home" sender:self];
+    [Services  getVersionWithHandler:^(id data) {
         
-    }
-    
+        
+        _appURLLink = [NSURL URLWithString:[data objectForKey:@"URL_iOS"]];
+        
+        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        NSString *versionWithoutDots = [version stringByReplacingOccurrencesOfString:@"." withString:@""];
+        
+        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        
+        NSNumber * versionOurs = [f numberFromString:versionWithoutDots];
+        
+        
+        
+        
+        NSNumber *remoteVersioon =[f numberFromString:[data objectForKey:@"Version"]];
+        NSInteger v1 = [versionOurs integerValue];
+        NSInteger v2 = [remoteVersioon isEqual:[NSNull null]] ? -1 : [remoteVersioon integerValue];
+        
+        if( v1 < v2 ) {
+            
+            
+          
+         
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New Version", nil)
+                                                              message:NSLocalizedString(@"A new version of this app is available", nil)
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                    otherButtonTitles:NSLocalizedString(@"Update", nil), nil];
+            [message show];
+            return ;
+        }else{
+            
+            
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            NSDate *dateCalledService = [defaults objectForKey:@"DATE_LOGIN"];
+            
+            
+            if ([defaults objectForKey:@"user_main"]){
+                if(![defaults objectForKey:@"DATE_LOGIN"]){
+                    
+              
+                    
+                }else if([[NSDate date] timeIntervalSinceDate:dateCalledService]>=60*24*60*5){
+                   
+                }else{
+                    
+                    [self performSegueWithIdentifier:@"home" sender:self];
+                }
+                
+                
+            }
+            
+        }
+        
+        
+    } orErrorHandler:^(NSError *err) {
+        
+    }];
 
+    
 
 }
+
+        
 
 
 - (BOOL)prefersStatusBarHidden {
@@ -150,21 +209,6 @@
 
 
 
--(void)showLoggedInUI {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if ( [defaults objectForKey:@"equipoFavorito"] != nil ) {
-        [self performSegueWithIdentifier:@"home" sender:self];
-    }
-    else {
-        [self performSegueWithIdentifier:@"seleccion_equipos" sender:self];
-    }
-    
-}
-
-
-
 
 
 
@@ -173,23 +217,10 @@
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return UIInterfaceOrientationMaskLandscape;
-    }else{
-        return UIInterfaceOrientationMaskPortrait;
-        
-    }
-}
-
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
-
-
-
 
 
 - (void)alertView:(UIAlertView *)alertView
@@ -198,13 +229,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         
     }else{
         
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
-                                                    @""]];
+    [[UIApplication sharedApplication] openURL:_appURLLink];
         
         
     }
 }
-
 
 
 
@@ -263,10 +292,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             [self.username resignFirstResponder];
             [self.password resignFirstResponder];
             
-            if ([[responseObject objectForKey:@"Result"] isEqualToString:@"Error"]){
-          
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
-               
+            if ([[responseObject objectForKey:@"Description"] isEqualToString:@"Username does not match password"]){
+                
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong username or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                
                 
                 UIAlertAction* ok = [UIAlertAction
                                      actionWithTitle:@"OK"
@@ -276,15 +306,39 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                          [alert dismissViewControllerAnimated:YES completion:nil];
                                          
                                      }];
-                 [alert addAction:ok];
-                 [self presentViewController:alert animated:YES completion:nil];
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
                 
+                
+    
+                
+                
+             
+                
+            }else if([[responseObject objectForKey:@"Description"] isEqualToString:@"We could not find any users with that name."]){
+            
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Username does not exist. Please try another one or register.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                
+                UIAlertAction* ok = [UIAlertAction
+                                     actionWithTitle:@"OK"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * action)
+                                     {
+                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         
+                                     }];
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+            
+            
             }else{
             
             Users *user = [[Users alloc] initWithDictionary:responseObject];
             
             NSData *user_data = [NSKeyedArchiver archivedDataWithRootObject:user];
             [defaults setObject:user_data forKey:@"user_main"];
+            [defaults setObject:[NSDate date] forKey:@"DATE_LOGIN"];
             [defaults synchronize];
             self.username.text=@"";
             self.password.text=@"";
@@ -295,7 +349,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong username or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
             
             
             UIAlertAction* ok = [UIAlertAction
@@ -333,25 +387,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 {
     
     
-    if ([textField.text isEqualToString:@""])
-    {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Field cannot be empty.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-        UIAlertAction* ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                                 
-                             }];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-          }
-    else
-    {
+ 
         NSInteger nextTag = textField.tag + 1;
         // Try to find next responder
         UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
@@ -362,7 +398,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             // Not found, so remove keyboard.
             [textField resignFirstResponder];
         }
-    }
+    
 
     return NO; // We do not want UITextField to insert line-breaks.
 }
@@ -560,13 +596,19 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)keyboardDidShow:(NSNotification *)notification
 {
     // Assign new frame to your view
+      [UIView animateWithDuration:0.3 animations:^{
     [self.view setFrame:CGRectMake(0,-110,self.view.frame.size.width,self.view.frame.size.height)]; //here taken -20 for example i.e. your view will be scrolled to -20. change its value according to your requirement.
-    
+     }];
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-    [self.view setFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+          [self.view setFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+        
+    }];
+
 }
 
 
