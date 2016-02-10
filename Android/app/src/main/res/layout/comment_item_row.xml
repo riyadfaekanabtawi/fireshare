@@ -43,6 +43,7 @@
         android:layout_toStartOf="@+id/imageView_hot"
         android:ellipsize="end"
         android:gravity="center_vertical"
+        android:maxLength="@integer/max_characters"
         android:maxLines="4"
         android:textColor="#4a4a4a"
         android:textSize="18sp" />

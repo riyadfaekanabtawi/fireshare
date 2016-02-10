@@ -21,13 +21,19 @@ import cz.msebera.android.httpclient.Header;
  */
 public class PostManager {
 
-    public static void createPost(String userId, String text, final ServiceManagerHandler<Post> callback) {
+    public static void create(String userId, String text, final ServiceManagerHandler<Post> callback) {
         if (!text.endsWith("..."))
             text += "...";
 
         RequestParams params = new RequestParams();
         params.put("id", userId);
         params.put("title", text);
+        /*
+        address: (ciudad, pais)
+        latitude:
+        longitude:(doule)
+        country: (pais)
+         */
 
         FireShareRestClient.post("recipe/create", params, new JsonHttpResponseHandler() {
             @Override
@@ -85,9 +91,10 @@ public class PostManager {
         });
     }
 
-    public static void getPost(String postId, final ServiceManagerHandler<Post> callback) {
+    public static void getPost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
         RequestParams params = new RequestParams();
-        params.put("id", postId);
+        params.put("id_post", postId);
+        params.put("id_user", userId);
 
         FireShareRestClient.get("postDetail", params, new JsonHttpResponseHandler() {
             @Override
@@ -160,6 +167,38 @@ public class PostManager {
                     }
                 } else {
                     callback.loaded(new Gson().fromJson(response.toString(), Post.class));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void report(String idPost, final ServiceManagerHandler<Boolean> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id", idPost);
+
+        FireShareRestClient.post("denouncePost", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    try {
+                        if (response.getString("Result").equals("Post has been denounced")) {
+                            callback.loaded(true);
+                        } else {
+                            callback.error("null json");
+                        }
+
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.error("null json");
                 }
             }
 

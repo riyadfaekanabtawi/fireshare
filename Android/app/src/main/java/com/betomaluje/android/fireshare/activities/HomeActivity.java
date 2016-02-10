@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,13 +18,13 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.PostsRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
+import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
 import com.betomaluje.android.fireshare.interfaces.OnPostClicked;
 import com.betomaluje.android.fireshare.models.Post;
 import com.betomaluje.android.fireshare.models.User;
@@ -53,11 +55,11 @@ public class HomeActivity extends AppCompatActivity {
     @Bind(R.id.textView_userName)
     TextView textViewUserName;
 
+    @Bind(R.id.textView_remaining)
+    TextView textViewRemaining;
+
     @Bind(R.id.editText_post)
     EditText editTextPost;
-
-    @Bind(R.id.progressBar)
-    ProgressBar progressBar;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -69,10 +71,12 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton imageButtonSend;
 
     boolean posting = false;
-    private Post selectedPost;
     private ServiceManager serviceManager = ServiceManager.getInstance(HomeActivity.this);
     private User user;
     private PostsRecyclerAdapter adapter;
+    private int totalCharacters;
+
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(HomeActivity.this);
 
         toolbar.setBackgroundResource(R.drawable.left_right_gradient);
         setSupportActionBar(toolbar);
@@ -170,8 +175,25 @@ public class HomeActivity extends AppCompatActivity {
                 .transform(new RoundedTransformation(8, 0))
                 .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
-        BusStation.getBus().register(this);
+        totalCharacters = getResources().getInteger(R.integer.max_characters);
+        editTextPost.addTextChangedListener(mTextEditorWatcher);
+
+        textViewRemaining.setText(String.format(getString(R.string.remaining_characters), totalCharacters));
     }
+
+    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //This sets a textview to the current length
+            int remain = totalCharacters - s.length();
+            textViewRemaining.setText(String.format(getString(R.string.remaining_characters), remain));
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     private class AnimationEndListener implements Animator.AnimatorListener {
 
@@ -254,7 +276,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void fillPosts() {
-        progressBar.setVisibility(View.VISIBLE);
+        loadingDialog.show();
         serviceManager.getPosts(new ServiceManager.ServiceManagerHandler<ArrayList<Post>>() {
             @Override
             public void loaded(ArrayList<Post> data) {
@@ -262,13 +284,15 @@ public class HomeActivity extends AppCompatActivity {
                 adapter = new PostsRecyclerAdapter(HomeActivity.this, data);
                 adapter.setOnPostClicked(onPostClicked);
                 recyclerView.setAdapter(adapter);
-                progressBar.setVisibility(View.GONE);
+                loadingDialog.dismiss();
+                loadingDialog.cancel();
             }
 
             @Override
             public void error(String error) {
                 super.error(error);
-                progressBar.setVisibility(View.GONE);
+                loadingDialog.dismiss();
+                loadingDialog.cancel();
             }
         });
     }
@@ -286,17 +310,10 @@ public class HomeActivity extends AppCompatActivity {
             //ActivityCompat.startActivity(HomeActivity.this, intent, options.toBundle());
             startActivity(intent);
 
-            selectedPost = post;
             //now we send it to the event bus
-            //BusStation.postOnMain(producePost());
             BusStation.postOnMain(produceUser());
         }
     };
-
-    @Produce
-    public Post producePost() {
-        return selectedPost;
-    }
 
     @Produce
     public User produceUser() {
@@ -306,8 +323,13 @@ public class HomeActivity extends AppCompatActivity {
     private void postText() {
         editTextPost.clearFocus();
         posting = true;
+        loadingDialog.show();
 
         String text = editTextPost.getText().toString();
+
+        if (text.length() > totalCharacters) {
+            text = text.substring(0, totalCharacters);
+        }
 
         if (!text.isEmpty()) {
             Log.e("HOME", "Post text");
@@ -320,12 +342,21 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.makeText(HomeActivity.this, "Agregaste tu post!", Toast.LENGTH_SHORT).show();
                     editTextPost.setText("");
 
+                    if (adapter == null) {
+                        ArrayList<Post> temp = new ArrayList<Post>(1);
+                        temp.add(data);
+                        adapter = new PostsRecyclerAdapter(HomeActivity.this, temp);
+                    }
+
                     adapter.addPost(data);
+                    adapter.notifyDataSetChanged();
                     recyclerView.scrollToPosition(0);
 
                     toggleToolbarControls(false);
 
                     posting = false;
+                    loadingDialog.dismiss();
+                    loadingDialog.cancel();
                 }
 
                 @Override
@@ -333,11 +364,15 @@ public class HomeActivity extends AppCompatActivity {
                     super.error(error);
                     Toast.makeText(HomeActivity.this, "Hubo un error agregando tu post. Intenta en unos momentos", Toast.LENGTH_LONG).show();
                     posting = false;
+                    loadingDialog.dismiss();
+                    loadingDialog.cancel();
                 }
             });
         } else {
             Toast.makeText(HomeActivity.this, "Para publicar, tienes que escribir algo", Toast.LENGTH_SHORT).show();
             posting = false;
+            loadingDialog.dismiss();
+            loadingDialog.cancel();
         }
     }
 
@@ -353,8 +388,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
+        BusStation.getBus().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         BusStation.getBus().unregister(this);
+        if (loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+            loadingDialog.cancel();
+        }
     }
 }

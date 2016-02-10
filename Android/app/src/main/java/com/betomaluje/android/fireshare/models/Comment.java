@@ -1,10 +1,10 @@
 package com.betomaluje.android.fireshare.models;
 
+import android.content.Context;
+
+import com.betomaluje.android.fireshare.utils.DateUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import org.joda.time.DateTime;
-import org.joda.time.Days;
 
 /**
  * Created by betomaluje on 1/7/16.
@@ -18,11 +18,11 @@ public class Comment {
     private String text;
     @Expose
     private User user;
-    @Expose
-    private boolean isHot;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+    @SerializedName("voted_string")
+    private String votedString;
 
     public long getId() {
         return id;
@@ -48,14 +48,6 @@ public class Comment {
         this.user = user;
     }
 
-    public boolean isHot() {
-        return isHot;
-    }
-
-    public void setIsHot(boolean isHot) {
-        this.isHot = isHot;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
@@ -64,19 +56,27 @@ public class Comment {
         this.createdAt = createdAt;
     }
 
-    public String getDate() {
-        if (createdAt == null || createdAt.isEmpty())
-            return "";
+    public String getVotedString() {
+        return votedString;
+    }
 
-        int date = Math.abs(Days.daysBetween(new DateTime(), new DateTime(createdAt)).getDays());
+    public void setVotedString(String votedString) {
+        this.votedString = votedString;
+    }
 
-        if (date == 0)
-            return "Hoy";
-        else if (date == 1)
-            return "Hace " + date + " día";
-        else if (date > 1 && date <= 30)
-            return "Hace " + date + " días";
-        else
-            return "El " + new DateTime(createdAt).toString("MM/dd/yyyy");
+    public String getDate(Context context) {
+        return DateUtils.getDate(context, createdAt);
+    }
+
+    public boolean userDidVote() {
+        return !votedString.endsWith("false");
+    }
+
+    public boolean userDidUpVote() {
+        return votedString.endsWith("up");
+    }
+
+    public boolean userDidDownVote() {
+        return votedString.endsWith("down");
     }
 }

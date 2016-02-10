@@ -14,13 +14,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.CommentRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
+import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
+import com.betomaluje.android.fireshare.interfaces.OnCommentClicked;
 import com.betomaluje.android.fireshare.models.Comment;
 import com.betomaluje.android.fireshare.models.Post;
 import com.betomaluje.android.fireshare.models.User;
@@ -48,6 +49,12 @@ public class PostActivity extends AppCompatActivity {
     @Bind(R.id.textView_date)
     TextView textViewDate;
 
+    @Bind(R.id.imageButton_report)
+    ImageButton imageButtonReport;
+
+    @Bind(R.id.imageButton_delete)
+    ImageButton imageButtonDelete;
+
     @Bind(R.id.textView_postText)
     TextView textViewPostText;
 
@@ -56,9 +63,6 @@ public class PostActivity extends AppCompatActivity {
 
     @Bind(R.id.editText_comment)
     EditText editTextComment;
-
-    @Bind(R.id.progressBar)
-    ProgressBar progressBar;
 
     @Bind(R.id.button_send)
     ImageButton buttonSend;
@@ -73,10 +77,12 @@ public class PostActivity extends AppCompatActivity {
     private int mCurrentPosition;
 
     private boolean posting = false;
+    private LoadingDialog loadingDialog;
 
     private Post post;
     private User user;
     private CommentRecyclerAdapter adapter;
+    private ServiceManager serviceManager = ServiceManager.getInstance(PostActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,21 +91,13 @@ public class PostActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_post);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(PostActivity.this);
 
         toolbar.setBackgroundResource(R.drawable.left_right_gradient);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mStartingPosition = 0;
-
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-
-            if (b.containsKey("mStartingPosition"))
-                mStartingPosition = b.getInt("mStartingPosition", 0);
-
-            getPost(b.getString("postId", ""));
-        }
 
         if (savedInstanceState == null) {
             mCurrentPosition = mStartingPosition;
@@ -122,18 +120,44 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        BusStation.getBus().register(this);
+        imageButtonReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceManager.reportPost(String.valueOf(post.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
+                    @Override
+                    public void loaded(Boolean data) {
+                        super.loaded(data);
+                        createToast(getString(R.string.post_report_success));
+                    }
+
+                    @Override
+                    public void error(String error) {
+                        super.error(error);
+                        createToast(getString(R.string.error_report));
+                    }
+                });
+            }
+        });
+
+        imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void postComment() {
         SystemUtils.hideKeyboard(PostActivity.this);
         posting = true;
+        loadingDialog.show();
 
         String text = editTextComment.getText().toString();
 
         if (!text.isEmpty()) {
             Log.e("HOME", "Post comment");
-            ServiceManager.getInstance(PostActivity.this).createComment(String.valueOf(user.getId()), String.valueOf(post.getId()), text, new ServiceManager.ServiceManagerHandler<Comment>() {
+            serviceManager.createComment(String.valueOf(user.getId()), String.valueOf(post.getId()), text, new ServiceManager.ServiceManagerHandler<Comment>() {
                 @Override
                 public void loaded(Comment data) {
                     super.loaded(data);
@@ -147,6 +171,8 @@ public class PostActivity extends AppCompatActivity {
                     }
 
                     posting = false;
+                    loadingDialog.dismiss();
+                    loadingDialog.cancel();
                 }
 
                 @Override
@@ -154,11 +180,15 @@ public class PostActivity extends AppCompatActivity {
                     super.error(error);
                     Toast.makeText(PostActivity.this, "Hubo un error agregando tu post. Intenta en unos momentos", Toast.LENGTH_LONG).show();
                     posting = false;
+                    loadingDialog.dismiss();
+                    loadingDialog.cancel();
                 }
             });
         } else {
             Toast.makeText(PostActivity.this, "Por favor ingresa algo", Toast.LENGTH_SHORT).show();
             posting = false;
+            loadingDialog.dismiss();
+            loadingDialog.cancel();
         }
     }
 
@@ -166,9 +196,9 @@ public class PostActivity extends AppCompatActivity {
         if (postId.isEmpty())
             return;
 
-        progressBar.setVisibility(View.VISIBLE);
+        loadingDialog.show();
 
-        ServiceManager.getInstance(PostActivity.this).getPost(postId, new ServiceManager.ServiceManagerHandler<Post>() {
+        ServiceManager.getInstance(PostActivity.this).getPost(String.valueOf(user.getId()), postId, new ServiceManager.ServiceManagerHandler<Post>() {
             @Override
             public void loaded(Post data) {
                 super.loaded(data);
@@ -183,26 +213,96 @@ public class PostActivity extends AppCompatActivity {
                     textViewUserName.setText(post.getUser().getName());
 
                 if (textViewDate != null)
-                    textViewDate.setText(post.getDate());
+                    textViewDate.setText(post.getDate(PostActivity.this));
 
                 if (textViewPostText != null)
                     textViewPostText.setText(post.getText());
 
                 if (recyclerViewComments != null) {
-                    adapter = new CommentRecyclerAdapter(PostActivity.this, post.getComments());
+                    adapter = new CommentRecyclerAdapter(PostActivity.this, user.getId(), post.getComments(), onCommentClicked);
                     recyclerViewComments.setAdapter(adapter);
                 }
 
-                progressBar.setVisibility(View.GONE);
+                imageButtonReport.setVisibility(View.VISIBLE);
+                imageButtonDelete.setVisibility(data.getUser().getId() == user.getId() ? View.VISIBLE : View.GONE);
+
+                loadingDialog.dismiss();
+                loadingDialog.cancel();
             }
 
             @Override
             public void error(String error) {
                 super.error(error);
 
-                progressBar.setVisibility(View.GONE);
+                loadingDialog.dismiss();
+                loadingDialog.cancel();
             }
         });
+    }
+
+    private OnCommentClicked onCommentClicked = new OnCommentClicked() {
+        @Override
+        public void onCommentClicked(View v, int position, final Comment comment) {
+            switch (v.getId()) {
+                case R.id.imageButton_like:
+                    serviceManager.likeComment(String.valueOf(user.getId()), comment, position, new ServiceManager.ServiceManagerHandler<Comment>() {
+                        @Override
+                        public void loaded(Comment data, int position) {
+                            super.loaded(data);
+                            if (adapter != null) {
+                                adapter.modifyComment(data, position);
+                            }
+                        }
+
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            createToast(getString(R.string.error_like));
+                        }
+                    });
+                    break;
+                case R.id.imageButton_dislike:
+                    serviceManager.dislikeComment(String.valueOf(user.getId()), comment, position, new ServiceManager.ServiceManagerHandler<Comment>() {
+                        @Override
+                        public void loaded(Comment data, int position) {
+                            super.loaded(data);
+                            if (adapter != null) {
+                                adapter.modifyComment(data, position);
+                            }
+                        }
+
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            createToast(getString(R.string.error_dislike));
+                        }
+                    });
+                    break;
+                case R.id.imageButton_report:
+                    serviceManager.reportComment(String.valueOf(comment.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
+                        @Override
+                        public void loaded(Boolean data) {
+                            super.loaded(data);
+                            createToast(getString(R.string.comment_report_success));
+                        }
+
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            //createToast(getString(R.string.error_report));
+                            createToast(getString(R.string.comment_report_success));
+                        }
+                    });
+                    break;
+                case R.id.imageButton_delete:
+
+                    break;
+            }
+        }
+    };
+
+    private void createToast(String message) {
+        Toast.makeText(PostActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Subscribe
@@ -238,8 +338,28 @@ public class PostActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        BusStation.getBus().register(this);
+
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+
+            if (b.containsKey("mStartingPosition")) {
+                mStartingPosition = b.getInt("mStartingPosition", 0);
+            }
+
+            getPost(b.getString("postId", ""));
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         BusStation.getBus().unregister(this);
+        if (loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+            loadingDialog.cancel();
+        }
     }
 }

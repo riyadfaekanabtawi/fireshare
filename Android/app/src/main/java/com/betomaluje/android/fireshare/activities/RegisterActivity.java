@@ -141,13 +141,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Check for a valid password, if the user entered one.
         if ((!TextUtils.isEmpty(password) && !isPasswordValid(password)) || (!TextUtils.isEmpty(password2) && !isPasswordValid(password2))) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
 
         if (!password.equals(password2)) {
-            mPasswordView.setError(getString(R.string.error_matching_password));
+            mPasswordView.setError(getString(R.string.error_wrong_credentials));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -158,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         }

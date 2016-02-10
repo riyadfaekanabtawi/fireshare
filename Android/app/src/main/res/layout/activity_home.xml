@@ -112,15 +112,33 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView_userProfile"
                 android:layout_alignTop="@+id/imageView_userProfile"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@+id/imageView_userProfile"
+                android:layout_toLeftOf="@+id/textView_remaining"
                 android:layout_toRightOf="@+id/imageView_userProfile"
+                android:layout_toStartOf="@+id/textView_remaining"
                 android:gravity="center_vertical"
+                android:text="user"
                 android:textColor="#4a4a4a"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView_userProfile"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/imageView_userProfile"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical"
+                android:text="100 characteres"
+                android:textColor="#4d9b9b9b"
+                android:textStyle="italic" />
 
             <EditText
                 android:id="@+id/editText_post"
@@ -135,6 +153,7 @@
                 android:gravity="top"
                 android:hint="Escribe tu frase aquí"
                 android:imeOptions="actionGo"
+                android:maxLength="@integer/max_characters"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textColorHint="#d9d9d9" />
@@ -150,21 +169,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

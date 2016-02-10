@@ -21,7 +21,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class CommentManager {
 
-    public static void createComment(String userId, String postId, String text, final ServiceManagerHandler<Comment> callback) {
+    public static void create(String userId, String postId, String text, final ServiceManagerHandler<Comment> callback) {
         Map<String, String> user = new HashMap<>();
         user.put("id", userId);
 
@@ -70,24 +70,19 @@ public class CommentManager {
         });
     }
 
-    public static void like(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
+    public static void like(String userId, final Comment comment, final int position, final ServiceManagerHandler<Comment> callback) {
         RequestParams params = new RequestParams();
         params.put("id_user", userId);
-        params.put("id_comment", idComment);
+        params.put("id_comment", comment.getId());
 
         FireShareRestClient.post("likeComment", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                if (response.has("Result")) {
-                    //error
-                    try {
-                        callback.error(response.getString("Description"));
-                    } catch (JSONException e) {
-                        callback.error("null json");
-                    }
-                } else {
-                    callback.loaded(new Gson().fromJson(response.toString(), Comment.class));
+                try {
+                    callback.loaded(new Gson().fromJson(response.toString(), Comment.class), position);
+                } catch (Exception e) {
+                    callback.error("null json");
                 }
             }
 
@@ -99,24 +94,51 @@ public class CommentManager {
         });
     }
 
-    public static void dislike(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
+    public static void dislike(String userId, final Comment comment, final int position, final ServiceManagerHandler<Comment> callback) {
         RequestParams params = new RequestParams();
         params.put("id_user", userId);
-        params.put("id_comment", idComment);
+        params.put("id_comment", comment.getId());
 
         FireShareRestClient.post("dislikeComment", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                try {
+                    callback.loaded(new Gson().fromJson(response.toString(), Comment.class), position);
+                } catch (Exception e) {
+                    callback.error("null json");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void report(String idComment, final ServiceManagerHandler<Boolean> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id", idComment);
+
+        FireShareRestClient.post("denounceComment", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
                 if (response.has("Result")) {
-                    //error
                     try {
-                        callback.error(response.getString("Description"));
+                        if (response.getString("Result").equals("Comment has been denounced")) {
+                            callback.loaded(true);
+                        } else {
+                            callback.error("null json");
+                        }
+
                     } catch (JSONException e) {
                         callback.error("null json");
                     }
                 } else {
-                    callback.loaded(new Gson().fromJson(response.toString(), Comment.class));
+                    callback.error("null json");
                 }
             }
 

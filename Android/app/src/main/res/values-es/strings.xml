@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="comment_like_success">Te gusta este comentario</string>
+    <string name="comment_dislike_success">No te gusta este comentario</string>
+    <string name="comment_report_success">Has reportado este comentario</string>
+
+    <string name="post_like_success">Te gusta este post</string>
+    <string name="post_dislike_success">No te gusta este post</string>
+    <string name="post_report_success">Has reportado este post</string>
+
+    <string name="error_like">Hubo un error al realizar el like</string>
+    <string name="error_dislike">Hubo un error al realizar el dislike</string>
+    <string name="error_report">Hubo un error al reportar esto</string>
+
+</resources>

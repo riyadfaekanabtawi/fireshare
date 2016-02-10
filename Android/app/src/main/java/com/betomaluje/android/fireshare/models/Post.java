@@ -1,10 +1,10 @@
 package com.betomaluje.android.fireshare.models;
 
+import android.content.Context;
+
+import com.betomaluje.android.fireshare.utils.DateUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import org.joda.time.DateTime;
-import org.joda.time.Days;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,6 @@ public class Post {
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-
-    private String date;
 
     public long getId() {
         return id;
@@ -70,22 +68,8 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public String getDate() {
-
-        int date = Math.abs(Days.daysBetween(new DateTime(), new DateTime(createdAt)).getDays());
-
-        if (date == 0)
-            return "Hoy";
-        else if (date == 1)
-            return "Hace " + date + " día";
-        else if (date > 1 && date <= 30)
-            return "Hace " + date + " días";
-        else
-            return "El " + new DateTime(createdAt).toString("MM/dd/yyyy");
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public String getDate(Context context) {
+        return DateUtils.getDate(context, createdAt);
     }
 
     public User getUser() {

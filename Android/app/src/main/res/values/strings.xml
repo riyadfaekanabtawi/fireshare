@@ -10,12 +10,29 @@
     <string name="action_register">regístrate</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_cancel">cancelar</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_matching_password">Both passwords don\'t match</string>
+    <string name="error_wrong_credentials">Wrong email or password. Please try again.</string>
     <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="error_field_required">Field cannot be empty.</string>
+
+    <string name="loading_text">LOADING</string>
+
+    <string name="date_weeks">%d weeks</string>
+    <string name="date_days">%d days ago</string>
+    <string name="date_hours">%d hs ago</string>
+    <string name="date_minutes">%d min ago</string>
+    <string name="date_now">Just now</string>
+
+    <string name="remaining_characters">%d characters</string>
+
+    <string name="comment_like_success">You like this comment</string>
+    <string name="comment_dislike_success">You don’t like this comment</string>
+    <string name="comment_report_success">Report made!</string>
+
+    <string name="post_like_success">You like this post</string>
+    <string name="post_dislike_success">You don’t like this post</string>
+    <string name="post_report_success">Report made!</string>
+
+    <string name="error_like">Hubo un error al realizar el like</string>
+    <string name="error_dislike">Hubo un error al realizar el dislike</string>
+    <string name="error_report">Hubo un error al reportar esto</string>
 </resources>

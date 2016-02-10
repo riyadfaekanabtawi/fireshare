@@ -48,43 +48,55 @@ public class ServiceManager {
     ===============  POSTS ===============
      */
     public void createPost(String userId, String text, final ServiceManagerHandler<Post> callback) {
-        PostManager.createPost(userId, text, callback);
+        PostManager.create(userId, text, callback);
     }
 
     public void getPosts(final ServiceManagerHandler<ArrayList<Post>> callback) {
         PostManager.getPosts(callback);
     }
 
-    public void getPost(String postId, final ServiceManagerHandler<Post> callback) {
-        PostManager.getPost(postId, callback);
+    public void getPost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
+        PostManager.getPost(userId, postId, callback);
     }
 
     public void likePost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
         PostManager.like(userId, postId, callback);
     }
 
-    public void dilikePost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
+    public void dislikePost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
         PostManager.dislike(userId, postId, callback);
+    }
+
+    public void reportPost(String idPost, final ServiceManagerHandler<Boolean> callback) {
+        PostManager.report(idPost, callback);
     }
 
     /*
     ===============  COMMENTS ===============
      */
     public void createComment(String userId, String postId, String text, final ServiceManagerHandler<Comment> callback) {
-        CommentManager.createComment(userId, postId, text, callback);
+        CommentManager.create(userId, postId, text, callback);
     }
 
-    public void likeComment(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
-        CommentManager.like(userId, idComment, callback);
+    public void likeComment(String userId, Comment comment, int position, final ServiceManagerHandler<Comment> callback) {
+        CommentManager.like(userId, comment, position, callback);
     }
 
-    public void dislikeComment(String userId, String idComment, final ServiceManagerHandler<Comment> callback) {
-        CommentManager.dislike(userId, idComment, callback);
+    public void dislikeComment(String userId, Comment comment, int position, final ServiceManagerHandler<Comment> callback) {
+        CommentManager.dislike(userId, comment, position, callback);
+    }
+
+    public void reportComment(String idComment, final ServiceManagerHandler<Boolean> callback) {
+        CommentManager.report(idComment, callback);
     }
 
     public static abstract class ServiceManagerHandler<T> {
 
         public void loaded(T data) {
+
+        }
+
+        public void loaded(T data, int position) {
 
         }
 

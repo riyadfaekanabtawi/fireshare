@@ -108,7 +108,7 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
                 .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
         textViewUserName.setText(post.getUser().getName());
-        textViewDate.setText(post.getDate());
+        textViewDate.setText(post.getDate(context));
         textViewPostText.setText(post.getText());
 
         linearLayoutUsers.removeAllViews();
