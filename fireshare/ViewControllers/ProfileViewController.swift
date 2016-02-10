@@ -197,9 +197,12 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
         self.posts_array = self.user.recipes as! [Posts]
         
         if (self.posts_array.count != 0){
-        
+            self.posts_tableView.hidden = false
             self.posts_tableView.reloadData()
         
+        }else{
+        
+        self.posts_tableView.hidden = true
         }
         
         }) { (err) -> Void in

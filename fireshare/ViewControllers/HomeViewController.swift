@@ -35,7 +35,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]
         tracker.send(build)
         
-        self.refresh()
+     
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Pull to refresh", comment: ""))
         self.refreshControl.addTarget(self, action: "callhomeService", forControlEvents: UIControlEvents.ValueChanged)
@@ -208,7 +208,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                                 
                                 array = arrayMutable as [AnyObject]
                                 self.posts_array = array
-                                
+                                self.posts_tableView.hidden = false
                                 self.posts_tableView.reloadData()
                                 }, orErrorHandler: { (err) -> Void in
                                     
@@ -385,12 +385,13 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                         self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
                         if self.posts_array.count != 0{
                             self.refreshControl.endRefreshing()
+                            self.posts_tableView.hidden = false
                             self.posts_tableView.reloadData()
                             
                         }else{
                             self.alert = SCLAlertView()
                             self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
-                            
+                            self.posts_tableView.hidden = true
                             self.alert.hideWhenBackgroundViewIsTapped = true
                             self.alert.showCloseButton = false
                             self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("It seems there are no posts near you. Be the first to post a new phrase.",comment:""))
