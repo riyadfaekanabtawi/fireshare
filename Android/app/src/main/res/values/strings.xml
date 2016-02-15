@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">FireShare</string>
 
+    <string name="google_app_id">60511707309</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_name">Name</string>

@@ -98,7 +98,7 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
             }
         });
 
-        this.imageWidth = (int) ImageUtils.convertPixelsToDp(200, context.getResources());
+        this.imageWidth = (int) ImageUtils.convertPixelsToDp(120, context.getResources());
     }
 
     public void setDataIntoView(Post post) {

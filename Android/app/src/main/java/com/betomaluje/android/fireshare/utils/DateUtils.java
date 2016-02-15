@@ -5,7 +5,10 @@ import android.content.Context;
 import com.betomaluje.android.fireshare.R;
 
 import org.joda.time.DateTime;
-import org.joda.time.Period;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.Minutes;
+import org.joda.time.Weeks;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -35,14 +38,10 @@ public class DateUtils {
             program = program.minusHours(minus);
         }
 
-        final Period period = new Period(now, program);
-
-        //past program
-
-        int weeksBetween = Math.abs(period.getWeeks());
-        int daysBetween = Math.abs(period.getDays());
-        int hoursBetween = Math.abs(period.getHours());
-        int minutesBetween = Math.abs(period.getMinutes());
+        int weeksBetween = Math.abs(Weeks.weeksBetween(program, now).getWeeks());
+        int daysBetween = Math.abs(Days.daysBetween(program, now).getDays());
+        int hoursBetween = Math.abs(Hours.hoursBetween(program, now).getHours());
+        int minutesBetween = Math.abs(Minutes.minutesBetween(program, now).getMinutes());
 
         String time;
 
@@ -65,5 +64,4 @@ public class DateUtils {
 
         return time;
     }
-
 }

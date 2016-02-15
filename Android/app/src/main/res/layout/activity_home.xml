@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/left_right_gradient"
+                android:gravity="center_horizontal"
                 android:minHeight="?attr/actionBarSize"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
@@ -37,6 +38,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical">
+
+                    <ImageButton
+                        android:id="@+id/imageButton_logout"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@android:color/transparent"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/logout"
+                        android:visibility="visible" />
 
                     <ImageButton
                         android:id="@+id/imageButton_cancel"
@@ -83,6 +101,22 @@
                         android:background="@android:color/transparent"
                         android:src="@mipmap/icon_send"
                         android:visibility="invisible" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton_editProfile"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@android:color/transparent"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/update_user" />
 
                 </RelativeLayout>
 

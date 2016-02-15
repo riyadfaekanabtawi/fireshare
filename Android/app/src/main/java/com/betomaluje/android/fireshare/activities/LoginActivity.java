@@ -25,9 +25,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betomaluje.android.fireshare.R;
+import com.betomaluje.android.fireshare.bus.BusStation;
+import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
+import com.betomaluje.android.fireshare.gcm.RegistrationIntentService;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.services.ServiceManager;
+import com.betomaluje.android.fireshare.utils.SystemUtils;
 import com.betomaluje.android.fireshare.utils.UserPreferences;
+import com.squareup.otto.Subscribe;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A login screen that offers login via email/password.
@@ -40,10 +48,20 @@ public class LoginActivity extends AppCompatActivity {
     public static final String VIEW_TAG_2 = "view2";
     public static final String VIEW_TAG_3 = "view3";
 
-    private EditText mEmailView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+    @Bind(R.id.email)
+    EditText mEmailView;
+
+    @Bind(R.id.password)
+    EditText mPasswordView;
+
+    @Bind(R.id.login_progress)
+    View mProgressView;
+
+    @Bind(R.id.email_login_form)
+    View mLoginFormView;
+
+    private String regId;
+    private LoadingDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +83,27 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        if (!UserPreferences.getInstance().using(LoginActivity.this).isNew()) {
+        regId = UserPreferences.using(LoginActivity.this).getTokenPush();
+
+        if (regId.isEmpty()) {
+            dialog = new LoadingDialog(LoginActivity.this);
+            dialog.show();
+
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        } else {
+            startApp();
+        }
+    }
+
+    private void startApp() {
+        if (!UserPreferences.using(LoginActivity.this).isNew()) {
             Log.e(TAG, "not new user");
 
             //check if we must do login again (after 30 days)
-            if (UserPreferences.getInstance().using(LoginActivity.this).mustLogin()) {
+            if (UserPreferences.using(LoginActivity.this).mustLogin()) {
                 Log.e(TAG, "date expired...so must login");
                 initApp();
             } else {
@@ -85,11 +118,38 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
+    public void getGCMToken(String token) {
+        regId = token;
+
+        UserPreferences.using(LoginActivity.this).saveTokenPush(token);
+        if (!regId.isEmpty()) {
+            dialog.cancel();
+            dialog.dismiss();
+
+            startApp();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BusStation.getBus().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BusStation.getBus().unregister(this);
+
+        if (dialog != null && dialog.isShowing()) {
+            dialog.cancel();
+            dialog.dismiss();
+        }
+    }
+
     private void initApp() {
         // Set up the login form.
-        mEmailView = (EditText) findViewById(R.id.email);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -115,9 +175,6 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
-
-        mLoginFormView = findViewById(R.id.email_login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     private void register() {
@@ -135,6 +192,8 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+        SystemUtils.hideKeyboard(LoginActivity.this);
+
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -174,16 +233,19 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
 
             //do actual login
-            ServiceManager.getInstance(LoginActivity.this).login(email, password, new ServiceManager.ServiceManagerHandler<User>() {
+            ServiceManager.getInstance(LoginActivity.this).login(email, password, regId, new ServiceManager.ServiceManagerHandler<User>() {
                 @Override
                 public void loaded(User data) {
                     super.loaded(data);
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
                 }
 
                 @Override
                 public void error(String error) {
                     super.error(error);
-                    Toast.makeText(LoginActivity.this, "Los datos ingresados no corresponden a nuestros registros", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, R.string.error_wrong_credentials, Toast.LENGTH_LONG).show();
+                    showProgress(false);
                 }
             });
         }

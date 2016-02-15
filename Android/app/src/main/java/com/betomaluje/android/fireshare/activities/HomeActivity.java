@@ -64,6 +64,12 @@ public class HomeActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
+    @Bind(R.id.imageButton_logout)
+    ImageButton imageButtonLogout;
+
+    @Bind(R.id.imageButton_editProfile)
+    ImageButton imageButtonEditProfile;
+
     @Bind(R.id.imageButton_cancel)
     ImageButton imageButtonCancel;
 
@@ -75,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
     private User user;
     private PostsRecyclerAdapter adapter;
     private int totalCharacters;
+    private OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
 
     private LoadingDialog loadingDialog;
 
@@ -109,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
         editTextPost.clearFocus();
         SystemUtils.hideKeyboard(HomeActivity.this);
 
-        user = UserPreferences.getInstance().using(HomeActivity.this).getUser();
+        user = UserPreferences.using(HomeActivity.this).getUser();
 
         editTextPost.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -145,6 +152,16 @@ public class HomeActivity extends AppCompatActivity {
                 if (!posting) {
                     postText();
                 }
+            }
+        });
+
+        imageButtonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserPreferences.using(HomeActivity.this).saveUser("");
+
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                finish();
             }
         });
 
@@ -226,6 +243,18 @@ public class HomeActivity extends AppCompatActivity {
             if (hiding) {
                 mView.setVisibility(View.INVISIBLE);
                 mView2.setVisibility(View.INVISIBLE);
+
+                ObjectAnimator tx1 = ObjectAnimator.ofFloat(imageButtonLogout, View.SCALE_X, 0, 1);
+                ObjectAnimator ty1 = ObjectAnimator.ofFloat(imageButtonLogout, View.SCALE_Y, 0, 1);
+
+                ObjectAnimator tx2 = ObjectAnimator.ofFloat(imageButtonEditProfile, View.SCALE_X, 0, 1);
+                ObjectAnimator ty2 = ObjectAnimator.ofFloat(imageButtonEditProfile, View.SCALE_Y, 0, 1);
+
+                AnimatorSet set = new AnimatorSet();
+                set.playTogether(tx1, ty1, tx2, ty2);
+                set.setDuration(400);
+                set.setInterpolator(overshootInterpolator);
+                set.start();
             }
         }
 
@@ -241,24 +270,14 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void toggleToolbarControls(boolean showControls) {
-        if (!showControls) {
-            //hide them
-            ObjectAnimator tx1 = ObjectAnimator.ofFloat(imageButtonCancel, View.SCALE_X, 1, 0);
-            ObjectAnimator ty1 = ObjectAnimator.ofFloat(imageButtonCancel, View.SCALE_Y, 1, 0);
+    private Animator.AnimatorListener hideControlsListener = new Animator.AnimatorListener() {
+        @Override
+        public void onAnimationStart(Animator animation) {
 
-            ObjectAnimator tx2 = ObjectAnimator.ofFloat(imageButtonSend, View.SCALE_X, 1, 0);
-            ObjectAnimator ty2 = ObjectAnimator.ofFloat(imageButtonSend, View.SCALE_Y, 1, 0);
+        }
 
-            AnimatorSet set = new AnimatorSet();
-            set.playTogether(tx1, ty1, tx2, ty2);
-            set.setDuration(400);
-            set.setStartDelay(200);
-            set.setInterpolator(new OvershootInterpolator());
-            set.addListener(new AnimationEndListener(imageButtonSend, imageButtonCancel, true));
-            set.start();
-        } else {
-            //show them
+        @Override
+        public void onAnimationEnd(Animator animation) {
             ObjectAnimator tx1 = ObjectAnimator.ofFloat(imageButtonCancel, View.SCALE_X, 0, 1);
             ObjectAnimator ty1 = ObjectAnimator.ofFloat(imageButtonCancel, View.SCALE_Y, 0, 1);
 
@@ -269,8 +288,52 @@ public class HomeActivity extends AppCompatActivity {
             set.playTogether(tx1, ty1, tx2, ty2);
             set.setDuration(400);
             set.setStartDelay(200);
-            set.setInterpolator(new OvershootInterpolator());
+            set.setInterpolator(overshootInterpolator);
             set.addListener(new AnimationEndListener(imageButtonSend, imageButtonCancel, false));
+            set.start();
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
+        }
+    };
+
+    private void toggleToolbarControls(boolean showControls) {
+        if (!showControls) {
+            //hide them and show logout
+            ObjectAnimator tx1 = ObjectAnimator.ofFloat(imageButtonCancel, View.SCALE_X, 1, 0);
+            ObjectAnimator ty1 = ObjectAnimator.ofFloat(imageButtonCancel, View.SCALE_Y, 1, 0);
+
+            ObjectAnimator tx2 = ObjectAnimator.ofFloat(imageButtonSend, View.SCALE_X, 1, 0);
+            ObjectAnimator ty2 = ObjectAnimator.ofFloat(imageButtonSend, View.SCALE_Y, 1, 0);
+
+            AnimatorSet set = new AnimatorSet();
+            set.playTogether(tx1, ty1, tx2, ty2);
+            set.setDuration(400);
+            set.setStartDelay(200);
+            set.setInterpolator(overshootInterpolator);
+            set.addListener(new AnimationEndListener(imageButtonSend, imageButtonCancel, true));
+            set.start();
+
+        } else {
+            //show them, hide logout
+            ObjectAnimator tx1 = ObjectAnimator.ofFloat(imageButtonLogout, View.SCALE_X, 1, 0);
+            ObjectAnimator ty1 = ObjectAnimator.ofFloat(imageButtonLogout, View.SCALE_Y, 1, 0);
+
+            ObjectAnimator tx2 = ObjectAnimator.ofFloat(imageButtonEditProfile, View.SCALE_X, 1, 0);
+            ObjectAnimator ty2 = ObjectAnimator.ofFloat(imageButtonEditProfile, View.SCALE_Y, 1, 0);
+
+            AnimatorSet set = new AnimatorSet();
+            set.playTogether(tx1, ty1, tx2, ty2);
+            set.setDuration(400);
+            set.setInterpolator(overshootInterpolator);
+            set.addListener(hideControlsListener);
             set.start();
         }
     }

@@ -10,6 +10,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.joda.time.DateTime;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -20,10 +21,11 @@ import java.util.Map;
  */
 public class UserManager {
 
-    public static void login(final Context context, String name, String password, final ServiceManagerHandler<User> callback) {
+    public static void login(final Context context, String name, String password, String tokenPush, final ServiceManagerHandler<User> callback) {
         RequestParams params = new RequestParams();
+        params.put("email", name);
         params.put("password", password);
-        params.put("name", name);
+        params.put("device_token", tokenPush);
 
         FireShareRestClient.post("user/login", params, new JsonHttpResponseHandler() {
             @Override
@@ -31,10 +33,20 @@ public class UserManager {
                 super.onSuccess(statusCode, headers, json);
 
                 if (json != null) {
-                    UserPreferences.getInstance().using(context).saveUser(json.toString());
+                    if (json.has("Result")) {
+                        //error
+                        try {
+                            callback.error(json.getString("Result"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.error("null json");
+                        }
+                    } else {
+                        UserPreferences.using(context).saveUser(json.toString());
 
-                    Gson gson = new Gson();
-                    callback.loaded(gson.fromJson(json.toString(), User.class));
+                        Gson gson = new Gson();
+                        callback.loaded(gson.fromJson(json.toString(), User.class));
+                    }
                 } else {
                     callback.error("null json");
                 }
@@ -48,14 +60,15 @@ public class UserManager {
         });
     }
 
-    public static void register(final Context context, String email, String name, String password, String passwordConfirmation,
-                         String encodedImage, final ServiceManagerHandler<User> callback) {
+    public static void register(final Context context, String email, String name, String tokenPush, String password, String passwordConfirmation,
+                                String encodedImage, final ServiceManagerHandler<User> callback) {
 
         Map<String, String> user = new HashMap<>();
         user.put("email", email);
         user.put("name", name);
         user.put("password", password);
         user.put("password_confirmation", passwordConfirmation);
+        user.put("device_token", tokenPush);
 
         //now the image
         //generated id
@@ -82,7 +95,7 @@ public class UserManager {
                 super.onSuccess(statusCode, headers, json);
 
                 if (json != null) {
-                    UserPreferences.getInstance().using(context).saveUser(json.toString());
+                    UserPreferences.using(context).saveUser(json.toString());
 
                     Gson gson = new Gson();
                     callback.loaded(gson.fromJson(json.toString(), User.class));
@@ -103,7 +116,7 @@ public class UserManager {
         RequestParams params = new RequestParams();
         params.put("id", userId);
 
-        FireShareRestClient.get("show_user", params, new JsonHttpResponseHandler(){
+        FireShareRestClient.get("show_user", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject json) {
                 super.onSuccess(statusCode, headers, json);

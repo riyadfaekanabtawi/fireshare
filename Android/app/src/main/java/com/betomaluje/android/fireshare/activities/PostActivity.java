@@ -96,6 +96,7 @@ public class PostActivity extends AppCompatActivity {
         toolbar.setBackgroundResource(R.drawable.left_right_gradient);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
 
         mStartingPosition = 0;
 

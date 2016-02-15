@@ -20,21 +20,15 @@ public class UserPreferences {
     private final String USER_PREFS_KEY = "user";
     private final String USER_KEY = "data";
     private final String DATE_KEY = "date";
+    private final String PUSH_TOKEN_KEY = "token_push";
 
-    private Context context;
+    private static Context context;
 
-    private static UserPreferences instance;
+    private static UserPreferences instance = new UserPreferences();
 
-    public static UserPreferences getInstance() {
-        if (instance == null)
-            instance = new UserPreferences();
-
+    public static UserPreferences using(Context context) {
+        UserPreferences.context = context;
         return instance;
-    }
-
-    public UserPreferences using(Context context) {
-        this.context = context;
-        return this;
     }
 
     public void saveUser(String user) {
@@ -57,6 +51,20 @@ public class UserPreferences {
         } else {
             return null;
         }
+    }
+
+    public void saveTokenPush(String token) {
+        SharedPreferences sharedPref = context.getSharedPreferences(USER_PREFS_KEY, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(PUSH_TOKEN_KEY, token);
+        editor.commit();
+    }
+
+    public String getTokenPush() {
+        SharedPreferences sharedPref = context.getSharedPreferences(USER_PREFS_KEY, Context.MODE_PRIVATE);
+
+        return sharedPref.getString(PUSH_TOKEN_KEY, "");
     }
 
     public boolean mustLogin() {

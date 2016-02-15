@@ -31,13 +31,13 @@ public class ServiceManager {
     /*
     ===============  USERS ===============
      */
-    public void login(String name, String password, final ServiceManagerHandler<User> callback) {
-        UserManager.login(context, name, password, callback);
+    public void login(String name, String password, String tokenPush, final ServiceManagerHandler<User> callback) {
+        UserManager.login(context, name, password, tokenPush,  callback);
     }
 
-    public void register(String email, String name, String password, String passwordConfirmation,
+    public void register(String email, String name, String tokenPush, String password, String passwordConfirmation,
                          String encodedImage, final ServiceManagerHandler<User> callback) {
-        UserManager.register(context, email, name, password, passwordConfirmation, encodedImage, callback);
+        UserManager.register(context, email, name, tokenPush, password, passwordConfirmation, encodedImage, callback);
     }
 
     public void getUser(String userId, final ServiceManagerHandler<User> callback) {

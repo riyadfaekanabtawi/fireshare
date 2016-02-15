@@ -27,6 +27,7 @@ import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.services.ServiceManager;
 import com.betomaluje.android.fireshare.utils.ImageUtils;
+import com.betomaluje.android.fireshare.utils.UserPreferences;
 
 import java.io.FileNotFoundException;
 
@@ -185,20 +186,21 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             //do actual login
-            ServiceManager.getInstance(RegisterActivity.this).register(email, name, password, password2, ImageUtils.imageToBase64String(photo), new ServiceManager.ServiceManagerHandler<User>() {
-                @Override
-                public void loaded(User data) {
-                    super.loaded(data);
-                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                    finish();
-                }
+            ServiceManager.getInstance(RegisterActivity.this).register(email, name, UserPreferences.using(RegisterActivity.this).getTokenPush(),
+                    password, password2, ImageUtils.imageToBase64String(photo), new ServiceManager.ServiceManagerHandler<User>() {
+                        @Override
+                        public void loaded(User data) {
+                            super.loaded(data);
+                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                            finish();
+                        }
 
-                @Override
-                public void error(String error) {
-                    super.error(error);
-                    Toast.makeText(RegisterActivity.this, "No te hemos podido registrar. Intenta en unos momentos", Toast.LENGTH_LONG).show();
-                }
-            });
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            Toast.makeText(RegisterActivity.this, "No te hemos podido registrar. Intenta en unos momentos", Toast.LENGTH_LONG).show();
+                        }
+                    });
         }
     }
 
