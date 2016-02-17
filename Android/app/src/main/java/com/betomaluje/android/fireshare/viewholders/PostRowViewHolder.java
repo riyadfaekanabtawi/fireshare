@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.betomaluje.android.fireshare.R;
+import com.betomaluje.android.fireshare.activities.ProfileActivity;
 import com.betomaluje.android.fireshare.adapters.CommentPagerAdapter;
 import com.betomaluje.android.fireshare.interfaces.OnPostClicked;
 import com.betomaluje.android.fireshare.models.Comment;
@@ -65,7 +66,7 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
     private int totalToDisplay = 3, actualLength;
     private ArrayList<View> views;
 
-    public PostRowViewHolder(Context context, final View itemView, OnPostClicked onPostClicked) {
+    public PostRowViewHolder(final Context context, final View itemView, OnPostClicked onPostClicked) {
         super(itemView);
         this.context = context;
         if (onPostClicked != null)
@@ -101,7 +102,7 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
         this.imageWidth = (int) ImageUtils.convertPixelsToDp(120, context.getResources());
     }
 
-    public void setDataIntoView(Post post) {
+    public void setDataIntoView(final Post post) {
         this.post = post;
         Picasso.with(context).load(post.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                 .transform(new RoundedTransformation(8, 0))
@@ -154,6 +155,13 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
             divider2.setVisibility(View.GONE);
         }
         viewPagerComments.setClipToPadding(false);
+
+        imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileActivity.launchActivity(context, String.valueOf(post.getUser().getId()));
+            }
+        });
     }
 
     private void setUsers(ArrayList<Comment> comments) {
@@ -183,10 +191,11 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
         }
     }
 
-    private ImageView createImage(Comment comment, int position) {
+    private ImageView createImage(final Comment comment, int position) {
         ImageView imageView = new ImageView(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imageWidth, imageWidth);
-        params.leftMargin = 8;
+        if (position != 0)
+            params.leftMargin = 8;
         imageView.setLayoutParams(params);
         Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                 .transform(new RoundedTransformation(8, 0))
@@ -196,6 +205,13 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
             ViewCompat.setAlpha(imageView, 1f);
         else
             ViewCompat.setAlpha(imageView, 0.5f);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileActivity.launchActivity(context, String.valueOf(comment.getUser().getId()));
+            }
+        });
 
         views.add(imageView);
 

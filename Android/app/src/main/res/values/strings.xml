@@ -13,6 +13,7 @@
     <string name="error_field_required">Field cannot be empty.</string>
 
     <string name="error_image_problem">There was a problem getting the image. Please try again</string>
+    <string name="error_no_user">There was a problem getting this user\'s info. Please try again</string>
 
     <string name="success_delete">Successfully deleted!</string>
     <string name="error_delete">There was a problem deleting. Please try again.</string>

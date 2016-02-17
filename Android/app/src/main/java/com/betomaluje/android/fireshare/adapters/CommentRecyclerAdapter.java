@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betomaluje.android.fireshare.R;
+import com.betomaluje.android.fireshare.activities.ProfileActivity;
 import com.betomaluje.android.fireshare.interfaces.OnCommentClicked;
 import com.betomaluje.android.fireshare.models.Comment;
 import com.betomaluje.android.fireshare.models.User;
@@ -78,7 +79,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
             imageButtonDelete.setOnClickListener(this);
         }
 
-        public void setDataIntoView(Context context, Comment comment, int position) {
+        public void setDataIntoView(final Context context, final Comment comment, int position) {
             Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                     .transform(new RoundedTransformation(8, 0))
                     .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
@@ -91,6 +92,13 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
             textViewDate.setText(comment.getDate(context));
 
             imageButtonDelete.setVisibility(comment.getUser().getId() == userId ? View.VISIBLE : View.GONE);
+
+            imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ProfileActivity.launchActivity(context, String.valueOf(comment.getUser().getId()));
+                }
+            });
 
             changeButtonColors(comment);
         }

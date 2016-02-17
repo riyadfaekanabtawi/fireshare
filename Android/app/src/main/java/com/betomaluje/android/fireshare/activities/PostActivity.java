@@ -215,14 +215,22 @@ public class PostActivity extends AppCompatActivity {
 
         ServiceManager.getInstance(PostActivity.this).getPost(String.valueOf(user.getId()), postId, new ServiceManager.ServiceManagerHandler<Post>() {
             @Override
-            public void loaded(Post data) {
+            public void loaded(final Post data) {
                 super.loaded(data);
                 post = data;
 
-                if (imageViewUserProfile != null)
+                if (imageViewUserProfile != null) {
                     Picasso.with(PostActivity.this).load(post.getUser().getUserImage())
                             .transform(new RoundedTransformation(8, 0))
                             .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
+
+                    imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ProfileActivity.launchActivity(PostActivity.this, String.valueOf(data.getUser().getId()));
+                        }
+                    });
+                }
 
                 if (textViewUserName != null)
                     textViewUserName.setText(post.getUser().getName());

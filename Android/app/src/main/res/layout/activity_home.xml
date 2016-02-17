@@ -81,7 +81,6 @@
                         android:layout_toRightOf="@+id/imageButton_cancel"
                         android:layout_toStartOf="@+id/imageButton_send"
                         android:gravity="center"
-                        android:orientation="horizontal"
                         android:text="home"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"

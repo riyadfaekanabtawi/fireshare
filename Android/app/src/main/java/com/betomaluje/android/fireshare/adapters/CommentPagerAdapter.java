@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betomaluje.android.fireshare.R;
+import com.betomaluje.android.fireshare.activities.ProfileActivity;
 import com.betomaluje.android.fireshare.models.Comment;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.utils.RoundedTransformation;
@@ -63,11 +64,18 @@ public class CommentPagerAdapter extends PagerAdapter {
 
         ButterKnife.bind(this, itemView);
 
-        Comment comment = comments.get(position);
+        final Comment comment = comments.get(position);
 
         Picasso.with(context).load(comment.getUser().getUserImage(User.IMAGE_TYPE.SMALL))
                 .transform(new RoundedTransformation(8, 0))
                 .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
+
+        imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileActivity.launchActivity(context, String.valueOf(comment.getUser().getId()));
+            }
+        });
 
         textViewUserName.setText(comment.getUser().getName());
         textViewComment.setText(comment.getText());
