@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate {
-
+    
     var locationManager = CLLocationManager()
     var posts_array:[AnyObject] = []
     var selectedUser:Users!
@@ -18,7 +18,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     var alert = SCLAlertView()
     var LatitudeString:String!
     var LongitudeString:String!
-   
+    var loader:SBTVLoaderView!
     var preventAnimation = Set<NSIndexPath>()
      @IBOutlet var user_main_avatar: UIImageView!
     @IBOutlet var user_main_name: UILabel!
@@ -36,8 +36,11 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         tracker.send(build)
         
      
+        self.posts_tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+       
+        
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Pull to refresh", comment: ""))
+        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("", comment: ""))
         self.refreshControl.addTarget(self, action: "callhomeService", forControlEvents: UIControlEvents.ValueChanged)
         self.posts_tableView.addSubview(refreshControl)
      
@@ -342,13 +345,16 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     func callhomeService(){
         
+        
+     
+        
          self.alert.hideView()
-    
+    self.showLoader()
         let locManager = CLLocationManager()
         locManager.requestWhenInUseAuthorization()
-        
+
         var currentLocation = CLLocation!()
-        
+
         if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
                 
@@ -375,39 +381,41 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                 if placemarks!.count > 0 {
                     let pm = placemarks![0]
                     print(pm.locality)
-                    
-                    
-                    Services.getAllPostsforScope(pm.country, andHandler: { (response) -> Void in
-                        
-                        self.hideError()
-                        self.posts_array = response as! [Posts]
-                        self.frase_text_field.resignFirstResponder()
-                        self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
-                        if self.posts_array.count != 0{
-                            self.refreshControl.endRefreshing()
-                            self.posts_tableView.hidden = false
-                            self.posts_tableView.reloadData()
-                            
-                        }else{
-                            self.alert = SCLAlertView()
-                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
-                            self.posts_tableView.hidden = true
-                            self.alert.hideWhenBackgroundViewIsTapped = true
-                            self.alert.showCloseButton = false
-                            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("It seems there are no posts near you. Be the first to post a new phrase.",comment:""))
-                        
-                        }
-                        
-                      
-                        }) { (err) -> Void in
-                            self.refreshControl.endRefreshing()
-                            self.posts_tableView.reloadData()
-                            self.showError()
-                            
-                    }                    
+
+                      Services.getAllPostsforScope(pm.country, andHandler: { (response) -> Void in
+        
+        self.hideError()
+        self.posts_array = response as! [Posts]
+        self.frase_text_field.resignFirstResponder()
+        self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
+        if self.posts_array.count != 0{
+            self.refreshControl.endRefreshing()
+            self.posts_tableView.hidden = false
+            self.posts_tableView.reloadData()
+            
+        }else{
+            self.alert = SCLAlertView()
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+            self.posts_tableView.hidden = true
+            self.alert.hideWhenBackgroundViewIsTapped = true
+            self.alert.showCloseButton = false
+            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("It seems there are no posts near you. Be the first to post a new phrase.",comment:""))
+            
+        }
+        self.hideLoader()
+        
+    }) { (err) -> Void in
+    self.refreshControl.endRefreshing()
+    self.hideLoader()
+    self.posts_tableView.reloadData()
+    self.showError()
+    
+    }
+
                 }
                 else {
-                     self.showError()
+                    self.showError()
+                    self.hideLoader()
                     self.refreshControl.endRefreshing()
                     self.posts_tableView.reloadData()
                 }
@@ -417,14 +425,14 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
             self.refreshControl.endRefreshing()
             self.alert = SCLAlertView()
             self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
-            
+              self.hideLoader()
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
             self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("There was an error while fetching your location. Please try again.",comment:""))
-            
+              self.hideLoader()
         }
         
-        
+
       
     
     }
@@ -567,6 +575,29 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         self.selectedUser = user
         
         self.performSegueWithIdentifier("user", sender: self)
+    
+    }
+    
+    
+    
+    func showLoader(){
+    
+  
+        
+//         self.loader  = SBTVLoaderView.create()
+//        //let frontView = UIApplication.sharedApplication().keyWindow
+//        
+//        
+//        let window = UIApplication.sharedApplication().keyWindow
+//        let sub =   (window?.subviews[0])! as UIView
+//        
+//        Functions.fillContainerView(sub, withView:  self.loader)
+    
+    }
+    
+    
+   func hideLoader(){
+//    self.loader.removeFromSuperview()
     
     }
 }

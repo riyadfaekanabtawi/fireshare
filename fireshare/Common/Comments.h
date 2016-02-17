@@ -17,6 +17,7 @@
 @property CGFloat hours_since;
 @property CGFloat days_since;
 @property CGFloat seconds_since;
+@property NSNumber *likes;
 @property NSString *voted_string;
 @property Users *user_owner;
 

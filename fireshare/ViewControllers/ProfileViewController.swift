@@ -49,6 +49,8 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.posts_tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         let tracker  = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value:"Vista Detalle Usuario")
         let build = GAIDictionaryBuilder.createScreenView().build() as [NSObject : AnyObject]

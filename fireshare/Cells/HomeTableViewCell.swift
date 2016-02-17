@@ -70,22 +70,22 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
             
         }else if  post.minutes_since < 60{
             
-            self.timeLabel.text = String(format: NSLocalizedString("%.0f min ago", comment: ""), post.minutes_since)
+            self.timeLabel.text = String(format: NSLocalizedString("%.f min ago", comment: ""), post.minutes_since)
           
         }else if post.hours_since < 24{
             
             
             
-            self.timeLabel.text = String(format: NSLocalizedString("%.0f hs ago", comment: ""), post.hours_since)
+            self.timeLabel.text = String(format: NSLocalizedString("%.f hs ago", comment: ""), post.hours_since)
             
         }else if  post.days_since < 7{
             
             
             
-            self.timeLabel.text = String(format: NSLocalizedString("%.0f days ago", comment: ""), post.days_since)
+            self.timeLabel.text = String(format: NSLocalizedString("%.f days ago", comment: ""), post.days_since)
             
         }else{
-         self.timeLabel.text = String(format: NSLocalizedString("%.0f weeks", comment: ""), post.days_since/7)
+         self.timeLabel.text = String(format: NSLocalizedString("%.f weeks", comment: ""), post.days_since/7.0)
         
         }
         

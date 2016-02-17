@@ -38,7 +38,7 @@
         NSString *dateServiceString= [[dictionary objectForKey:@"created_at"] stringByReplacingOccurrencesOfString:@"Z"  withString:@""];
         NSDate *dateA =     [[dateFormatter dateFromString:dateServiceString] dateByAddingTimeInterval:-3600*3];
         
-        
+        self.likes = [dictionary objectForKey:@"likes"];
         
         self.seconds_since = [dateNow timeIntervalSinceDate:dateA];
         self.minutes_since = round(self.seconds_since/60);

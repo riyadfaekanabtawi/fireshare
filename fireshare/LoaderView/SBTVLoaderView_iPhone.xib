@@ -15,7 +15,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OSW-j3-mse">
-                            <rect key="frame" x="120" y="428" width="80" height="40"/>
+                            <rect key="frame" x="120" y="478" width="80" height="40"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fire1.png" translatesAutoresizingMaskIntoConstraints="NO" id="3dP-tY-5eJ">
                                     <rect key="frame" x="33" y="12" width="13" height="15"/>
@@ -34,7 +34,7 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="...loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCz-px-7uD">
-                            <rect key="frame" x="121" y="468" width="78" height="21"/>
+                            <rect key="frame" x="121" y="518" width="78" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="0VG-hQ-YCj"/>
                                 <constraint firstAttribute="width" constant="78" id="Vdf-9W-cPI"/>
@@ -47,7 +47,7 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="BCz-px-7uD" firstAttribute="top" secondItem="OSW-j3-mse" secondAttribute="bottom" id="JK7-tz-fpt"/>
-                        <constraint firstAttribute="bottom" secondItem="OSW-j3-mse" secondAttribute="bottom" constant="100" id="nvU-eB-vyf"/>
+                        <constraint firstAttribute="bottom" secondItem="OSW-j3-mse" secondAttribute="bottom" constant="50" id="nvU-eB-vyf"/>
                         <constraint firstItem="OSW-j3-mse" firstAttribute="centerX" secondItem="Zui-M7-BAx" secondAttribute="centerX" id="wxH-lI-guY"/>
                         <constraint firstItem="BCz-px-7uD" firstAttribute="centerX" secondItem="Zui-M7-BAx" secondAttribute="centerX" id="ywV-yG-ymz"/>
                     </constraints>

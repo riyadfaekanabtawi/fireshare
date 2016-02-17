@@ -17,6 +17,8 @@ class CommentCollectionViewCell: UICollectionViewCell {
     var delegate:CommentDelegate! = nil
     @IBOutlet var comment_owner_name: UILabel!
     @IBOutlet var date_label: UILabel!
+    @IBOutlet var likeCountLabelWidth: NSLayoutConstraint!
+    @IBOutlet var likesCountLabel: UILabel!
     @IBOutlet var comment_owner_avatar: UIImageView!
     @IBOutlet var fireIcon: UIImageView!
     @IBOutlet var likeButton: UIButton!
@@ -35,7 +37,8 @@ class CommentCollectionViewCell: UICollectionViewCell {
         self.comment_owner_name.font = UIFont(name: FONT_REGULAR, size: self.comment_owner_name.font.pointSize)
         self.comment_owner_avatar.layer.cornerRadius = 2
         self.comment_owner_avatar.layer.masksToBounds = true
-        
+        self.likesCountLabel.font = UIFont(name: FONT_BOLD, size: self.likesCountLabel.font.pointSize)
+        self.comment_content.font = UIFont(name: FONT_REGULAR, size: self.comment_content.font.pointSize)
         if ( self.date_label != nil){
         
            self.date_label.font = UIFont(name: FONT_REGULAR, size: self.date_label.font.pointSize)
@@ -65,6 +68,28 @@ class CommentCollectionViewCell: UICollectionViewCell {
         }
         self.layoutIfNeeded()
         
+        
+        let like = comment.likes.integerValue
+        
+        
+        if like > 1000{
+        
+        self.likesCountLabel.text = "+ \(like/1000)K"
+        self.likeCountLabelWidth.constant = 42
+        }else if like == 0{
+        
+        self.likesCountLabel.hidden = true
+        self.likeCountLabelWidth.constant = 0
+        }else{
+        
+        self.likesCountLabel.text = "+ \(like)"
+        self.likesCountLabel.hidden = false
+        self.likeCountLabelWidth.constant = 42
+        }
+        
+        
+        self.layoutIfNeeded()
+        
         if (self.likeButton != nil && self.unlikeButton != nil){
             if comment.voted_string  == "voted up"{
                 
@@ -92,22 +117,22 @@ class CommentCollectionViewCell: UICollectionViewCell {
                 
             }else if  comment.minutes_since < 60{
                 
-                self.date_label.text = String(format: NSLocalizedString("%.0f min ago", comment: ""), comment.minutes_since)
+                self.date_label.text = String(format: NSLocalizedString("%.f min ago", comment: ""), comment.minutes_since)
                 
             }else if comment.hours_since < 24{
                 
                 
                 
-                self.date_label.text = String(format: NSLocalizedString("%.0f hs ago", comment: ""), comment.hours_since)
+                self.date_label.text = String(format: NSLocalizedString("%.f hs ago", comment: ""), comment.hours_since)
                 
             }else if  comment.days_since < 7{
                 
                 
                 
-                self.date_label.text = String(format: NSLocalizedString("%.0f days ago", comment: ""), comment.days_since)
+                self.date_label.text = String(format: NSLocalizedString("%.f days ago", comment: ""), comment.days_since)
                 
             }else{
-                self.date_label.text = String(format: NSLocalizedString("%.0f weeks", comment: ""), comment.days_since/7)
+                self.date_label.text = String(format: NSLocalizedString("%.f weeks", comment: ""), comment.days_since/7)
                 
             }
 

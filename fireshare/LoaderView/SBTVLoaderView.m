@@ -55,7 +55,7 @@
     [loader setHidden:NO];
     [loader.popcornUIImage setImage:  [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"fire1" ofType:@"png"]]];
     
-    [NSTimer scheduledTimerWithTimeInterval:.1 target:loader selector:@selector(updateAnimation) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:.2 target:loader selector:@selector(updateAnimation) userInfo:nil repeats:NO];
     
     
     
@@ -75,7 +75,7 @@
     
     self.status = self.status+1;
     [self.popcornUIImage setImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"fire%d",self.status]ofType:@"png"]]];
-    [NSTimer scheduledTimerWithTimeInterval:1.0/20.0 target:self selector:@selector(updateAnimation) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(updateAnimation) userInfo:nil repeats:NO];
     
     
     if(self.status==2){

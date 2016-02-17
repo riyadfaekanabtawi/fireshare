@@ -58,6 +58,8 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
         
         
         self.post_title.text = self.post.post_title
+        self.post_user_avatar.layer.cornerRadius = 3
+        self.post_user_avatar.layer.masksToBounds = true
         
         self.post_user_avatar.image = UIImage(named: "user.png")
         self.post_user_avatar.sd_setImageWithURL(NSURL(string: self.post.post_user.avatar_url)) { (image, err, SDImageCacheType, url) -> Void in
@@ -270,6 +272,12 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
             self.view.frame.origin.y -= keyboardSize.height
         }
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return false
     }
     
     func keyboardWillHide(notification: NSNotification) {
