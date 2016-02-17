@@ -209,4 +209,42 @@ public class PostManager {
             }
         });
     }
+
+    public static void delete(String idPost, final ServiceManagerHandler<Boolean> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id", idPost);
+
+        FireShareRestClient.get("post/destroy", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    try {
+                        if (response.getString("Result").equals("Post deleted")) {
+                            callback.loaded(true);
+                        } else {
+                            callback.error("null json");
+                        }
+
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.error("null json");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                callback.error("null json");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
 }

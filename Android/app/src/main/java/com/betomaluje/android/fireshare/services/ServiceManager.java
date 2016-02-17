@@ -32,12 +32,17 @@ public class ServiceManager {
     ===============  USERS ===============
      */
     public void login(String name, String password, String tokenPush, final ServiceManagerHandler<User> callback) {
-        UserManager.login(context, name, password, tokenPush,  callback);
+        UserManager.login(context, name, password, tokenPush, callback);
     }
 
     public void register(String email, String name, String tokenPush, String password, String passwordConfirmation,
                          String encodedImage, final ServiceManagerHandler<User> callback) {
         UserManager.register(context, email, name, tokenPush, password, passwordConfirmation, encodedImage, callback);
+    }
+
+    public void update(String userId, String email, String name, String tokenPush, String password, String passwordConfirmation,
+                       String encodedImage, final ServiceManagerHandler<User> callback) {
+        UserManager.update(context, userId, email, name, tokenPush, password, passwordConfirmation, encodedImage, callback);
     }
 
     public void getUser(String userId, final ServiceManagerHandler<User> callback) {
@@ -71,6 +76,10 @@ public class ServiceManager {
         PostManager.report(idPost, callback);
     }
 
+    public void deletePost(String idPost, final ServiceManagerHandler<Boolean> callback) {
+        PostManager.delete(idPost, callback);
+    }
+
     /*
     ===============  COMMENTS ===============
      */
@@ -88,6 +97,10 @@ public class ServiceManager {
 
     public void reportComment(String idComment, final ServiceManagerHandler<Boolean> callback) {
         CommentManager.report(idComment, callback);
+    }
+
+    public void deleteComment(String idComment, final ServiceManagerHandler<Boolean> callback) {
+        CommentManager.delete(idComment, callback);
     }
 
     public static abstract class ServiceManagerHandler<T> {

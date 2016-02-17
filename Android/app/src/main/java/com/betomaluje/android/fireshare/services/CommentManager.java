@@ -1,7 +1,6 @@
 package com.betomaluje.android.fireshare.services;
 
 import com.betomaluje.android.fireshare.models.Comment;
-import com.betomaluje.android.fireshare.models.Post;
 import com.betomaluje.android.fireshare.services.ServiceManager.ServiceManagerHandler;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -56,10 +55,16 @@ public class CommentManager {
                         callback.error("null json");
                     }
                 } else {
-                    Post post = new Gson().fromJson(response.toString(), Post.class);
+                    Comment comment = new Gson().fromJson(response.toString(), Comment.class);
 
-                    callback.loaded(post.getComments().get(post.getComments().size() - 1));
+                    callback.loaded(comment);
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                callback.error("null json");
             }
 
             @Override
@@ -140,6 +145,44 @@ public class CommentManager {
                 } else {
                     callback.error("null json");
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void delete(String idComment, final ServiceManagerHandler<Boolean> callback) {
+        RequestParams params = new RequestParams();
+        params.put("id", idComment);
+
+        FireShareRestClient.get("deleteComment", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    try {
+                        if (response.getString("Result").equals("Comment deleted")) {
+                            callback.loaded(true);
+                        } else {
+                            callback.error("null json");
+                        }
+
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.error("null json");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                callback.error("null json");
             }
 
             @Override

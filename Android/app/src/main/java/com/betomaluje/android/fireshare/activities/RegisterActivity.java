@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -27,9 +29,15 @@ import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.services.ServiceManager;
 import com.betomaluje.android.fireshare.utils.ImageUtils;
+import com.betomaluje.android.fireshare.utils.RoundedTransformation;
 import com.betomaluje.android.fireshare.utils.UserPreferences;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.FileNotFoundException;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by betomaluje on 1/7/16.
@@ -38,27 +46,43 @@ public class RegisterActivity extends AppCompatActivity {
 
     private final int IMAGE_PICK = 342;
 
-    private EditText mEmailView, mNameView;
-    private EditText mPasswordView, mPasswordView2;
-    private View mProgressView;
-    private View mLoginFormView;
-    private ImageView imageViewPhoto;
+    @Bind(R.id.email)
+    EditText mEmailView;
+
+    @Bind(R.id.name)
+    EditText mNameView;
+
+    @Bind(R.id.password)
+    EditText mPasswordView;
+
+    @Bind(R.id.password2)
+    EditText mPasswordView2;
+
+    @Bind(R.id.login_progress)
+    View mProgressView;
+
+    @Bind(R.id.email_login_form)
+    View mLoginFormView;
+
+    @Bind(R.id.photo)
+    ImageView imageViewPhoto;
+
+    @Bind(R.id.btn_register)
+    Button btnRegister;
+
+    @Bind(R.id.btn_cancel)
+    Button btnCancel;
 
     private Bitmap photo;
+    private boolean isUpdating;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
 
-        //getSupportActionBar().hide();
-
-        // Set up the login form.
-        mEmailView = (EditText) findViewById(R.id.email);
-        mNameView = (EditText) findViewById(R.id.name);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView2 = (EditText) findViewById(R.id.password2);
         mPasswordView2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -70,15 +94,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_register = (Button) findViewById(R.id.btn_register);
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptRegister();
             }
         });
-
-        imageViewPhoto = (ImageView) findViewById(R.id.photo);
 
         imageViewPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +108,47 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.email_login_form);
-        mProgressView = findViewById(R.id.login_progress);
+        Bundle b = getIntent().getExtras();
+        if (b != null && b.getBoolean("update", false)) {
+            isUpdating = true;
+
+            user = UserPreferences.using(RegisterActivity.this).getUser();
+            mNameView.setText(user.getName());
+            mEmailView.setText(user.getEmail());
+
+            btnRegister.setText(R.string.button_update);
+
+            Picasso.with(RegisterActivity.this).load(user.getUserImage(User.IMAGE_TYPE.SMALL))
+                    .transform(new RoundedTransformation(8, 0))
+                    .placeholder(R.mipmap.icon_user).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    photo = bitmap;
+                    imageViewPhoto.setImageBitmap(bitmap);
+                    imageViewPhoto.setBackgroundColor(Color.TRANSPARENT);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            });
+        } else {
+            isUpdating = false;
+        }
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
     }
 
     private void chooseImage() {
@@ -114,7 +174,14 @@ public class RegisterActivity extends AppCompatActivity {
                 photo = ImageUtils.scaleDown(getResources(),
                         BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())),
                         size, true);
-                imageViewPhoto.setImageBitmap(photo);
+
+                if (photo != null) {
+                    imageViewPhoto.setImageBitmap(photo);
+                    imageViewPhoto.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    Toast.makeText(RegisterActivity.this, R.string.error_image_problem, Toast.LENGTH_LONG).show();
+                }
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -185,22 +252,43 @@ public class RegisterActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
 
-            //do actual login
-            ServiceManager.getInstance(RegisterActivity.this).register(email, name, UserPreferences.using(RegisterActivity.this).getTokenPush(),
-                    password, password2, ImageUtils.imageToBase64String(photo), new ServiceManager.ServiceManagerHandler<User>() {
-                        @Override
-                        public void loaded(User data) {
-                            super.loaded(data);
-                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                            finish();
-                        }
+            if (isUpdating) {
+                //do actual register
+                ServiceManager.getInstance(RegisterActivity.this).update(String.valueOf(user.getId()), email, name, UserPreferences.using(RegisterActivity.this).getTokenPush(),
+                        password, password2, ImageUtils.imageToBase64String(photo), new ServiceManager.ServiceManagerHandler<User>() {
+                            @Override
+                            public void loaded(User data) {
+                                super.loaded(data);
+                                startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                                finish();
+                            }
 
-                        @Override
-                        public void error(String error) {
-                            super.error(error);
-                            Toast.makeText(RegisterActivity.this, "No te hemos podido registrar. Intenta en unos momentos", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                            @Override
+                            public void error(String error) {
+                                super.error(error);
+                                Toast.makeText(RegisterActivity.this, R.string.error_wrong_credentials, Toast.LENGTH_LONG).show();
+                                showProgress(false);
+                            }
+                        });
+            } else {
+                //do actual register
+                ServiceManager.getInstance(RegisterActivity.this).register(email, name, UserPreferences.using(RegisterActivity.this).getTokenPush(),
+                        password, password2, ImageUtils.imageToBase64String(photo), new ServiceManager.ServiceManagerHandler<User>() {
+                            @Override
+                            public void loaded(User data) {
+                                super.loaded(data);
+                                startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void error(String error) {
+                                super.error(error);
+                                Toast.makeText(RegisterActivity.this, R.string.error_wrong_credentials, Toast.LENGTH_LONG).show();
+                                showProgress(false);
+                            }
+                        });
+            }
         }
     }
 

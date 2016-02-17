@@ -79,6 +79,7 @@ public class PostActivity extends AppCompatActivity {
     private boolean posting = false;
     private LoadingDialog loadingDialog;
 
+    private String idPost;
     private Post post;
     private User user;
     private CommentRecyclerAdapter adapter;
@@ -143,7 +144,20 @@ public class PostActivity extends AppCompatActivity {
         imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                serviceManager.deletePost(idPost, new ServiceManager.ServiceManagerHandler<Boolean>() {
+                    @Override
+                    public void loaded(Boolean data) {
+                        super.loaded(data);
+                        Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
 
+                    @Override
+                    public void error(String error) {
+                        super.error(error);
+                        Toast.makeText(PostActivity.this, R.string.error_delete, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -243,7 +257,7 @@ public class PostActivity extends AppCompatActivity {
 
     private OnCommentClicked onCommentClicked = new OnCommentClicked() {
         @Override
-        public void onCommentClicked(View v, int position, final Comment comment) {
+        public void onCommentClicked(View v, final int position, final Comment comment) {
             switch (v.getId()) {
                 case R.id.imageButton_like:
                     serviceManager.likeComment(String.valueOf(user.getId()), comment, position, new ServiceManager.ServiceManagerHandler<Comment>() {
@@ -296,7 +310,20 @@ public class PostActivity extends AppCompatActivity {
                     });
                     break;
                 case R.id.imageButton_delete:
+                    serviceManager.deleteComment(String.valueOf(comment.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
+                        @Override
+                        public void loaded(Boolean data) {
+                            super.loaded(data);
+                            Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
+                            adapter.removeComment(position);
+                        }
 
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            Toast.makeText(PostActivity.this, R.string.error_delete, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
             }
         }
@@ -350,7 +377,9 @@ public class PostActivity extends AppCompatActivity {
                 mStartingPosition = b.getInt("mStartingPosition", 0);
             }
 
-            getPost(b.getString("postId", ""));
+            idPost = b.getString("postId", "");
+
+            getPost(idPost);
         }
     }
 

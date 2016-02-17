@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import cz.msebera.android.httpclient.Header;
+
 /**
  * Created by betomaluje on 2/1/16.
  */
@@ -95,13 +97,92 @@ public class UserManager {
                 super.onSuccess(statusCode, headers, json);
 
                 if (json != null) {
-                    UserPreferences.using(context).saveUser(json.toString());
+                    if (json.has("Result")) {
+                        //error
+                        try {
+                            callback.error(json.getString("Result"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.error("null json");
+                        }
+                    } else {
+                        UserPreferences.using(context).saveUser(json.toString());
 
-                    Gson gson = new Gson();
-                    callback.loaded(gson.fromJson(json.toString(), User.class));
+                        Gson gson = new Gson();
+                        callback.loaded(gson.fromJson(json.toString(), User.class));
+                    }
                 } else {
                     callback.error("null json");
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void update(final Context context, String userId, String email, String name, String tokenPush, String password, String passwordConfirmation,
+                              String encodedImage, final ServiceManagerHandler<User> callback) {
+
+        Map<String, String> user = new HashMap<>();
+        user.put("id", userId);
+        user.put("email", email);
+        user.put("name", name);
+        user.put("password", password);
+        user.put("password_confirmation", passwordConfirmation);
+        user.put("device_token", tokenPush);
+
+        //now the image
+        //generated id
+        String id = String.valueOf(System.currentTimeMillis());
+        String date = new DateTime().toString("dd-MM-yyyy HH:mm:ss");
+
+        Map<String, String> image = new HashMap<>();
+        image.put("id", id);
+        image.put("created_at", date);
+        image.put("updated_at", date);
+        image.put("image_url", "\"" + encodedImage + "\"");
+        image.put("filename", "User-" + id + ".jpg");
+        image.put("content_type", "image/jpg");
+        image.put("password", password);
+        image.put("password_confirmation", passwordConfirmation);
+
+        RequestParams params = new RequestParams();
+        params.put("user", user);
+        params.put("image", image);
+
+        FireShareRestClient.post("user/update", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject json) {
+                super.onSuccess(statusCode, headers, json);
+
+                if (json != null) {
+                    if (json.has("Result")) {
+                        //error
+                        try {
+                            callback.error(json.getString("Result"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.error("null json");
+                        }
+                    } else {
+                        UserPreferences.using(context).saveUser(json.toString());
+
+                        Gson gson = new Gson();
+                        callback.loaded(gson.fromJson(json.toString(), User.class));
+                    }
+                } else {
+                    callback.error("null json");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                callback.error("null json");
             }
 
             @Override

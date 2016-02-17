@@ -28,8 +28,12 @@ public class ImageUtils {
         int width = Math.round((float) ratio * realImage.getWidth());
         int height = Math.round((float) ratio * realImage.getHeight());
 
-        return Bitmap.createScaledBitmap(realImage, width,
-                height, filter);
+        try {
+            return Bitmap.createScaledBitmap(realImage, width,
+                    height, filter);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     /**

@@ -118,6 +118,11 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
         notifyItemInserted(comments.size() - 1);
     }
 
+    public void removeComment(int position) {
+        comments.remove(position);
+        notifyItemChanged(position);
+    }
+
     public void modifyComment(Comment comment, int position) {
         comments.set(position, comment);
         notifyItemChanged(position);

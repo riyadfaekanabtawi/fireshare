@@ -138,14 +138,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        imageButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleToolbarControls(false);
-                SystemUtils.hideKeyboard(HomeActivity.this);
-            }
-        });
-
+        imageButtonCancel.setOnClickListener(barButtonListener);
         imageButtonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,16 +147,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-
-        imageButtonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserPreferences.using(HomeActivity.this).saveUser("");
-
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
+        imageButtonLogout.setOnClickListener(barButtonListener);
+        imageButtonEditProfile.setOnClickListener(barButtonListener);
 
         CustomLinearLayoutManager layoutManager = new CustomLinearLayoutManager(HomeActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -173,20 +158,7 @@ public class HomeActivity extends AppCompatActivity {
 
         textViewUserName.setText(user.getName());
 
-        imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-
-                //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this, v, "postView");
-                //ActivityCompat.startActivity(HomeActivity.this, intent, options.toBundle());
-                startActivity(intent);
-
-                //now we send it to the event bus
-                //BusStation.postOnMain(producePost());
-                BusStation.postOnMain(produceUser());
-            }
-        });
+        imageViewUserProfile.setOnClickListener(barButtonListener);
 
         Picasso.with(HomeActivity.this).load(user.getUserImage())
                 .transform(new RoundedTransformation(8, 0))
@@ -197,6 +169,45 @@ public class HomeActivity extends AppCompatActivity {
 
         textViewRemaining.setText(String.format(getString(R.string.remaining_characters), totalCharacters));
     }
+
+    private View.OnClickListener barButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.imageButton_logout:
+                    UserPreferences.using(HomeActivity.this).saveUser("");
+
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    finish();
+                    break;
+                case R.id.imageButton_editProfile:
+                    Intent updateIntent = new Intent(HomeActivity.this, RegisterActivity.class);
+                    updateIntent.putExtra("update", true);
+                    startActivity(updateIntent);
+
+                    finish();
+                    break;
+                case R.id.imageButton_cancel:
+                    toggleToolbarControls(false);
+                    SystemUtils.hideKeyboard(HomeActivity.this);
+                    break;
+                case R.id.imageButton_send:
+
+                    break;
+                case R.id.imageView_userProfile:
+                    Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
+
+                    //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this, v, "postView");
+                    //ActivityCompat.startActivity(HomeActivity.this, intent, options.toBundle());
+                    startActivity(profileIntent);
+
+                    //now we send it to the event bus
+                    //BusStation.postOnMain(producePost());
+                    BusStation.postOnMain(produceUser());
+                    break;
+            }
+        }
+    };
 
     private final TextWatcher mTextEditorWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -232,6 +243,9 @@ public class HomeActivity extends AppCompatActivity {
             if (!hiding) {
                 mView.setVisibility(View.VISIBLE);
                 mView2.setVisibility(View.VISIBLE);
+            } else {
+                imageButtonEditProfile.setVisibility(View.VISIBLE);
+                imageButtonLogout.setVisibility(View.VISIBLE);
             }
         }
 
@@ -241,8 +255,8 @@ public class HomeActivity extends AppCompatActivity {
             mView2.setLayerType(View.LAYER_TYPE_NONE, null);
 
             if (hiding) {
-                mView.setVisibility(View.INVISIBLE);
-                mView2.setVisibility(View.INVISIBLE);
+                mView.setVisibility(View.GONE);
+                mView2.setVisibility(View.GONE);
 
                 ObjectAnimator tx1 = ObjectAnimator.ofFloat(imageButtonLogout, View.SCALE_X, 0, 1);
                 ObjectAnimator ty1 = ObjectAnimator.ofFloat(imageButtonLogout, View.SCALE_Y, 0, 1);
@@ -273,7 +287,8 @@ public class HomeActivity extends AppCompatActivity {
     private Animator.AnimatorListener hideControlsListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
-
+            imageButtonEditProfile.setVisibility(View.GONE);
+            imageButtonLogout.setVisibility(View.GONE);
         }
 
         @Override
