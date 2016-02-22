@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betomaluje.android.fireshare.FireShareApplication;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.PostsRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
@@ -121,6 +122,8 @@ public class HomeActivity extends AppCompatActivity {
             //getWindow().setSharedElementReturnTransition(move);
         }
         */
+
+        ((FireShareApplication) getApplication()).sendScreen("Vista Home");
 
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
@@ -254,7 +257,7 @@ public class HomeActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.imageButton_logout:
                     UserPreferences.using(HomeActivity.this).saveUser("");
-
+                    ((FireShareApplication) getApplication()).sendEvent("Authentication", "Logout", "Logout");
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                     finish();
                     break;
@@ -494,6 +497,9 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void loaded(Post data) {
                     super.loaded(data);
+
+                    ((FireShareApplication) getApplication()).sendEvent("Post", "Create Post", "Create Post");
+
                     Toast.makeText(HomeActivity.this, "Agregaste tu post!", Toast.LENGTH_SHORT).show();
                     editTextPost.setText("");
 

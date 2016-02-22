@@ -53,4 +53,6 @@
     <string name="error_like">Hubo un error al realizar el like</string>
     <string name="error_dislike">Hubo un error al realizar el dislike</string>
     <string name="error_report">Hubo un error al reportar esto</string>
+
+    <string name="terms_and_conditions"><![CDATA[http://fireshareterms.anabtatec-mobile.com]]></string>
 </resources>

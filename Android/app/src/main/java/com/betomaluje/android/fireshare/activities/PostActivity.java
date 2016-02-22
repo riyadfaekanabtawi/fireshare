@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betomaluje.android.fireshare.FireShareApplication;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.CommentRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
@@ -95,6 +96,8 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //ActivityCompat.postponeEnterTransition(this);
 
+        ((FireShareApplication) getApplication()).sendScreen("Vista Detalle Post");
+
         setContentView(R.layout.activity_post);
         ButterKnife.bind(this);
         loadingDialog = new LoadingDialog(PostActivity.this);
@@ -157,6 +160,8 @@ public class PostActivity extends AppCompatActivity {
                 @Override
                 public void loaded(Comment data) {
                     super.loaded(data);
+                    ((FireShareApplication) getApplication()).sendEvent("Post", "Comment Post", "Comment Post");
+
                     Toast.makeText(PostActivity.this, "Agregaste tu comentario!", Toast.LENGTH_SHORT).show();
                     editTextComment.setText("");
                     editTextComment.clearFocus();
@@ -254,6 +259,9 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void loaded(Boolean data) {
                             super.loaded(data);
+
+                            ((FireShareApplication) getApplication()).sendEvent("Comment", "Delete Comment", "Delete Comment");
+
                             loadingDialog.cancel();
                             loadingDialog.dismiss();
                             Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
@@ -284,6 +292,9 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void loaded(Boolean data) {
                             super.loaded(data);
+
+                            ((FireShareApplication) getApplication()).sendEvent("Post", "Delete Post", "Delete Post");
+
                             loadingDialog.cancel();
                             loadingDialog.dismiss();
                             Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
@@ -316,6 +327,9 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void loaded(Comment data, int position) {
                             super.loaded(data);
+
+                            ((FireShareApplication) getApplication()).sendEvent("Comment", "Like Comment", "Like Comment");
+
                             if (adapter != null) {
                                 adapter.modifyComment(data, position);
                             }
@@ -333,6 +347,9 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void loaded(Comment data, int position) {
                             super.loaded(data);
+
+                            ((FireShareApplication) getApplication()).sendEvent("Comment", "UnLike Comment", "UnLike Comment");
+
                             if (adapter != null) {
                                 adapter.modifyComment(data, position);
                             }

@@ -24,9 +24,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betomaluje.android.fireshare.FireShareApplication;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.bus.BusStation;
 import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
+import com.betomaluje.android.fireshare.dialogs.TermsAndConditionsDialog;
 import com.betomaluje.android.fireshare.gcm.RegistrationIntentService;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.services.ServiceManager;
@@ -66,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((FireShareApplication) getApplication()).sendScreen("Vista Login");
 
         //for transitions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -114,6 +118,9 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
             Log.e(TAG, "new user");
+
+            new TermsAndConditionsDialog(LoginActivity.this).show();
+
             initApp();
         }
     }
@@ -237,6 +244,9 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void loaded(User data) {
                     super.loaded(data);
+
+                    ((FireShareApplication) getApplication()).sendEvent("Authentication", "Login", "Login");
+
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                 }

@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betomaluje.android.fireshare.FireShareApplication;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.models.User;
 import com.betomaluje.android.fireshare.services.ServiceManager;
@@ -112,6 +113,8 @@ public class RegisterActivity extends AppCompatActivity {
         if (b != null && b.getBoolean("update", false)) {
             isUpdating = true;
 
+            ((FireShareApplication) getApplication()).sendScreen("Vista Actualizar Info");
+
             user = UserPreferences.using(RegisterActivity.this).getUser();
             mNameView.setText(user.getName());
             mEmailView.setText(user.getEmail());
@@ -140,6 +143,8 @@ public class RegisterActivity extends AppCompatActivity {
             });
         } else {
             isUpdating = false;
+
+            ((FireShareApplication) getApplication()).sendScreen("Vista Registro");
         }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +264,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void loaded(User data) {
                                 super.loaded(data);
+                                ((FireShareApplication) getApplication()).sendEvent("Authentication", "Update", "Update");
                                 startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                                 finish();
                             }
@@ -277,6 +283,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void loaded(User data) {
                                 super.loaded(data);
+                                ((FireShareApplication) getApplication()).sendEvent("Authentication", "Register", "Register");
                                 startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                                 finish();
                             }

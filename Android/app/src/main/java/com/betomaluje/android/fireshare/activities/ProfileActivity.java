@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betomaluje.android.fireshare.FireShareApplication;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.UserRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
@@ -59,6 +60,9 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((FireShareApplication) getApplication()).sendScreen("Vista Detalle Usuario");
+
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 

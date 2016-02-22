@@ -1,5 +1,6 @@
 package com.betomaluje.android.fireshare.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betomaluje.android.fireshare.FireShareApplication;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.bus.BusStation;
 import com.betomaluje.android.fireshare.interfaces.OnCommentClicked;
@@ -46,9 +48,6 @@ public class WarningDialog extends Dialog {
     private Context context;
     private String text;
     private boolean isReport;
-
-    private OnCommentClicked onCommentClicked;
-    private OnPostClicked onPostClicked;
 
     public WarningDialog(Context context, TYPE type) {
         super(context, R.style.Theme_FullScreenDialog);
@@ -98,7 +97,6 @@ public class WarningDialog extends Dialog {
 
         this.context = context;
         this.type = type;
-        this.onCommentClicked = onCommentClicked;
 
         isReport = type == TYPE.REPORT_COMMENT || type == TYPE.REPORT_POST;
 
@@ -144,7 +142,6 @@ public class WarningDialog extends Dialog {
 
         this.context = context;
         this.type = type;
-        this.onPostClicked = onPostClicked;
 
         isReport = type == TYPE.REPORT_COMMENT || type == TYPE.REPORT_POST;
 
@@ -201,6 +198,9 @@ public class WarningDialog extends Dialog {
                         @Override
                         public void loaded(Boolean data) {
                             super.loaded(data);
+
+                            ((FireShareApplication) ((Activity) context).getApplication()).sendEvent("Comment", "Denounce Comment", "Denounce Comment");
+
                             cancel();
                             dismiss();
                             createToast(context.getString(R.string.comment_report_success));
@@ -234,6 +234,9 @@ public class WarningDialog extends Dialog {
                         @Override
                         public void loaded(Boolean data) {
                             super.loaded(data);
+
+                            ((FireShareApplication) ((Activity) context).getApplication()).sendEvent("Post", "Denounce Post", "Denounce Post");
+
                             cancel();
                             dismiss();
                             createToast(context.getString(R.string.post_report_success));
