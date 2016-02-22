@@ -56,8 +56,16 @@ public class ServiceManager {
         PostManager.create(userId, text, callback);
     }
 
+    public void createPost(String userId, String text, double latitude, double longitude, String address, String country, final ServiceManagerHandler<Post> callback) {
+        PostManager.create(userId, text, latitude, longitude, address, country, callback);
+    }
+
     public void getPosts(final ServiceManagerHandler<ArrayList<Post>> callback) {
         PostManager.getPosts(callback);
+    }
+
+    public void getPosts(double latitude, double longitude, String address, String country, final ServiceManagerHandler<ArrayList<Post>> callback) {
+        PostManager.getPosts(latitude, longitude, address, country, callback);
     }
 
     public void getPost(String userId, String postId, final ServiceManagerHandler<Post> callback) {
@@ -74,6 +82,7 @@ public class ServiceManager {
 
     public void reportPost(String idPost, final ServiceManagerHandler<Boolean> callback) {
         PostManager.report(idPost, callback);
+        callback.loaded(true);
     }
 
     public void deletePost(String idPost, final ServiceManagerHandler<Boolean> callback) {
@@ -97,6 +106,7 @@ public class ServiceManager {
 
     public void reportComment(String idComment, final ServiceManagerHandler<Boolean> callback) {
         CommentManager.report(idComment, callback);
+        callback.loaded(true);
     }
 
     public void deleteComment(String idComment, final ServiceManagerHandler<Boolean> callback) {

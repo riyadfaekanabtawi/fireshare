@@ -21,7 +21,9 @@ import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.CommentRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
 import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
+import com.betomaluje.android.fireshare.dialogs.WarningDialog;
 import com.betomaluje.android.fireshare.interfaces.OnCommentClicked;
+import com.betomaluje.android.fireshare.interfaces.OnPostClicked;
 import com.betomaluje.android.fireshare.models.Comment;
 import com.betomaluje.android.fireshare.models.Post;
 import com.betomaluje.android.fireshare.models.User;
@@ -29,6 +31,7 @@ import com.betomaluje.android.fireshare.services.ServiceManager;
 import com.betomaluje.android.fireshare.utils.CustomLinearLayoutManager;
 import com.betomaluje.android.fireshare.utils.RoundedTransformation;
 import com.betomaluje.android.fireshare.utils.SystemUtils;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
@@ -78,9 +81,11 @@ public class PostActivity extends AppCompatActivity {
 
     private boolean posting = false;
     private LoadingDialog loadingDialog;
+    private int clickedPosition = -1;
 
     private String idPost;
     private Post post;
+    private Comment comment;
     private User user;
     private CommentRecyclerAdapter adapter;
     private ServiceManager serviceManager = ServiceManager.getInstance(PostActivity.this);
@@ -125,39 +130,15 @@ public class PostActivity extends AppCompatActivity {
         imageButtonReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serviceManager.reportPost(String.valueOf(post.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
-                    @Override
-                    public void loaded(Boolean data) {
-                        super.loaded(data);
-                        createToast(getString(R.string.post_report_success));
-                    }
-
-                    @Override
-                    public void error(String error) {
-                        super.error(error);
-                        createToast(getString(R.string.error_report));
-                    }
-                });
+                new WarningDialog(PostActivity.this, WarningDialog.TYPE.REPORT_POST).show();
+                BusStation.postOnMain(producePost());
             }
         });
 
         imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serviceManager.deletePost(idPost, new ServiceManager.ServiceManagerHandler<Boolean>() {
-                    @Override
-                    public void loaded(Boolean data) {
-                        super.loaded(data);
-                        Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-
-                    @Override
-                    public void error(String error) {
-                        super.error(error);
-                        Toast.makeText(PostActivity.this, R.string.error_delete, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                new WarningDialog(PostActivity.this, WarningDialog.TYPE.DELETE_POST, warningDialogPostClickListener).show();
             }
         });
 
@@ -263,9 +244,72 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    private OnCommentClicked warningDialogCommentClickListener = new OnCommentClicked() {
+        @Override
+        public void onCommentClicked(View v, final int position, final Comment comment) {
+            switch (v.getId()) {
+                case R.id.button_ok:
+                    loadingDialog.show();
+                    serviceManager.deleteComment(String.valueOf(comment.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
+                        @Override
+                        public void loaded(Boolean data) {
+                            super.loaded(data);
+                            loadingDialog.cancel();
+                            loadingDialog.dismiss();
+                            Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
+                            adapter.removeComment(clickedPosition);
+                        }
+
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            loadingDialog.cancel();
+                            loadingDialog.dismiss();
+                            Toast.makeText(PostActivity.this, R.string.error_delete, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    break;
+            }
+        }
+    };
+
+    private OnPostClicked warningDialogPostClickListener = new OnPostClicked() {
+        @Override
+        public void onPostClicked(View v, int position, Post post) {
+            switch (v.getId()) {
+                case R.id.button_ok:
+                    loadingDialog.show();
+                    serviceManager.deletePost(idPost, new ServiceManager.ServiceManagerHandler<Boolean>() {
+                        @Override
+                        public void loaded(Boolean data) {
+                            super.loaded(data);
+                            loadingDialog.cancel();
+                            loadingDialog.dismiss();
+                            Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void error(String error) {
+                            super.error(error);
+                            loadingDialog.cancel();
+                            loadingDialog.dismiss();
+                            Toast.makeText(PostActivity.this, R.string.error_delete, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    break;
+            }
+        }
+    };
+
     private OnCommentClicked onCommentClicked = new OnCommentClicked() {
         @Override
         public void onCommentClicked(View v, final int position, final Comment comment) {
+            PostActivity.this.comment = comment;
+
+            clickedPosition = position;
+
             switch (v.getId()) {
                 case R.id.imageButton_like:
                     serviceManager.likeComment(String.valueOf(user.getId()), comment, position, new ServiceManager.ServiceManagerHandler<Comment>() {
@@ -302,36 +346,11 @@ public class PostActivity extends AppCompatActivity {
                     });
                     break;
                 case R.id.imageButton_report:
-                    serviceManager.reportComment(String.valueOf(comment.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
-                        @Override
-                        public void loaded(Boolean data) {
-                            super.loaded(data);
-                            createToast(getString(R.string.comment_report_success));
-                        }
-
-                        @Override
-                        public void error(String error) {
-                            super.error(error);
-                            //createToast(getString(R.string.error_report));
-                            createToast(getString(R.string.comment_report_success));
-                        }
-                    });
+                    new WarningDialog(PostActivity.this, WarningDialog.TYPE.REPORT_COMMENT).show();
+                    BusStation.postOnMain(produceComment());
                     break;
                 case R.id.imageButton_delete:
-                    serviceManager.deleteComment(String.valueOf(comment.getId()), new ServiceManager.ServiceManagerHandler<Boolean>() {
-                        @Override
-                        public void loaded(Boolean data) {
-                            super.loaded(data);
-                            Toast.makeText(PostActivity.this, R.string.success_delete, Toast.LENGTH_SHORT).show();
-                            adapter.removeComment(position);
-                        }
-
-                        @Override
-                        public void error(String error) {
-                            super.error(error);
-                            Toast.makeText(PostActivity.this, R.string.error_delete, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    new WarningDialog(PostActivity.this, WarningDialog.TYPE.DELETE_COMMENT, warningDialogCommentClickListener, comment).show();
                     break;
             }
         }
@@ -344,6 +363,16 @@ public class PostActivity extends AppCompatActivity {
     @Subscribe
     public void getUser(User user) {
         this.user = user;
+    }
+
+    @Produce
+    public Post producePost() {
+        return post;
+    }
+
+    @Produce
+    public Comment produceComment() {
+        return comment;
     }
 
     @Override

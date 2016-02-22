@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import com.betomaluje.android.fireshare.R;
 import com.betomaluje.android.fireshare.adapters.PostsRecyclerAdapter;
 import com.betomaluje.android.fireshare.bus.BusStation;
+import com.betomaluje.android.fireshare.dialogs.ErrorDialog;
 import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
 import com.betomaluje.android.fireshare.interfaces.OnPostClicked;
 import com.betomaluje.android.fireshare.models.Post;
@@ -36,10 +40,17 @@ import com.betomaluje.android.fireshare.utils.UserPreferences;
 import com.squareup.otto.Produce;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.OnReverseGeocodingListener;
+import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 
 /**
  * Created by betomaluje on 1/19/16.
@@ -84,6 +95,11 @@ public class HomeActivity extends AppCompatActivity {
     private OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
 
     private LoadingDialog loadingDialog;
+
+    //Location
+    private LocationGooglePlayServicesProvider provider;
+    private String usersAddress = "", usersCountry = "";
+    private double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +184,68 @@ public class HomeActivity extends AppCompatActivity {
         editTextPost.addTextChangedListener(mTextEditorWatcher);
 
         textViewRemaining.setText(String.format(getString(R.string.remaining_characters), totalCharacters));
+
+        showLastLocation();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (provider != null) {
+            provider.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void requestUsersLocation() {
+        provider = new LocationGooglePlayServicesProvider();
+        provider.setCheckLocationSettings(true);
+
+        SmartLocation smartLocation = new SmartLocation.Builder(this).logging(true).build();
+
+        smartLocation.location(provider).oneFix().start(new OnLocationUpdatedListener() {
+            @Override
+            public void onLocationUpdated(Location location) {
+                SmartLocation.with(HomeActivity.this).geocoding()
+                        .reverse(location, new OnReverseGeocodingListener() {
+                            @Override
+                            public void onAddressResolved(Location location, List<Address> list) {
+                                Address address = list.get(0);
+
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+
+                                if (address != null) {
+                                    usersCountry = address.getCountryName();
+                                    usersAddress = address.getLocality();
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    private void showLastLocation() {
+        Location lastLocation = SmartLocation.with(this).location().getLastLocation();
+        if (lastLocation != null) {
+            latitude = lastLocation.getLatitude();
+            longitude = lastLocation.getLongitude();
+
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                Address address = addresses.get(0);
+
+                if (address != null) {
+                    usersCountry = address.getCountryName();
+                    usersAddress = address.getLocality();
+
+                    Log.e("LOCATION", "last: " + usersAddress);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private View.OnClickListener barButtonListener = new View.OnClickListener() {
@@ -355,7 +433,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void fillPosts() {
         loadingDialog.show();
-        serviceManager.getPosts(new ServiceManager.ServiceManagerHandler<ArrayList<Post>>() {
+        serviceManager.getPosts(latitude, longitude, usersAddress, usersCountry,new ServiceManager.ServiceManagerHandler<ArrayList<Post>>() {
             @Override
             public void loaded(ArrayList<Post> data) {
                 super.loaded(data);
@@ -410,10 +488,9 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (!text.isEmpty()) {
-            Log.e("HOME", "Post text");
             SystemUtils.hideKeyboard(HomeActivity.this);
 
-            serviceManager.createPost(String.valueOf(user.getId()), text, new ServiceManager.ServiceManagerHandler<Post>() {
+            serviceManager.createPost(String.valueOf(user.getId()), text, latitude, longitude, usersAddress, usersCountry, new ServiceManager.ServiceManagerHandler<Post>() {
                 @Override
                 public void loaded(Post data) {
                     super.loaded(data);
@@ -440,14 +517,14 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void error(String error) {
                     super.error(error);
-                    Toast.makeText(HomeActivity.this, "Hubo un error agregando tu post. Intenta en unos momentos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(HomeActivity.this, R.string.error_posting, Toast.LENGTH_LONG).show();
                     posting = false;
                     loadingDialog.dismiss();
                     loadingDialog.cancel();
                 }
             });
         } else {
-            Toast.makeText(HomeActivity.this, "Para publicar, tienes que escribir algo", Toast.LENGTH_SHORT).show();
+            new ErrorDialog(HomeActivity.this).show();
             posting = false;
             loadingDialog.dismiss();
             loadingDialog.cancel();
@@ -469,6 +546,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         BusStation.getBus().register(this);
+        requestUsersLocation();
     }
 
     @Override
@@ -479,5 +557,7 @@ public class HomeActivity extends AppCompatActivity {
             loadingDialog.dismiss();
             loadingDialog.cancel();
         }
+
+        SmartLocation.with(this).location().stop();
     }
 }

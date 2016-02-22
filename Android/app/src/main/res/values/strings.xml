@@ -15,8 +15,17 @@
     <string name="error_image_problem">There was a problem getting the image. Please try again</string>
     <string name="error_no_user">There was a problem getting this user\'s info. Please try again</string>
 
+    <string name="error_posting">There was a problem posting your text. Please try again.</string>
+
     <string name="success_delete">Successfully deleted!</string>
     <string name="error_delete">There was a problem deleting. Please try again.</string>
+
+    <string name="warning_dialog_title">Denounce</string>
+    <string name="warning_dialog_text_report">Are you sure you want to denounce: %1$s for posting \'%2$s\'</string>
+    <string name="warning_dialog_text_delete">Are you sure you want to delete this?</string>
+
+    <string name="error_dialog_title">Ooops</string>
+    <string name="error_dialog_text">You have to write something before posting</string>
 
     <string name="button_register">Sign in</string>
     <string name="button_update">Update</string>

@@ -28,12 +28,42 @@ public class PostManager {
         RequestParams params = new RequestParams();
         params.put("id", userId);
         params.put("title", text);
-        /*
-        address: (ciudad, pais)
-        latitude:
-        longitude:(doule)
-        country: (pais)
-         */
+
+        FireShareRestClient.post("recipe/create", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.has("Result")) {
+                    //error
+                    try {
+                        callback.error(response.getString("Description"));
+                    } catch (JSONException e) {
+                        callback.error("null json");
+                    }
+                } else {
+                    callback.loaded(new Gson().fromJson(response.toString(), Post.class));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void create(String userId, String text, double latitude, double longitude, String address, String country, final ServiceManagerHandler<Post> callback) {
+        if (!text.endsWith("..."))
+            text += "...";
+
+        RequestParams params = new RequestParams();
+        params.put("id", userId);
+        params.put("title", text);
+        params.put("address", address);
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
+        params.put("country", country);
 
         FireShareRestClient.post("recipe/create", params, new JsonHttpResponseHandler() {
             @Override
@@ -70,7 +100,45 @@ public class PostManager {
                     Gson gson = new Gson();
                     Type t = new TypeToken<ArrayList<Post>>() {
                     }.getType();
-                    ArrayList<Post> posts = (ArrayList<Post>) gson.fromJson(response.toString(), t);
+                    ArrayList<Post> posts = gson.fromJson(response.toString(), t);
+                    callback.loaded(posts);
+                } else {
+                    callback.error("null json");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+        });
+    }
+
+    public static void getPosts(double latitude, double longitude, String address, String country, final ServiceManagerHandler<ArrayList<Post>> callback) {
+        RequestParams params = new RequestParams();
+        params.put("address", address);
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
+        params.put("country", country);
+
+        FireShareRestClient.get("posts", params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+
+                if (response != null && response.length() > 0) {
+                    Gson gson = new Gson();
+                    Type t = new TypeToken<ArrayList<Post>>() {
+                    }.getType();
+                    ArrayList<Post> posts = gson.fromJson(response.toString(), t);
                     callback.loaded(posts);
                 } else {
                     callback.error("null json");
