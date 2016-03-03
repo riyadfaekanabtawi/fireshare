@@ -5,6 +5,7 @@ import android.content.Context;
 import com.betomaluje.android.fireshare.models.Comment;
 import com.betomaluje.android.fireshare.models.Post;
 import com.betomaluje.android.fireshare.models.User;
+import com.betomaluje.android.fireshare.models.VersionCheck;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,10 @@ public class ServiceManager {
     /*
     ===============  USERS ===============
      */
+    public void getVersion(final ServiceManagerHandler<VersionCheck> callback) {
+        UserManager.getVersion(callback);
+    }
+
     public void login(String name, String password, String tokenPush, final ServiceManagerHandler<User> callback) {
         UserManager.login(context, name, password, tokenPush, callback);
     }

@@ -41,6 +41,9 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
     @Bind(R.id.textView_userName)
     TextView textViewUserName;
 
+    @Bind(R.id.textView_postLikes)
+    TextView textViewPostLikes;
+
     @Bind(R.id.textView_date)
     TextView textViewDate;
 
@@ -123,6 +126,21 @@ public class PostRowViewHolder extends RecyclerView.ViewHolder implements View.O
             viewPagerComments.setAdapter(adapter);
 
             setUsers(post.getComments());
+
+            int total = 0;
+            for (Comment c : post.getComments()) {
+                total += c.getLikes();
+            }
+
+            String text;
+
+            if (total < 1000) {
+                text = "+" + total;
+            } else {
+                text = "+" + (total / 1000) + "K";
+            }
+
+            textViewPostLikes.setText(text);
 
             viewPagerComments.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override

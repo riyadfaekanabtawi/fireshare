@@ -1,6 +1,7 @@
 package com.betomaluje.android.fireshare.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +71,21 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
         @Bind(R.id.imageButton_delete)
         ImageButton imageButtonDelete;
 
-        public CommentRowViewHolder(View itemView) {
+        @Bind(R.id.textView_likes)
+        TextView textViewLikes;
+
+        private int blue, gray;
+
+        public CommentRowViewHolder(Context context, View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             imageButtonLike.setOnClickListener(this);
             imageButtonDislike.setOnClickListener(this);
             imageButtonReport.setOnClickListener(this);
             imageButtonDelete.setOnClickListener(this);
+
+            blue = context.getResources().getColor(R.color.light_blue);
+            gray = Color.GRAY;
         }
 
         public void setDataIntoView(final Context context, final Comment comment, int position) {
@@ -91,7 +100,15 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
 
             textViewDate.setText(comment.getDate(context));
 
-            imageButtonDelete.setVisibility(comment.getUser().getId() == userId ? View.VISIBLE : View.GONE);
+            if (comment.getLikes() > 0)
+                textViewLikes.setText("+" + String.valueOf(comment.getLikes()));
+            else
+                textViewLikes.setText(String.valueOf(comment.getLikes()));
+
+            boolean isSameUser = comment.getUser().getId() == userId;
+
+            imageButtonDelete.setVisibility(isSameUser ? View.VISIBLE : View.GONE);
+            imageButtonReport.setVisibility(isSameUser ? View.GONE : View.VISIBLE);
 
             imageViewUserProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,11 +122,13 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
 
         private void changeButtonColors(Comment comment) {
             if (comment.userDidVote()) {
-                imageButtonLike.setImageResource(comment.userDidUpVote() ? R.mipmap.heart_on : R.mipmap.heart_off);
-                imageButtonDislike.setImageResource(comment.userDidDownVote() ? R.mipmap.heart_break_on : R.mipmap.heart_break_off);
+                imageButtonLike.setImageResource(comment.userDidUpVote() ? R.mipmap.like_on : R.mipmap.like_off);
+                imageButtonDislike.setImageResource(comment.userDidDownVote() ? R.mipmap.dislike_on : R.mipmap.dislike_off);
+                textViewLikes.setTextColor(blue);
             } else {
-                imageButtonLike.setImageResource(R.mipmap.heart_off);
-                imageButtonDislike.setImageResource(R.mipmap.heart_break_off);
+                imageButtonLike.setImageResource(R.mipmap.like_off);
+                imageButtonDislike.setImageResource(R.mipmap.dislike_off);
+                textViewLikes.setTextColor(gray);
             }
         }
 
@@ -139,7 +158,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
     @Override
     public CommentRowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.comment_item_row_2, parent, false);
-        return new CommentRowViewHolder(view);
+        return new CommentRowViewHolder(context, view);
     }
 
     @Override

@@ -24,11 +24,6 @@ public class FireShareApplication extends Application {
 
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
      *

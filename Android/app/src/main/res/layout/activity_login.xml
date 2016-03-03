@@ -26,9 +26,18 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/logo" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:theme="@style/EditTextLabel">
 
             <EditText
                 android:id="@+id/email"
@@ -46,7 +55,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/EditTextLabel">
 
             <EditText
                 android:id="@+id/password"
@@ -73,6 +83,7 @@
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
             android:text="@string/button_login"
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
 
         <Button
@@ -81,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
-            android:text="@string/button_register" />
+            android:text="@string/button_register"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </LinearLayout>

@@ -29,12 +29,15 @@ public class UserHeaderRowViewHolder extends RecyclerView.ViewHolder {
     TextView textViewUserQuantity;
 
     private Context context;
+    private String totalPosts;
 
     public UserHeaderRowViewHolder(Context context, View itemView) {
         super(itemView);
         this.context = context;
 
         ButterKnife.bind(this, itemView);
+
+        totalPosts = context.getString(R.string.user_total_posts);
 
     }
 
@@ -44,7 +47,7 @@ public class UserHeaderRowViewHolder extends RecyclerView.ViewHolder {
                 .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
         textViewUserName.setText(user.getName());
-        textViewUserQuantity.setText(user.getPosts().size() + " frases");
+        textViewUserQuantity.setText(String.format(totalPosts, user.getPosts().size()));
     }
 
 }

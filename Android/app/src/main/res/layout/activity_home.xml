@@ -154,7 +154,6 @@
                 android:layout_toRightOf="@+id/imageView_userProfile"
                 android:layout_toStartOf="@+id/textView_remaining"
                 android:gravity="center_vertical"
-                android:text="user"
                 android:textColor="#4a4a4a"
                 android:textStyle="bold" />
 
@@ -169,7 +168,6 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
-                android:text="100 characteres"
                 android:textColor="#4d9b9b9b"
                 android:textStyle="italic" />
 
@@ -184,9 +182,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:gravity="top"
-                android:hint="Escribe tu frase aquí"
+                android:hint="@string/write_post_hint"
                 android:imeOptions="actionGo"
-                android:maxLength="@integer/max_characters"
+                android:maxLength="@integer/max_characters_post"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textColorHint="#d9d9d9" />

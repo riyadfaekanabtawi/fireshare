@@ -3,6 +3,7 @@ package com.betomaluje.android.fireshare.services;
 import android.content.Context;
 
 import com.betomaluje.android.fireshare.models.User;
+import com.betomaluje.android.fireshare.models.VersionCheck;
 import com.betomaluje.android.fireshare.services.ServiceManager.ServiceManagerHandler;
 import com.betomaluje.android.fireshare.utils.UserPreferences;
 import com.google.gson.Gson;
@@ -22,6 +23,35 @@ import cz.msebera.android.httpclient.Header;
  * Created by betomaluje on 2/1/16.
  */
 public class UserManager {
+
+    public static void getVersion(final ServiceManagerHandler<VersionCheck> callback) {
+
+        FireShareRestClient.get("getVersion", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject json) {
+                super.onSuccess(statusCode, headers, json);
+
+                if (json != null) {
+                    Gson gson = new Gson();
+                    callback.loaded(gson.fromJson(json.toString(), VersionCheck.class));
+                } else {
+                    callback.error("null json");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                callback.error("null json");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                callback.error("null json");
+            }
+        });
+    }
 
     public static void login(final Context context, String name, String password, String tokenPush, final ServiceManagerHandler<User> callback) {
         RequestParams params = new RequestParams();

@@ -7,7 +7,7 @@
         android:id="@+id/imageView_userProfile"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon_user" />
 
     <TextView
         android:id="@+id/textView_userName"
@@ -43,7 +43,7 @@
         android:layout_toStartOf="@+id/imageView_hot"
         android:ellipsize="end"
         android:gravity="center_vertical"
-        android:maxLength="@integer/max_characters"
+        android:maxLength="@integer/max_characters_post"
         android:maxLines="4"
         android:textColor="#4a4a4a"
         android:textSize="18sp" />

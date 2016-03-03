@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_red"
-        android:text="@android:string/yes"
+        android:text="@android:string/ok"
         android:textColor="@android:color/white" />
 
     <ProgressBar

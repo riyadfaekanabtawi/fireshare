@@ -7,7 +7,7 @@ import com.loopj.android.http.RequestParams;
 /**
  * Created by betomaluje on 1/29/16.
  */
-public class FireShareRestClient {
+public final class FireShareRestClient {
 
     public static final String BASE_URL = "http://fireshare.anabtatec-mobile.com/";
 

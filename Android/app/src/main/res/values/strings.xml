@@ -34,11 +34,34 @@
 
     <string name="loading_text">LOADING</string>
 
-    <string name="date_weeks">%d weeks</string>
-    <string name="date_days">%d days ago</string>
-    <string name="date_hours">%d hs ago</string>
-    <string name="date_minutes">%d min ago</string>
+    <string name="user_total_posts">%s posts</string>
+    <string name="write_post_hint">Write your phrase here&#8230;</string>
+    <string name="write_comment_hint">Write your comment here&#8230;</string>
+
+    <plurals name="weeks">
+        <item quantity="one">%d week</item>
+        <item quantity="other">%d weeks</item>
+    </plurals>
+
+    <plurals name="days">
+        <item quantity="one">%d day ago</item>
+        <item quantity="other">%d days ago</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="one">%d hour ago</item>
+        <item quantity="other">%d hs ago</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="one">%d min ago</item>
+        <item quantity="other">%d mins ago</item>
+    </plurals>
+
     <string name="date_now">Just now</string>
+
+    <string name="new_version_title">New Version</string>
+    <string name="new_version_message">A new version of this app is available</string>
 
     <string name="remaining_characters">%d characters</string>
 

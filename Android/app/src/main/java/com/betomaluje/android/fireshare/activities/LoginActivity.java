@@ -3,7 +3,12 @@ package com.betomaluje.android.fireshare.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -31,13 +36,16 @@ import com.betomaluje.android.fireshare.dialogs.LoadingDialog;
 import com.betomaluje.android.fireshare.dialogs.TermsAndConditionsDialog;
 import com.betomaluje.android.fireshare.gcm.RegistrationIntentService;
 import com.betomaluje.android.fireshare.models.User;
+import com.betomaluje.android.fireshare.models.VersionCheck;
 import com.betomaluje.android.fireshare.services.ServiceManager;
 import com.betomaluje.android.fireshare.utils.SystemUtils;
 import com.betomaluje.android.fireshare.utils.UserPreferences;
+import com.crashlytics.android.Crashlytics;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * A login screen that offers login via email/password.
@@ -68,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 
         ((FireShareApplication) getApplication()).sendScreen("Vista Login");
 
@@ -89,17 +98,100 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        regId = UserPreferences.using(LoginActivity.this).getTokenPush();
+        dialog = new LoadingDialog(LoginActivity.this);
 
-        if (regId.isEmpty()) {
-            dialog = new LoadingDialog(LoginActivity.this);
-            dialog.show();
+        checkVersion();
+    }
 
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        } else {
-            startApp();
-        }
+    private void checkVersion() {
+        dialog.show();
+        ServiceManager.getInstance(LoginActivity.this).getVersion(new ServiceManager.ServiceManagerHandler<VersionCheck>() {
+            @Override
+            public void loaded(final VersionCheck data) {
+                super.loaded(data);
+
+                dialog.cancel();
+                dialog.dismiss();
+
+                PackageInfo pInfo = null;
+                try {
+                    pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                    int verCode = Integer.parseInt(pInfo.versionName.replace(".", ""));
+                    int serverVersion = Integer.parseInt(data.getVersion());
+
+                    if (serverVersion > verCode) {
+                        //newer version on play store
+                        Log.e("VERSION", "there's a newer version!");
+
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle(R.string.new_version_title)
+                                .setMessage(R.string.new_version_message)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        dialog.dismiss();
+                                        dialog.cancel();
+
+                                        try {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getUrl())));
+                                        } catch (Exception e) {
+                                        }
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert).show();
+                    } else {
+                        //OK
+                        Log.e("VERSION", "version OK");
+                        regId = UserPreferences.using(LoginActivity.this).getTokenPush();
+
+                        if (regId.isEmpty()) {
+                            dialog.show();
+                            Intent intent = new Intent(LoginActivity.this, RegistrationIntentService.class);
+                            startService(intent);
+                        } else {
+                            startApp();
+                        }
+                    }
+
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                    regId = UserPreferences.using(LoginActivity.this).getTokenPush();
+
+                    if (regId.isEmpty()) {
+                        dialog.show();
+
+                        Intent intent = new Intent(LoginActivity.this, RegistrationIntentService.class);
+                        startService(intent);
+                    } else {
+                        startApp();
+                    }
+                }
+            }
+
+            @Override
+            public void error(String error) {
+                super.error(error);
+                dialog.cancel();
+                dialog.dismiss();
+
+                regId = UserPreferences.using(LoginActivity.this).getTokenPush();
+
+                if (regId.isEmpty()) {
+                    dialog.show();
+
+                    Intent intent = new Intent(LoginActivity.this, RegistrationIntentService.class);
+                    startService(intent);
+                } else {
+                    startApp();
+                }
+            }
+        });
     }
 
     private void startApp() {

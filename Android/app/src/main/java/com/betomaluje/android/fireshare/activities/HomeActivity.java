@@ -183,7 +183,7 @@ public class HomeActivity extends AppCompatActivity {
                 .transform(new RoundedTransformation(8, 0))
                 .fit().centerCrop().placeholder(R.mipmap.icon_user).into(imageViewUserProfile);
 
-        totalCharacters = getResources().getInteger(R.integer.max_characters);
+        totalCharacters = getResources().getInteger(R.integer.max_characters_post);
         editTextPost.addTextChangedListener(mTextEditorWatcher);
 
         textViewRemaining.setText(String.format(getString(R.string.remaining_characters), totalCharacters));
@@ -530,6 +530,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
         } else {
+            toggleToolbarControls(false);
             new ErrorDialog(HomeActivity.this).show();
             posting = false;
             loadingDialog.dismiss();

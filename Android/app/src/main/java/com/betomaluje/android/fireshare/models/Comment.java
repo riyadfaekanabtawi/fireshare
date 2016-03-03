@@ -23,6 +23,8 @@ public class Comment {
     private String createdAt;
     @SerializedName("voted_string")
     private String votedString;
+    @Expose
+    private long likes;
 
     public long getId() {
         return id;
@@ -78,5 +80,13 @@ public class Comment {
 
     public boolean userDidDownVote() {
         return votedString.endsWith("down");
+    }
+
+    public long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(long likes) {
+        this.likes = likes;
     }
 }

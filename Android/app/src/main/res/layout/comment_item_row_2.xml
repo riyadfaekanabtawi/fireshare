@@ -22,7 +22,7 @@
             android:id="@+id/imageView_userProfile"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icon_user" />
 
         <TextView
             android:id="@+id/textView_userName"
@@ -37,7 +37,6 @@
             android:layout_toRightOf="@+id/imageView_userProfile"
             android:layout_toStartOf="@+id/textView_date"
             android:gravity="center_vertical"
-            android:text="autor"
             android:textColor="#4a4a4a"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -54,7 +53,6 @@
             android:layout_toLeftOf="@+id/imageView_hot"
             android:layout_toStartOf="@+id/imageView_hot"
             android:gravity="center_vertical"
-            android:text="fecha"
             android:textColor="#9b9b9b"
             android:textSize="12sp" />
 
@@ -90,12 +88,24 @@
             android:gravity="top"
             android:lines="2"
             android:maxEms="20"
-            android:maxLength="@integer/max_characters"
+            android:maxLength="@integer/max_characters_post"
             android:maxLines="2"
             android:minEms="20"
             android:minLines="2"
             android:textColor="#4a4a4a"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageButton_like"
+            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/imageButton_like"
+            android:layout_toLeftOf="@+id/imageButton_like"
+            android:layout_toStartOf="@+id/imageButton_like"
+            android:gravity="center_vertical"
+            android:textSize="12sp" />
 
         <ImageButton
             android:id="@+id/imageButton_like"
@@ -104,11 +114,14 @@
             android:layout_alignBottom="@+id/imageButton_dislike"
             android:layout_alignParentBottom="true"
             android:layout_alignTop="@+id/imageButton_dislike"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_toLeftOf="@+id/imageButton_dislike"
             android:layout_toStartOf="@+id/imageButton_dislike"
             android:background="@android:color/transparent"
-            android:scaleType="centerInside"
-            android:src="@mipmap/heart_off" />
+            android:padding="4dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/like_off" />
 
         <ImageButton
             android:id="@+id/imageButton_dislike"
@@ -117,13 +130,14 @@
             android:layout_alignBottom="@+id/imageButton_report"
             android:layout_alignParentBottom="true"
             android:layout_alignTop="@+id/imageButton_report"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_toLeftOf="@+id/imageButton_report"
             android:layout_toStartOf="@+id/imageButton_report"
             android:background="@android:color/transparent"
-            android:scaleType="centerInside"
-            android:src="@mipmap/heart_break_off" />
+            android:padding="4dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/dislike_off" />
 
         <ImageButton
             android:id="@+id/imageButton_report"
@@ -131,12 +145,13 @@
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
             android:layout_alignWithParentIfMissing="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_toLeftOf="@+id/imageButton_delete"
             android:layout_toStartOf="@+id/imageButton_delete"
             android:background="@android:color/transparent"
-            android:scaleType="centerInside"
+            android:padding="4dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/report" />
 
         <ImageButton
@@ -146,9 +161,10 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:background="@android:color/transparent"
+            android:padding="2dp"
             android:scaleType="centerInside"
             android:src="@mipmap/delete"
             android:visibility="visible" />

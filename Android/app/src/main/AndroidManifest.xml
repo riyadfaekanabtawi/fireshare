@@ -94,6 +94,9 @@
             android:value="@integer/google_play_services_version"
             tools:replace="android:value" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3fa706c9fc2d5acc570c09149a8c62619d0d004e" />
     </application>
 
 </manifest>

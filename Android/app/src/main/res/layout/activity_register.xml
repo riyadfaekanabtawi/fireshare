@@ -32,19 +32,24 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp" />
+                android:layout_marginTop="80dp"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/logo" />
 
             <ImageView
                 android:id="@+id/photo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
+                android:layout_marginTop="22dp"
+                android:background="@drawable/background_dialog"
+                android:padding="24dp"
+                android:src="@mipmap/icon_cam" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:theme="@style/EditTextLabel">
 
                 <EditText
                     android:id="@+id/email"
@@ -62,7 +67,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:theme="@style/EditTextLabel">
 
                 <EditText
                     android:id="@+id/name"
@@ -80,7 +86,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:theme="@style/EditTextLabel">
 
                 <EditText
                     android:id="@+id/password"
@@ -100,7 +107,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:theme="@style/EditTextLabel">
 
                 <EditText
                     android:id="@+id/password2"

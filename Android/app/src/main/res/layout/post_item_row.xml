@@ -22,7 +22,7 @@
             android:id="@+id/imageView_userProfile"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icon_user" />
 
         <TextView
             android:id="@+id/textView_userName"
@@ -30,30 +30,42 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageView_userProfile"
             android:layout_alignTop="@+id/imageView_userProfile"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/imageView_userProfile"
-            android:layout_toLeftOf="@+id/textView_date"
+            android:layout_toLeftOf="@+id/textView_postLikes"
             android:layout_toRightOf="@+id/imageView_userProfile"
-            android:layout_toStartOf="@+id/textView_date"
+            android:layout_toStartOf="@+id/textView_postLikes"
             android:gravity="center_vertical"
             android:textColor="#4a4a4a"
             android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView_date"
+            android:id="@+id/textView_postLikes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageView_userProfile"
+            android:layout_alignTop="@+id/imageView_userProfile"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/imageView_postLikes"
+            android:layout_toStartOf="@+id/imageView_postLikes"
+            android:gravity="center_vertical"
+            android:maxLength="@integer/max_characters_post"
+            android:textColor="@color/light_blue"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView_postLikes"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/imageView_userProfile"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:gravity="center_vertical"
-            android:textColor="#9b9b9b"
-            android:textSize="12sp" />
+            android:padding="4dp"
+            android:src="@mipmap/like_on" />
 
         <TextView
             android:id="@+id/textView_postText"
@@ -64,15 +76,26 @@
             android:layout_below="@+id/imageView_userProfile"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
-            android:maxLength="@integer/max_characters"
+            android:maxLength="@integer/max_characters_post"
+            android:text="ASDASDA"
             android:textColor="#4a4a4a"
             android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_postText"
+            android:gravity="center_vertical"
+            android:text="dada"
+            android:textColor="#9b9b9b"
+            android:textSize="12sp" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/textView_postText"
+            android:layout_below="@+id/textView_date"
             android:layout_marginTop="8dp"
             android:background="#f2f2f2" />
 

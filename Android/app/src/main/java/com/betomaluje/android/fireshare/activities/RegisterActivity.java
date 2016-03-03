@@ -127,8 +127,9 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     photo = bitmap;
-                    imageViewPhoto.setImageBitmap(bitmap);
+                    imageViewPhoto.setPadding(0, 0, 0, 0);
                     imageViewPhoto.setBackgroundColor(Color.TRANSPARENT);
+                    imageViewPhoto.setImageBitmap(bitmap);
                 }
 
                 @Override
@@ -181,8 +182,9 @@ public class RegisterActivity extends AppCompatActivity {
                         size, true);
 
                 if (photo != null) {
-                    imageViewPhoto.setImageBitmap(photo);
+                    imageViewPhoto.setPadding(0, 0, 0, 0);
                     imageViewPhoto.setBackgroundColor(Color.TRANSPARENT);
+                    imageViewPhoto.setImageBitmap(photo);
                 } else {
                     Toast.makeText(RegisterActivity.this, R.string.error_image_problem, Toast.LENGTH_LONG).show();
                 }

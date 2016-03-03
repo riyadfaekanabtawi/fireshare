@@ -47,15 +47,15 @@ public class DateUtils {
 
         //weeks
         if (weeksBetween >= 1) {
-            time = String.format(context.getString(R.string.date_weeks), weeksBetween);
+            time = String.format(context.getResources().getQuantityString(R.plurals.weeks, weeksBetween), weeksBetween);
         } else if (daysBetween > 0 && weeksBetween < 1) {
-            time = String.format(context.getString(R.string.date_days), daysBetween);
+            time = String.format(context.getResources().getQuantityString(R.plurals.days, daysBetween), daysBetween);
         } else {
             if (hoursBetween > 0) {
-                time = String.format(context.getString(R.string.date_hours), hoursBetween);
+                time = String.format(context.getResources().getQuantityString(R.plurals.hours, hoursBetween), hoursBetween);
             } else {
                 if (minutesBetween > 0) {
-                    time = String.format(context.getString(R.string.date_minutes), minutesBetween);
+                    time = String.format(context.getResources().getQuantityString(R.plurals.minutes, minutesBetween), minutesBetween);
                 } else {
                     time = context.getString(R.string.date_now);
                 }

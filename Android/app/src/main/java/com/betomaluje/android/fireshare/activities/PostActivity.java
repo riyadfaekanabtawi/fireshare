@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,6 +85,7 @@ public class PostActivity extends AppCompatActivity {
     private boolean posting = false;
     private LoadingDialog loadingDialog;
     private int clickedPosition = -1;
+    private int totalCharacters;
 
     private String idPost;
     private Post post;
@@ -145,7 +148,25 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+        totalCharacters = getResources().getInteger(R.integer.max_characters_comment);
+        editTextComment.addTextChangedListener(mTextEditorWatcher);
+
+        //textViewRemaining.setText(String.format(getString(R.string.remaining_characters), totalCharacters));
     }
+
+    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //This sets a textview to the current length
+            int remain = totalCharacters - s.length();
+            //textViewRemaining.setText(String.format(getString(R.string.remaining_characters), remain));
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     private void postComment() {
         SystemUtils.hideKeyboard(PostActivity.this);
@@ -232,8 +253,10 @@ public class PostActivity extends AppCompatActivity {
                     recyclerViewComments.setAdapter(adapter);
                 }
 
-                imageButtonReport.setVisibility(View.VISIBLE);
-                imageButtonDelete.setVisibility(data.getUser().getId() == user.getId() ? View.VISIBLE : View.GONE);
+                boolean isSameUser = data.getUser().getId() == user.getId();
+
+                imageButtonReport.setVisibility(isSameUser ? View.GONE : View.VISIBLE);
+                imageButtonDelete.setVisibility(isSameUser ? View.VISIBLE : View.GONE);
 
                 loadingDialog.dismiss();
                 loadingDialog.cancel();

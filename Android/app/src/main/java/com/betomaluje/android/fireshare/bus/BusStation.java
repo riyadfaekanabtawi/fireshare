@@ -8,7 +8,7 @@ import com.squareup.otto.Bus;
 /**
  * Created by betomaluje on 1/4/16.
  */
-public class BusStation {
+public final class BusStation {
 
     public static Bus bus = new Bus();
 
