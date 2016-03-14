@@ -17,25 +17,46 @@
 
 
 
-+(void)getAllPostsforScope:(NSString *)scope andHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
++(void)getAllPostsforScope:(NSString *)country andAddress:(NSString *)address andLatitude:(CGFloat)latitude andLongitude:(CGFloat)longitude andHandler:(void (^)(id))handler orErrorHandler:(void (^)(NSError *))errorHandler  {
+    
+
+    
+    NSDictionary *p = @{
+                        
+                        @"address" : address,@"country" : country,@"latitude": [NSNumber numberWithFloat:latitude],@"longitude" : [NSNumber numberWithFloat:longitude]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
     
     
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@posts?address=%@",BASE_URL,scope]];
-    
-    
-    [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
+    [manager GET:[NSString stringWithFormat:@"%@posts",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        
+        
         
         NSMutableArray *media = [NSMutableArray new];
-        for (NSDictionary *jsonDict in streamsData ) {
+        for (NSDictionary *jsonDict in responseObject ) {
             [media addObject:[[Posts alloc] initWithDictionary:jsonDict]];
         }
         
-       
+        
         handler([NSArray arrayWithArray:media]);
-    } orErrorHandler:^(NSError *err) {
-        errorHandler(err);
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
     }];
+   
 }
 
 

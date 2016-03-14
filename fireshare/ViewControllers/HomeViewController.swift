@@ -184,7 +184,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                         if placemarks!.count > 0 {
                             let pm = placemarks![0]
                             print(pm.locality)
-                            Services.createPostForUser(user.user_id, andTitleOfPost: self.frase_text_field.text + "...", andAdress: pm.locality! + ", " + pm.country!, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude),andCountry:pm.country, andHandler: { (response) -> Void in
+                            Services.createPostForUser(user.user_id, andTitleOfPost: self.frase_text_field.text + "...", andAdress: pm.locality!, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude),andCountry:pm.country, andHandler: { (response) -> Void in
                                 
                                 
                                 let tracker = GAI.sharedInstance().defaultTracker
@@ -381,8 +381,11 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                 if placemarks!.count > 0 {
                     let pm = placemarks![0]
                     print(pm.locality)
+                    
+            Services.getAllPostsforScope(pm.country, andAddress: pm.locality, andLatitude: CGFloat(currentLocation.coordinate.latitude), andLongitude: CGFloat(currentLocation.coordinate.longitude), andHandler: { (response) -> Void in
 
-                      Services.getAllPostsforScope(pm.country, andHandler: { (response) -> Void in
+
+
         
         self.hideError()
         self.posts_array = response as! [Posts]

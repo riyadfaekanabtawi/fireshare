@@ -13,7 +13,7 @@
 
 +(void)deleteComment:(NSNumber *)comment_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 
-+(void)getAllPostsforScope:(NSString *)scope andHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
++(void)getAllPostsforScope:(NSString *)country andAddress:(NSString *)address andLatitude:(CGFloat )latitude andLongitude:(CGFloat )longitude andHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 +(void)getRecipesCardsWithHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;
 
 +(void)getUserInfoWithId:(NSNumber *)user_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler;

@@ -79,11 +79,11 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
         let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
         
         if self.post.post_user.user_id == user.user_id{
-        
-        self.deletecon_width.constant = 40
+        self.denounceButton.hidden = true
+        self.deletecon_width.constant = 20
             
         }else{
-        
+        self.denounceButton.hidden = false
         self.deletecon_width.constant = 0
         }
 
