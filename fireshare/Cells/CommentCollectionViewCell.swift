@@ -9,7 +9,7 @@
 import UIKit
 protocol CommentDelegate{
     func CommentRefreshDetail()
-    
+ 
     
 }
 
@@ -18,6 +18,8 @@ class CommentCollectionViewCell: UICollectionViewCell {
     @IBOutlet var comment_owner_name: UILabel!
     @IBOutlet var date_label: UILabel!
     @IBOutlet var likeCountLabelWidth: NSLayoutConstraint!
+    @IBOutlet var denounceButtonWidth: NSLayoutConstraint!
+    @IBOutlet var denounceButtonLeading: NSLayoutConstraint!
     @IBOutlet var likesCountLabel: UILabel!
     @IBOutlet var comment_owner_avatar: UIImageView!
     @IBOutlet var fireIcon: UIImageView!
@@ -58,12 +60,14 @@ class CommentCollectionViewCell: UICollectionViewCell {
         let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
         if (self.trashIcon_width != nil){
         if user.user_id == comment.user_owner.user_id{
-            self.denounceButton.hidden = true
+            self.denounceButtonWidth.constant = 0
+            self.denounceButtonLeading.constant = 0
             self.trashIcon_width.constant = 20
         
         }else{
-            self.denounceButton.hidden = false
+            self.denounceButtonWidth.constant = 20
          self.trashIcon_width.constant = 0
+            self.denounceButtonLeading.constant = 12
         
         }
         }
@@ -300,4 +304,14 @@ class CommentCollectionViewCell: UICollectionViewCell {
                 
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

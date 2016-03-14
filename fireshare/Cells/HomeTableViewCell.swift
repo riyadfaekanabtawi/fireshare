@@ -16,7 +16,8 @@ protocol HomeCellDelegate{
 
 class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
 
-    
+    @IBOutlet var likesSum: UILabel!
+  @IBOutlet var likesSumFace: UIImageView!
     var delegate:HomeCellDelegate! = nil
     @IBOutlet var post_title_label: UILabel!
     @IBOutlet var tableView_height: NSLayoutConstraint!
@@ -52,6 +53,7 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         self.commentCountLabel.font = UIFont(name: FONT_BOLD, size: self.commentCountLabel.font.pointSize)
         self.timeLabel.font = UIFont(name: FONT_REGULAR, size: self.timeLabel.font.pointSize)
         self.post_title_label.font = UIFont(name: FONT_REGULAR, size: self.post_title_label.font.pointSize)
+         self.likesSum.font = UIFont(name: FONT_BOLD, size: self.likesSum.font.pointSize)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -63,6 +65,18 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
     
     func displayPost(post:Posts, atindex:NSIndexPath){
         
+        
+        
+        if post.post_likes == 0{
+        
+        self.likesSum.hidden = true
+        self.likesSumFace.hidden = true
+        }else{
+            self.likesSum.hidden = false
+            self.likesSumFace.hidden = false
+        
+        }
+        self.likesSum.text = "+\(post.post_likes)"
         self.selectedPost = post
         if  post.seconds_since < 60{
             
@@ -244,4 +258,24 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         
         self.delegate.showUser(self.selectedPost.post_user)
     }
+    
+    
+    
+    
+    @IBAction func firstUserTouchUpInside(sender: UIButton) {
+        
+        self.delegate.showUser(self.array_comments[0].user_owner)
+    }
+    
+    @IBAction func secondUserTouchUpInside(sender: UIButton) {
+          self.delegate.showUser(self.array_comments[1].user_owner)
+    }
+    
+    @IBAction func thirdUserTouchUpInside(sender: UIButton) {
+          self.delegate.showUser(self.array_comments[2].user_owner)
+    }
+    
+    
+    
+    
 }

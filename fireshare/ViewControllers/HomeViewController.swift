@@ -307,7 +307,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
         if post.comments.count != 0{
             
-            return 260
+            return 265
         }else{
             
             return 100
