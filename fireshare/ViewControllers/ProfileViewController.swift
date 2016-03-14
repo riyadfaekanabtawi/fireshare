@@ -7,12 +7,17 @@
 //
 
 import UIKit
+protocol ProfileViewControllerDelegate{
+    func logout()
+    
+    
+}
 
 class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-  
+  @IBOutlet var signOutView: UIView!
     
- 
-    
+    var delegate:ProfileViewControllerDelegate! = nil
+    @IBOutlet var signOutLabel: UILabel!
     @IBOutlet var viewTitle: UILabel!
     var alert:SCLAlertView!
     @IBOutlet var posts_tableView: UITableView!
@@ -48,8 +53,15 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
         self.callUserProfileService()
     }
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        
+        
+        self.signOutView.layer.borderWidth = 1
+        self.signOutView.layer.borderColor = UIColor(red: 222.0/255.0, green: 222.0, blue: 222.0/255.0, alpha: 1).CGColor
+        self.signOutView.layer.masksToBounds = true
+        self.signOutLabel.text = NSLocalizedString("Sign out", comment: "")
+        super.viewDidLoad()
+        self.signOutLabel.font = UIFont(name: FONT_BOLD, size: self.signOutLabel.font.pointSize)
         self.posts_tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         let tracker  = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value:"Vista Detalle Usuario")
@@ -193,12 +205,10 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             
         }
+      
         
-        
-        
-        self.posts_array = self.user.recipes as! [Posts]
-        
-        if (self.posts_array.count != 0){
+        if (self.user.recipes.count != 0){
+              self.posts_array = self.user.recipes as! [Posts]
             self.posts_tableView.hidden = false
             self.posts_tableView.reloadData()
         
@@ -267,14 +277,11 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
         
        
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func logoutTouchUpInside(sender: UIButton) {
+         self.navigationController?.popViewControllerAnimated(true)
+        self.delegate.logout()
+       
+        
     }
-    */
-
 }

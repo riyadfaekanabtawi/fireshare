@@ -161,20 +161,35 @@
 
 
 +(void)getUserInfoWithId:(NSNumber *)user_id AndHandler:(void (^)(id)) handler orErrorHandler:(void (^)(NSError *)) errorHandler {
+    NSDictionary *p = @{
+                        
+                        @"id" : user_id};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = YES;
     
     
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@user?id=%@",BASE_URL,user_id]];
-    
-    
-    [[[JSONServiceParser alloc] init] getJSONFromUrl:url withHandler:^(id streamsData) {
+    [manager GET:[NSString stringWithFormat:@"%@user",BASE_URL] parameters:p success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         
-        Users *user = [[Users alloc] initWithDictionary:streamsData];
+        
+        Users *user = [[Users alloc] initWithDictionary:responseObject];
         handler(user);
-    } orErrorHandler:^(NSError *err) {
-        errorHandler(err);
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+        
+        errorHandler(error);
+        
+        
     }];
+    
+    
+
+  
 }
 
 

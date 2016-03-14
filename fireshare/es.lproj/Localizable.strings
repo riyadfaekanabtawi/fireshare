@@ -8,7 +8,7 @@
 
 
 "Wrong email or password. Please try again." = "Email o contraseña incorrecto. Por favor intente nuevamente";
-
+"Sign out" = "Cerrar sesión";
 "Field cannot be empty." = "El campo no puede estar vacío";
 
 "Tap to refresh" = "Toca para reintentar";

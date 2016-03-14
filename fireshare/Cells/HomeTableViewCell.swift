@@ -17,7 +17,7 @@ protocol HomeCellDelegate{
 class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
 
     @IBOutlet var likesSum: UILabel!
-  @IBOutlet var likesSumFace: UIImageView!
+    @IBOutlet var likesSumFace: UIImageView!
     var delegate:HomeCellDelegate! = nil
     @IBOutlet var post_title_label: UILabel!
     @IBOutlet var tableView_height: NSLayoutConstraint!

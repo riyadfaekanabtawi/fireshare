@@ -649,17 +649,6 @@
                                                     <action selector="psot:" destination="vb8-0H-6fT" eventType="touchUpInside" id="Lhj-H0-mEs"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miU-Xr-PYD">
-                                                <rect key="frame" x="0.0" y="15" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="tqg-bL-9PV"/>
-                                                    <constraint firstAttribute="width" constant="50" id="wkT-gt-QQR"/>
-                                                </constraints>
-                                                <state key="normal" image="logout.png"/>
-                                                <connections>
-                                                    <action selector="logoutTouchUpInside:" destination="vb8-0H-6fT" eventType="touchUpInside" id="f0x-0t-PaE"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -667,10 +656,8 @@
                                             <constraint firstAttribute="trailing" secondItem="5Yr-XO-bOV" secondAttribute="trailing" id="A43-wc-ZAo"/>
                                             <constraint firstAttribute="height" constant="64" id="JnG-jY-WAh"/>
                                             <constraint firstItem="cBY-fx-7uj" firstAttribute="centerX" secondItem="yvH-Fp-GJu" secondAttribute="centerX" id="Kir-sH-Hhe"/>
-                                            <constraint firstItem="miU-Xr-PYD" firstAttribute="leading" secondItem="yvH-Fp-GJu" secondAttribute="leading" id="Qxb-bA-AC4"/>
                                             <constraint firstItem="WPN-Qg-bpT" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="15" id="RQ0-nA-ith"/>
                                             <constraint firstItem="5Yr-XO-bOV" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" id="UnS-Ie-SCU"/>
-                                            <constraint firstItem="miU-Xr-PYD" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="15" id="dBH-w0-Hb5"/>
                                             <constraint firstAttribute="bottom" secondItem="5Yr-XO-bOV" secondAttribute="bottom" id="ftg-Rs-ejo"/>
                                             <constraint firstItem="cBY-fx-7uj" firstAttribute="centerY" secondItem="yvH-Fp-GJu" secondAttribute="centerY" constant="7" id="k8d-jn-04m"/>
                                             <constraint firstItem="5Yr-XO-bOV" firstAttribute="leading" secondItem="yvH-Fp-GJu" secondAttribute="leading" id="ntS-LF-SAV"/>
@@ -1165,7 +1152,6 @@
                         <outlet property="navView" destination="5Yr-XO-bOV" id="LQ3-sv-5Th"/>
                         <outlet property="posts_tableView" destination="sda-14-FTa" id="M8a-lM-wcz"/>
                         <outlet property="send_button_post" destination="WPN-Qg-bpT" id="vlm-et-CXc"/>
-                        <outlet property="sigoutButton" destination="miU-Xr-PYD" id="ETH-PR-otD"/>
                         <outlet property="user_main_avatar" destination="n1m-kQ-Zwn" id="a7n-25-pQ1"/>
                         <outlet property="user_main_name" destination="FRJ-oI-yO3" id="qnI-2u-WaW"/>
                         <segue destination="Aee-dM-Lxx" kind="show" identifier="postDetail" id="3Cz-SL-VFL"/>
@@ -1727,7 +1713,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JOy-3j-U21">
-                                        <rect key="frame" x="0.0" y="134" width="320" height="434"/>
+                                        <rect key="frame" x="0.0" y="134" width="320" height="384"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -2061,19 +2047,66 @@
                                             <constraint firstAttribute="bottom" secondItem="7YH-B0-Nft" secondAttribute="bottom" id="zi2-Tw-VIq"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2N-vF-1Oq">
+                                        <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconLogout.png" translatesAutoresizingMaskIntoConstraints="NO" id="rwE-GE-IkE">
+                                                <rect key="frame" x="183" y="19" width="14" height="13"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="14" id="wMt-sF-PHt"/>
+                                                    <constraint firstAttribute="height" constant="13" id="wo4-W4-lrS"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLn-Bd-PgB">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="logoutTouchUpInside:" destination="Jw9-ni-ftU" eventType="touchUpInside" id="RdG-cg-CbB"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvJ-Rn-EVD">
+                                                <rect key="frame" x="115" y="14" width="66" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="66" id="LMC-p5-L3k"/>
+                                                    <constraint firstAttribute="height" constant="21" id="t4e-iP-yGd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.7843137255" green="0.2666666667" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="pvJ-Rn-EVD" firstAttribute="centerY" secondItem="B2N-vF-1Oq" secondAttribute="centerY" id="3oW-Rc-KFC"/>
+                                            <constraint firstItem="rwE-GE-IkE" firstAttribute="leading" secondItem="pvJ-Rn-EVD" secondAttribute="trailing" constant="2" id="El2-Rg-YvJ"/>
+                                            <constraint firstItem="oLn-Bd-PgB" firstAttribute="top" secondItem="B2N-vF-1Oq" secondAttribute="top" id="Q8E-7j-OdQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="oLn-Bd-PgB" secondAttribute="trailing" id="SRm-ea-7ZH"/>
+                                            <constraint firstItem="oLn-Bd-PgB" firstAttribute="leading" secondItem="B2N-vF-1Oq" secondAttribute="leading" id="Tp8-Mj-Bi3"/>
+                                            <constraint firstAttribute="height" constant="50" id="dsE-82-nyj"/>
+                                            <constraint firstAttribute="bottom" secondItem="oLn-Bd-PgB" secondAttribute="bottom" id="gsG-cd-v1e"/>
+                                            <constraint firstItem="pvJ-Rn-EVD" firstAttribute="centerX" secondItem="B2N-vF-1Oq" secondAttribute="centerX" constant="-12" id="ha0-Ac-8z4"/>
+                                            <constraint firstItem="rwE-GE-IkE" firstAttribute="top" secondItem="B2N-vF-1Oq" secondAttribute="top" constant="19" id="kOE-nZ-Ggc"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="JOy-3j-U21" secondAttribute="bottom" id="1fU-38-i4w"/>
+                                    <constraint firstAttribute="bottom" secondItem="JOy-3j-U21" secondAttribute="bottom" constant="50" id="1fU-38-i4w"/>
                                     <constraint firstItem="NXY-fN-xXr" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="3mq-hg-KHX"/>
                                     <constraint firstAttribute="trailing" secondItem="D2A-Cj-l4F" secondAttribute="trailing" id="6Cz-aI-epO"/>
                                     <constraint firstAttribute="trailing" secondItem="JOy-3j-U21" secondAttribute="trailing" id="CSh-25-E7z"/>
                                     <constraint firstItem="D2A-Cj-l4F" firstAttribute="top" secondItem="NXY-fN-xXr" secondAttribute="bottom" id="GpU-WN-9VR"/>
+                                    <constraint firstAttribute="bottom" secondItem="B2N-vF-1Oq" secondAttribute="bottom" id="JcU-Q2-Vq0"/>
                                     <constraint firstItem="JOy-3j-U21" firstAttribute="top" secondItem="D2A-Cj-l4F" secondAttribute="bottom" constant="-20" id="KEf-sj-p61"/>
                                     <constraint firstAttribute="trailing" secondItem="NXY-fN-xXr" secondAttribute="trailing" id="R35-zf-Kno"/>
                                     <constraint firstItem="JOy-3j-U21" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="Vvk-oA-BkD"/>
                                     <constraint firstItem="D2A-Cj-l4F" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="YIM-DF-WeH"/>
                                     <constraint firstItem="NXY-fN-xXr" firstAttribute="top" secondItem="7dM-wI-x3t" secondAttribute="top" id="gc8-eT-2XV"/>
+                                    <constraint firstAttribute="trailing" secondItem="B2N-vF-1Oq" secondAttribute="trailing" id="hql-rM-cxe"/>
+                                    <constraint firstItem="B2N-vF-1Oq" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="qGg-Hx-td0"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2094,6 +2127,8 @@
                         <outlet property="post_user_avatar" destination="nU9-Nm-Hhy" id="IdG-Jb-Rck"/>
                         <outlet property="post_user_name" destination="lm0-3p-FtQ" id="oXL-WF-h5J"/>
                         <outlet property="posts_tableView" destination="JOy-3j-U21" id="d03-Mf-iSe"/>
+                        <outlet property="signOutLabel" destination="pvJ-Rn-EVD" id="2ZM-cq-E44"/>
+                        <outlet property="signOutView" destination="B2N-vF-1Oq" id="mB7-Y5-gH0"/>
                         <outlet property="updateButton" destination="CC2-I6-axm" id="Nvl-Ck-Wjk"/>
                         <outlet property="viewTitle" destination="gnd-gL-WE8" id="7Hz-gd-A9I"/>
                         <segue destination="Aee-dM-Lxx" kind="show" identifier="postDetail" id="wT9-Mj-ZWh"/>
@@ -2115,11 +2150,11 @@
         <image name="fireshare.png" width="214" height="37"/>
         <image name="iconDownOff.png" width="40" height="40"/>
         <image name="iconDownOn.png" width="40" height="40"/>
+        <image name="iconLogout.png" width="14" height="13"/>
         <image name="iconSend.png" width="34" height="20"/>
         <image name="iconSendWrite.png" width="34" height="20"/>
         <image name="iconUpOff.png" width="40" height="40"/>
         <image name="iconUpOn.png" width="40" height="40"/>
-        <image name="logout.png" width="20" height="20"/>
         <image name="rectangle99.png" width="375" height="81"/>
         <image name="report.png" width="40" height="40"/>
         <image name="shapeShapeShape.png" width="32" height="27"/>

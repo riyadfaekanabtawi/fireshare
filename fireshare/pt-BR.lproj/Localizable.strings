@@ -15,7 +15,7 @@
  Copyright © 2016 Riyad Anabtawi. All rights reserved.
  */
 
-
+"Sign out" = "Sair";
 "Wrong email or password. Please try again." = "Email ou senha incorretos. Por favor, tente novamente.";
 
 "Field cannot be empty." = "O campo não pode estar vazio.";
