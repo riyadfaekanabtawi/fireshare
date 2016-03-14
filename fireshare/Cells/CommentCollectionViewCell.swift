@@ -58,10 +58,11 @@ class CommentCollectionViewCell: UICollectionViewCell {
         let user = NSKeyedUnarchiver.unarchiveObjectWithData(defaults.objectForKey("user_main")as! NSData) as! Users
         if (self.trashIcon_width != nil){
         if user.user_id == comment.user_owner.user_id{
-        
-            self.trashIcon_width.constant = 34
+            self.denounceButton.hidden = true
+            self.trashIcon_width.constant = 20
         
         }else{
+            self.denounceButton.hidden = false
          self.trashIcon_width.constant = 0
         
         }
