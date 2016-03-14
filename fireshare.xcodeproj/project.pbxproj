@@ -152,9 +152,10 @@
 		EB88A6641C96FB8800EB6F24 /* report.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A6601C96FB8800EB6F24 /* report.png */; };
 		EB88A6651C96FB8800EB6F24 /* report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A6611C96FB8800EB6F24 /* report@2x.png */; };
 		EB88A6661C96FB8800EB6F24 /* report@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A6621C96FB8800EB6F24 /* report@3x.png */; };
-		EB88A66A1C971FE500EB6F24 /* iconLogout.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A6671C971FE500EB6F24 /* iconLogout.png */; };
-		EB88A66B1C971FE500EB6F24 /* iconLogout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A6681C971FE500EB6F24 /* iconLogout@2x.png */; };
-		EB88A66C1C971FE500EB6F24 /* iconLogout@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A6691C971FE500EB6F24 /* iconLogout@3x.png */; };
+		EB88A6701C974B8F00EB6F24 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A66D1C974B8F00EB6F24 /* logout.png */; };
+		EB88A6711C974B8F00EB6F24 /* logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A66E1C974B8F00EB6F24 /* logout@2x.png */; };
+		EB88A6721C974B8F00EB6F24 /* logout@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB88A66F1C974B8F00EB6F24 /* logout@3x.png */; };
+		EB88A6771C974C6400EB6F24 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB88A6761C974C6400EB6F24 /* SplashViewController.m */; };
 		EB8A24D21C6541770052BA69 /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8A24CF1C6541770052BA69 /* trash.png */; };
 		EB8A24D31C6541770052BA69 /* trash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8A24D01C6541770052BA69 /* trash@2x.png */; };
 		EB8A24D41C6541770052BA69 /* trash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8A24D11C6541770052BA69 /* trash@3x.png */; };
@@ -391,9 +392,11 @@
 		EB88A6601C96FB8800EB6F24 /* report.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = report.png; sourceTree = "<group>"; };
 		EB88A6611C96FB8800EB6F24 /* report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "report@2x.png"; sourceTree = "<group>"; };
 		EB88A6621C96FB8800EB6F24 /* report@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "report@3x.png"; sourceTree = "<group>"; };
-		EB88A6671C971FE500EB6F24 /* iconLogout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconLogout.png; sourceTree = "<group>"; };
-		EB88A6681C971FE500EB6F24 /* iconLogout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconLogout@2x.png"; sourceTree = "<group>"; };
-		EB88A6691C971FE500EB6F24 /* iconLogout@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconLogout@3x.png"; sourceTree = "<group>"; };
+		EB88A66D1C974B8F00EB6F24 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		EB88A66E1C974B8F00EB6F24 /* logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logout@2x.png"; sourceTree = "<group>"; };
+		EB88A66F1C974B8F00EB6F24 /* logout@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logout@3x.png"; sourceTree = "<group>"; };
+		EB88A6751C974C6400EB6F24 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
+		EB88A6761C974C6400EB6F24 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
 		EB8A24CF1C6541770052BA69 /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
 		EB8A24D01C6541770052BA69 /* trash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash@2x.png"; sourceTree = "<group>"; };
 		EB8A24D11C6541770052BA69 /* trash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash@3x.png"; sourceTree = "<group>"; };
@@ -640,6 +643,8 @@
 				EB0490A41C60325E00FA53C8 /* PostDetailViewController.swift */,
 				EB2626051C69131B00A8A7AA /* TermsViewController.swift */,
 				EB2626471C6A1C5200A8A7AA /* ProfileViewController.swift */,
+				EB88A6751C974C6400EB6F24 /* SplashViewController.h */,
+				EB88A6761C974C6400EB6F24 /* SplashViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -647,9 +652,9 @@
 		EB34F5221C3D6FC3004B6AB2 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				EB88A6671C971FE500EB6F24 /* iconLogout.png */,
-				EB88A6681C971FE500EB6F24 /* iconLogout@2x.png */,
-				EB88A6691C971FE500EB6F24 /* iconLogout@3x.png */,
+				EB88A66D1C974B8F00EB6F24 /* logout.png */,
+				EB88A66E1C974B8F00EB6F24 /* logout@2x.png */,
+				EB88A66F1C974B8F00EB6F24 /* logout@3x.png */,
 				EB88A65F1C96FB8800EB6F24 /* heartBOn@3x.png */,
 				EB88A6601C96FB8800EB6F24 /* report.png */,
 				EB88A6611C96FB8800EB6F24 /* report@2x.png */,
@@ -885,7 +890,6 @@
 				EB76D10B1C4558D1003E4732 /* Icon-60@3x.png in Resources */,
 				EB26262F1C69528900A8A7AA /* SBTVLoaderView_iPhone.xib in Resources */,
 				EB0490B51C6117BF00FA53C8 /* backWriteBig@3x.png in Resources */,
-				EB88A66B1C971FE500EB6F24 /* iconLogout@2x.png in Resources */,
 				EB76D10E1C4558D1003E4732 /* Icon-83.5@2x.png in Resources */,
 				EB76D0FA1C455883003E4732 /* Icon-Small@3x.png in Resources */,
 				EB98482B1C6150F9008BC7E6 /* icon_reload@2x.png in Resources */,
@@ -897,6 +901,7 @@
 				EBCA1D3A1C6387EF00ED705C /* iconUpOn.png in Resources */,
 				EB2626101C6917FD00A8A7AA /* heartOn.png in Resources */,
 				EB34F53A1C3D6FF6004B6AB2 /* add photo@3x.png in Resources */,
+				EB88A6711C974B8F00EB6F24 /* logout@2x.png in Resources */,
 				EB76D1131C45719B003E4732 /* GothamBoldItalic.ttf in Resources */,
 				EB76D1081C4558D1003E4732 /* Icon-40@2x.png in Resources */,
 				EB0490A31C5FD81500FA53C8 /* iconSend@3x.png in Resources */,
@@ -917,6 +922,7 @@
 				EB76D0E01C4551E6003E4732 /* gotham-black.ttf in Resources */,
 				EB0490BA1C61182E00FA53C8 /* rectangle99@2x.png in Resources */,
 				EB76D0D11C454B2F003E4732 /* backgroundColor@2x.png in Resources */,
+				EB88A6721C974B8F00EB6F24 /* logout@3x.png in Resources */,
 				EB26261C1C69191200A8A7AA /* heartBOn@2x.png in Resources */,
 				EB88A6631C96FB8800EB6F24 /* heartBOn@3x.png in Resources */,
 				EBCA1D321C6387EF00ED705C /* iconDownOff@2x.png in Resources */,
@@ -944,6 +950,7 @@
 				EB0490AB1C61178F00FA53C8 /* iconSendWrite.png in Resources */,
 				EBCA1D331C6387EF00ED705C /* iconDownOff@3x.png in Resources */,
 				EB76D11F1C458470003E4732 /* iconMenu@3x.png in Resources */,
+				EB88A6701C974B8F00EB6F24 /* logout.png in Resources */,
 				EBCA1D371C6387EF00ED705C /* iconUpOff.png in Resources */,
 				EB26263A1C69543600A8A7AA /* fire1@2x.png in Resources */,
 				EB76D0F31C455883003E4732 /* Icon-60@2x.png in Resources */,
@@ -952,7 +959,6 @@
 				EBCA1D3B1C6387EF00ED705C /* iconUpOn@2x.png in Resources */,
 				EB98482C1C6150F9008BC7E6 /* icon_reload@3x.png in Resources */,
 				EBFCCE8B1C59457200095B58 /* icon_refresh_top@3x.png in Resources */,
-				EB88A66C1C971FE500EB6F24 /* iconLogout@3x.png in Resources */,
 				EB76D0E31C4551E6003E4732 /* GothamMedium.otf in Resources */,
 				EBFCCE971C597A8000095B58 /* iconWrite.png in Resources */,
 				EB76D0F51C455883003E4732 /* Icon-76.png in Resources */,
@@ -998,7 +1004,6 @@
 				EB2626111C6917FD00A8A7AA /* heartOn@2x.png in Resources */,
 				EB26264E1C6AA69D00A8A7AA /* update_icon@2x.png in Resources */,
 				EB34F4A31C3D6AAD004B6AB2 /* Main.storyboard in Resources */,
-				EB88A66A1C971FE500EB6F24 /* iconLogout.png in Resources */,
 				EB76D10D1C4558D1003E4732 /* Icon-76@2x.png in Resources */,
 				EBFCCE931C5947D000095B58 /* backWrite@3x.png in Resources */,
 				EB34F52D1C3D6FC3004B6AB2 /* back@2x.png in Resources */,
@@ -1030,6 +1035,7 @@
 				EB34F5021C3D6B30004B6AB2 /* SDImageCache.m in Sources */,
 				EB34F5181C3D6B62004B6AB2 /* Users.m in Sources */,
 				EB04909D1C5FC33300FA53C8 /* CommentCollectionViewCell.swift in Sources */,
+				EB88A6771C974C6400EB6F24 /* SplashViewController.m in Sources */,
 				EBF2FE501C3D8AB1009C8C3F /* HomeTableViewCell.swift in Sources */,
 				EB34F4FC1C3D6B30004B6AB2 /* AFURLRequestSerialization.m in Sources */,
 				EB34F4F81C3D6B30004B6AB2 /* AFHTTPSessionManager.m in Sources */,

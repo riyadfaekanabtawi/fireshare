@@ -27,7 +27,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ijp-ab-H4b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-603" y="339"/>
+            <point key="canvasLocation" x="-904" y="349"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fKO-2J-Xc0">
@@ -43,12 +43,58 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="AXI-1o-Szh" kind="relationship" relationship="rootViewController" id="h3J-GT-d0h"/>
+                        <segue destination="SZG-WU-dCR" kind="relationship" relationship="rootViewController" id="fUA-Xy-SfB"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Cy-6e-A3C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-211" y="339"/>
+            <point key="canvasLocation" x="-556" y="349"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="oYA-j0-PFt">
+            <objects>
+                <viewController id="SZG-WU-dCR" customClass="SplashViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Tvi-gN-UpM"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZsI-ke-Fa3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aKA-io-6MH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="backgroundColor.png" translatesAutoresizingMaskIntoConstraints="NO" id="2gN-iw-Vxl">
+                                <rect key="frame" x="-140" y="-16" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fireshare.png" translatesAutoresizingMaskIntoConstraints="NO" id="QS5-t3-Rsb">
+                                <rect key="frame" x="53" y="272" width="215" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="Z5G-Hq-2M2"/>
+                                    <constraint firstAttribute="width" constant="215" id="fxG-tU-JcD"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QS5-t3-Rsb" firstAttribute="centerX" secondItem="aKA-io-6MH" secondAttribute="centerX" id="1RJ-MW-QMO"/>
+                            <constraint firstItem="2gN-iw-Vxl" firstAttribute="top" secondItem="aKA-io-6MH" secondAttribute="top" id="CsM-4c-LK1"/>
+                            <constraint firstAttribute="trailing" secondItem="2gN-iw-Vxl" secondAttribute="trailing" id="IDa-jP-SJ9"/>
+                            <constraint firstItem="2gN-iw-Vxl" firstAttribute="leading" secondItem="aKA-io-6MH" secondAttribute="leading" id="PYC-JA-XW3"/>
+                            <constraint firstAttribute="bottom" secondItem="2gN-iw-Vxl" secondAttribute="bottom" id="eNb-9T-fIc"/>
+                            <constraint firstItem="QS5-t3-Rsb" firstAttribute="centerY" secondItem="aKA-io-6MH" secondAttribute="centerY" id="j4s-sZ-tll"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Mez-16-0pL"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <segue destination="AXI-1o-Szh" kind="show" identifier="login" id="sWW-hS-cNt"/>
+                        <segue destination="vb8-0H-6fT" kind="show" identifier="homeCache" id="0Ln-q8-2K7"/>
+                        <segue destination="C6c-Qg-oDc" kind="presentation" identifier="terms" id="mNd-kC-58I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Qp-Ct-w7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-214" y="349"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="l94-nB-PU1">
@@ -603,7 +649,6 @@
                         <outlet property="usernameView" destination="OWl-qq-e5u" id="ks5-dI-IBK"/>
                         <segue destination="RZ3-iK-9gK" kind="show" identifier="signup" id="WXe-0b-j1X"/>
                         <segue destination="vb8-0H-6fT" kind="show" identifier="home" id="tuF-Sd-j5c"/>
-                        <segue destination="C6c-Qg-oDc" kind="presentation" identifier="terms" id="oDf-46-sjB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ku3-AA-uuy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -649,13 +694,26 @@
                                                     <action selector="psot:" destination="vb8-0H-6fT" eventType="touchUpInside" id="Lhj-H0-mEs"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xo-Jf-cTZ">
+                                                <rect key="frame" x="1" y="12" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="dCI-RM-ft1"/>
+                                                    <constraint firstAttribute="height" constant="50" id="wjo-Ve-1Og"/>
+                                                </constraints>
+                                                <state key="normal" image="logout.png"/>
+                                                <connections>
+                                                    <action selector="logoutTouchUpInside:" destination="vb8-0H-6fT" eventType="touchUpInside" id="ieg-jo-EKZ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="WPN-Qg-bpT" secondAttribute="trailing" constant="13" id="07c-20-XTD"/>
+                                            <constraint firstItem="3xo-Jf-cTZ" firstAttribute="leading" secondItem="yvH-Fp-GJu" secondAttribute="leading" constant="1" id="0eU-7c-ru2"/>
                                             <constraint firstAttribute="trailing" secondItem="5Yr-XO-bOV" secondAttribute="trailing" id="A43-wc-ZAo"/>
                                             <constraint firstAttribute="height" constant="64" id="JnG-jY-WAh"/>
                                             <constraint firstItem="cBY-fx-7uj" firstAttribute="centerX" secondItem="yvH-Fp-GJu" secondAttribute="centerX" id="Kir-sH-Hhe"/>
+                                            <constraint firstItem="3xo-Jf-cTZ" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="12" id="Ly9-mt-a0t"/>
                                             <constraint firstItem="WPN-Qg-bpT" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="15" id="RQ0-nA-ith"/>
                                             <constraint firstItem="5Yr-XO-bOV" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" id="UnS-Ie-SCU"/>
                                             <constraint firstAttribute="bottom" secondItem="5Yr-XO-bOV" secondAttribute="bottom" id="ftg-Rs-ejo"/>
@@ -756,11 +814,11 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="305"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YdU-vk-GPm">
-                                                            <rect key="frame" x="12" y="0.0" width="296" height="288"/>
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YdU-vk-GPm">
+                                                            <rect key="frame" x="12" y="0.0" width="296" height="293"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cardFeed.png" translatesAutoresizingMaskIntoConstraints="NO" id="tbC-ms-XpE">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="296" height="288"/>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardFeed.png" translatesAutoresizingMaskIntoConstraints="NO" id="tbC-ms-XpE">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="296" height="293"/>
                                                                 </imageView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="OBV-G9-WDA">
                                                                     <rect key="frame" x="10" y="10" width="25" height="25"/>
@@ -1152,6 +1210,7 @@
                         <outlet property="navView" destination="5Yr-XO-bOV" id="LQ3-sv-5Th"/>
                         <outlet property="posts_tableView" destination="sda-14-FTa" id="M8a-lM-wcz"/>
                         <outlet property="send_button_post" destination="WPN-Qg-bpT" id="vlm-et-CXc"/>
+                        <outlet property="sigoutButton" destination="3xo-Jf-cTZ" id="aqX-0Z-09e"/>
                         <outlet property="user_main_avatar" destination="n1m-kQ-Zwn" id="a7n-25-pQ1"/>
                         <outlet property="user_main_name" destination="FRJ-oI-yO3" id="qnI-2u-WaW"/>
                         <segue destination="Aee-dM-Lxx" kind="show" identifier="postDetail" id="3Cz-SL-VFL"/>
@@ -1713,7 +1772,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JOy-3j-U21">
-                                        <rect key="frame" x="0.0" y="134" width="320" height="384"/>
+                                        <rect key="frame" x="0.0" y="134" width="320" height="434"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -2047,66 +2106,19 @@
                                             <constraint firstAttribute="bottom" secondItem="7YH-B0-Nft" secondAttribute="bottom" id="zi2-Tw-VIq"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2N-vF-1Oq">
-                                        <rect key="frame" x="0.0" y="518" width="320" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconLogout.png" translatesAutoresizingMaskIntoConstraints="NO" id="rwE-GE-IkE">
-                                                <rect key="frame" x="183" y="19" width="14" height="13"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="14" id="wMt-sF-PHt"/>
-                                                    <constraint firstAttribute="height" constant="13" id="wo4-W4-lrS"/>
-                                                </constraints>
-                                            </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLn-Bd-PgB">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <state key="normal">
-                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="logoutTouchUpInside:" destination="Jw9-ni-ftU" eventType="touchUpInside" id="RdG-cg-CbB"/>
-                                                </connections>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvJ-Rn-EVD">
-                                                <rect key="frame" x="115" y="14" width="66" height="21"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="66" id="LMC-p5-L3k"/>
-                                                    <constraint firstAttribute="height" constant="21" id="t4e-iP-yGd"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" red="0.7843137255" green="0.2666666667" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="pvJ-Rn-EVD" firstAttribute="centerY" secondItem="B2N-vF-1Oq" secondAttribute="centerY" id="3oW-Rc-KFC"/>
-                                            <constraint firstItem="rwE-GE-IkE" firstAttribute="leading" secondItem="pvJ-Rn-EVD" secondAttribute="trailing" constant="2" id="El2-Rg-YvJ"/>
-                                            <constraint firstItem="oLn-Bd-PgB" firstAttribute="top" secondItem="B2N-vF-1Oq" secondAttribute="top" id="Q8E-7j-OdQ"/>
-                                            <constraint firstAttribute="trailing" secondItem="oLn-Bd-PgB" secondAttribute="trailing" id="SRm-ea-7ZH"/>
-                                            <constraint firstItem="oLn-Bd-PgB" firstAttribute="leading" secondItem="B2N-vF-1Oq" secondAttribute="leading" id="Tp8-Mj-Bi3"/>
-                                            <constraint firstAttribute="height" constant="50" id="dsE-82-nyj"/>
-                                            <constraint firstAttribute="bottom" secondItem="oLn-Bd-PgB" secondAttribute="bottom" id="gsG-cd-v1e"/>
-                                            <constraint firstItem="pvJ-Rn-EVD" firstAttribute="centerX" secondItem="B2N-vF-1Oq" secondAttribute="centerX" constant="-12" id="ha0-Ac-8z4"/>
-                                            <constraint firstItem="rwE-GE-IkE" firstAttribute="top" secondItem="B2N-vF-1Oq" secondAttribute="top" constant="19" id="kOE-nZ-Ggc"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="JOy-3j-U21" secondAttribute="bottom" constant="50" id="1fU-38-i4w"/>
+                                    <constraint firstAttribute="bottom" secondItem="JOy-3j-U21" secondAttribute="bottom" id="1fU-38-i4w"/>
                                     <constraint firstItem="NXY-fN-xXr" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="3mq-hg-KHX"/>
                                     <constraint firstAttribute="trailing" secondItem="D2A-Cj-l4F" secondAttribute="trailing" id="6Cz-aI-epO"/>
                                     <constraint firstAttribute="trailing" secondItem="JOy-3j-U21" secondAttribute="trailing" id="CSh-25-E7z"/>
                                     <constraint firstItem="D2A-Cj-l4F" firstAttribute="top" secondItem="NXY-fN-xXr" secondAttribute="bottom" id="GpU-WN-9VR"/>
-                                    <constraint firstAttribute="bottom" secondItem="B2N-vF-1Oq" secondAttribute="bottom" id="JcU-Q2-Vq0"/>
                                     <constraint firstItem="JOy-3j-U21" firstAttribute="top" secondItem="D2A-Cj-l4F" secondAttribute="bottom" constant="-20" id="KEf-sj-p61"/>
                                     <constraint firstAttribute="trailing" secondItem="NXY-fN-xXr" secondAttribute="trailing" id="R35-zf-Kno"/>
                                     <constraint firstItem="JOy-3j-U21" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="Vvk-oA-BkD"/>
                                     <constraint firstItem="D2A-Cj-l4F" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="YIM-DF-WeH"/>
                                     <constraint firstItem="NXY-fN-xXr" firstAttribute="top" secondItem="7dM-wI-x3t" secondAttribute="top" id="gc8-eT-2XV"/>
-                                    <constraint firstAttribute="trailing" secondItem="B2N-vF-1Oq" secondAttribute="trailing" id="hql-rM-cxe"/>
-                                    <constraint firstItem="B2N-vF-1Oq" firstAttribute="leading" secondItem="7dM-wI-x3t" secondAttribute="leading" id="qGg-Hx-td0"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2127,8 +2139,6 @@
                         <outlet property="post_user_avatar" destination="nU9-Nm-Hhy" id="IdG-Jb-Rck"/>
                         <outlet property="post_user_name" destination="lm0-3p-FtQ" id="oXL-WF-h5J"/>
                         <outlet property="posts_tableView" destination="JOy-3j-U21" id="d03-Mf-iSe"/>
-                        <outlet property="signOutLabel" destination="pvJ-Rn-EVD" id="2ZM-cq-E44"/>
-                        <outlet property="signOutView" destination="B2N-vF-1Oq" id="mB7-Y5-gH0"/>
                         <outlet property="updateButton" destination="CC2-I6-axm" id="Nvl-Ck-Wjk"/>
                         <outlet property="viewTitle" destination="gnd-gL-WE8" id="7Hz-gd-A9I"/>
                         <segue destination="Aee-dM-Lxx" kind="show" identifier="postDetail" id="wT9-Mj-ZWh"/>
@@ -2150,11 +2160,11 @@
         <image name="fireshare.png" width="214" height="37"/>
         <image name="iconDownOff.png" width="40" height="40"/>
         <image name="iconDownOn.png" width="40" height="40"/>
-        <image name="iconLogout.png" width="14" height="13"/>
         <image name="iconSend.png" width="34" height="20"/>
         <image name="iconSendWrite.png" width="34" height="20"/>
         <image name="iconUpOff.png" width="40" height="40"/>
         <image name="iconUpOn.png" width="40" height="40"/>
+        <image name="logout.png" width="20" height="20"/>
         <image name="rectangle99.png" width="375" height="81"/>
         <image name="report.png" width="40" height="40"/>
         <image name="shapeShapeShape.png" width="32" height="27"/>
@@ -2163,8 +2173,8 @@
         <image name="user.png" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wT9-Mj-ZWh"/>
-        <segue reference="tuF-Sd-j5c"/>
+        <segue reference="3Cz-SL-VFL"/>
+        <segue reference="0Ln-q8-2K7"/>
         <segue reference="UfQ-A0-nI5"/>
     </inferredMetricsTieBreakers>
 </document>

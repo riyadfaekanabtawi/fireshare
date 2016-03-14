@@ -7,17 +7,12 @@
 //
 
 import UIKit
-protocol ProfileViewControllerDelegate{
-    func logout()
-    
-    
-}
 
 class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-  @IBOutlet var signOutView: UIView!
+
     
-    var delegate:ProfileViewControllerDelegate! = nil
-    @IBOutlet var signOutLabel: UILabel!
+
+
     @IBOutlet var viewTitle: UILabel!
     var alert:SCLAlertView!
     @IBOutlet var posts_tableView: UITableView!
@@ -56,12 +51,6 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         
         
-        self.signOutView.layer.borderWidth = 1
-        self.signOutView.layer.borderColor = UIColor(red: 222.0/255.0, green: 222.0, blue: 222.0/255.0, alpha: 1).CGColor
-        self.signOutView.layer.masksToBounds = true
-        self.signOutLabel.text = NSLocalizedString("Sign out", comment: "")
-        super.viewDidLoad()
-        self.signOutLabel.font = UIFont(name: FONT_BOLD, size: self.signOutLabel.font.pointSize)
         self.posts_tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         let tracker  = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value:"Vista Detalle Usuario")
@@ -278,10 +267,5 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
        
     }
 
-    @IBAction func logoutTouchUpInside(sender: UIButton) {
-         self.navigationController?.popViewControllerAnimated(true)
-        self.delegate.logout()
-       
-        
-    }
+  
 }

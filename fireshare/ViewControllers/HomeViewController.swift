@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreLocation
-class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate,ProfileViewControllerDelegate {
+class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate {
     
     var locationManager = CLLocationManager()
     var posts_array:[AnyObject] = []
@@ -281,9 +281,9 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
         if segue.identifier == "user"{
         
-        let controller2 = segue.destinationViewController as! ProfileViewController
-        controller2.delegate = self
-        controller2.user = self.selectedUser
+        let controller = segue.destinationViewController as! ProfileViewController
+            
+        controller.user = self.selectedUser
         
         }
     }
@@ -545,7 +545,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         defaults.removeObjectForKey("DATE_LOGIN")
         defaults.removeObjectForKey("user_main")
         defaults.synchronize()
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     
     }
 
