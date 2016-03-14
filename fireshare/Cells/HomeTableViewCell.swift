@@ -53,7 +53,11 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
         self.commentCountLabel.font = UIFont(name: FONT_BOLD, size: self.commentCountLabel.font.pointSize)
         self.timeLabel.font = UIFont(name: FONT_REGULAR, size: self.timeLabel.font.pointSize)
         self.post_title_label.font = UIFont(name: FONT_REGULAR, size: self.post_title_label.font.pointSize)
-         self.likesSum.font = UIFont(name: FONT_BOLD, size: self.likesSum.font.pointSize)
+        
+        if self.likesSum != nil{
+           self.likesSum.font = UIFont(name: FONT_BOLD, size: self.likesSum.font.pointSize)
+        }
+      
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -66,17 +70,20 @@ class HomeTableViewCell: UITableViewCell,UICollectionViewDataSource,UICollection
     func displayPost(post:Posts, atindex:NSIndexPath){
         
         
+        if self.likesSum != nil || self.likesSumFace != nil{
         
-        if post.post_likes == 0{
-        
-        self.likesSum.hidden = true
-        self.likesSumFace.hidden = true
-        }else{
-            self.likesSum.hidden = false
-            self.likesSumFace.hidden = false
-        
+            if post.post_likes == 0{
+                
+                self.likesSum.hidden = true
+                self.likesSumFace.hidden = true
+            }else{
+                self.likesSum.hidden = false
+                self.likesSumFace.hidden = false
+                
+            }
+            self.likesSum.text = "+\(post.post_likes)"
         }
-        self.likesSum.text = "+\(post.post_likes)"
+        
         self.selectedPost = post
         if  post.seconds_since < 60{
             
