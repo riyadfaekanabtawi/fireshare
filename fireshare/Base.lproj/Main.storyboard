@@ -695,7 +695,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xo-Jf-cTZ">
-                                                <rect key="frame" x="1" y="12" width="50" height="50"/>
+                                                <rect key="frame" x="1" y="14" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="dCI-RM-ft1"/>
                                                     <constraint firstAttribute="height" constant="50" id="wjo-Ve-1Og"/>
@@ -713,7 +713,7 @@
                                             <constraint firstAttribute="trailing" secondItem="5Yr-XO-bOV" secondAttribute="trailing" id="A43-wc-ZAo"/>
                                             <constraint firstAttribute="height" constant="64" id="JnG-jY-WAh"/>
                                             <constraint firstItem="cBY-fx-7uj" firstAttribute="centerX" secondItem="yvH-Fp-GJu" secondAttribute="centerX" id="Kir-sH-Hhe"/>
-                                            <constraint firstItem="3xo-Jf-cTZ" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="12" id="Ly9-mt-a0t"/>
+                                            <constraint firstItem="3xo-Jf-cTZ" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="14" id="Ly9-mt-a0t"/>
                                             <constraint firstItem="WPN-Qg-bpT" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" constant="15" id="RQ0-nA-ith"/>
                                             <constraint firstItem="5Yr-XO-bOV" firstAttribute="top" secondItem="yvH-Fp-GJu" secondAttribute="top" id="UnS-Ie-SCU"/>
                                             <constraint firstAttribute="bottom" secondItem="5Yr-XO-bOV" secondAttribute="bottom" id="ftg-Rs-ejo"/>

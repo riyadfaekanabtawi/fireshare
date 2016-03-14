@@ -82,20 +82,13 @@
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             
-            NSDate *dateCalledService = [defaults objectForKey:@"DATE_LOGIN"];
+          
             
             
             if ([defaults objectForKey:@"user_main"]){
-                if(![defaults objectForKey:@"DATE_LOGIN"]){
-                    
-                   // [self performSegueWithIdentifier:@"login" sender:self];
-                    
-                }else if([[NSDate date] timeIntervalSinceDate:dateCalledService]>=60*24*60*5){
-                    
-                }else{
-                    
-                    [self performSegueWithIdentifier:@"homeCache" sender:self];
-                }
+            
+                
+                [self performSegueWithIdentifier:@"homeCache" sender:self];
                 
                 
             }else{
