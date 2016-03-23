@@ -30,12 +30,7 @@ static NSString *const kTrackingId = @"UA-73548513-1";
         
         [application registerForRemoteNotifications];
     }
-    else
-    {
-        // iOS < 8 Notifications
-        [application registerForRemoteNotificationTypes:
-         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
-    }
+    
     
     application.applicationIconBadgeNumber = 0;
     

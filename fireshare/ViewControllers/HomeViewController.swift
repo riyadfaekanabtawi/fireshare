@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreLocation
-class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate {
-    
+class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate,MAActivityIndicatorViewDelegate {
+    var indicatorView1 : MAActivityIndicatorView!
+
     var locationManager = CLLocationManager()
     var posts_array:[AnyObject] = []
     var selectedUser:Users!
@@ -18,7 +19,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     var alert = SCLAlertView()
     var LatitudeString:String!
     var LongitudeString:String!
-    var loader:SBTVLoaderView!
+   
     var preventAnimation = Set<NSIndexPath>()
      @IBOutlet var user_main_avatar: UIImageView!
     @IBOutlet var user_main_name: UILabel!
@@ -310,7 +311,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
             return 265
         }else{
             
-            return 100
+            return 130
             
         }
      
@@ -345,7 +346,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     func callhomeService(){
         
-        
+          self.posts_tableView.hidden = true
      
         
          self.alert.hideView()
@@ -410,7 +411,6 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     }) { (err) -> Void in
     self.refreshControl.endRefreshing()
     self.hideLoader()
-    self.posts_tableView.reloadData()
     self.showError()
     
     }
@@ -420,7 +420,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                     self.showError()
                     self.hideLoader()
                     self.refreshControl.endRefreshing()
-                    self.posts_tableView.reloadData()
+      
                 }
             })
             
@@ -587,20 +587,40 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
   
         
-//         self.loader  = SBTVLoaderView.create()
-//        //let frontView = UIApplication.sharedApplication().keyWindow
-//        
-//        
-//        let window = UIApplication.sharedApplication().keyWindow
-//        let sub =   (window?.subviews[0])! as UIView
-//        
-//        Functions.fillContainerView(sub, withView:  self.loader)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            self.indicatorView1 = MAActivityIndicatorView(frame: self.view.frame)
+            self.indicatorView1.defaultColor = UIColor.redColor()
+            self.indicatorView1.animationDuration    = 1
+            self.indicatorView1.numberOfCircles      = 10
+            self.indicatorView1.maxRadius            = 40
+            self.indicatorView1.delegate = self
+            // self.indicatorView1.backgroundColor = UIColor.lightGrayColor()
+            self.indicatorView1.startAnimating()
+      
+            
+            
+            let window = UIApplication.sharedApplication().keyWindow
+         
+            
+            Functions.fillContainerView(window?.subviews[0], withView: self.indicatorView1)
+            
+        })
+
     
     }
     
     
    func hideLoader(){
-//    self.loader.removeFromSuperview()
+   self.indicatorView1.removeFromSuperview()
     
     }
+    
+    
+    
+    func activityIndicatorView(activityIndicatorView: MAActivityIndicatorView, circleBackgroundColorAtIndex index: NSInteger) -> UIColor {
+        
+        return UIColor(red: 200.0/255.0, green: 68.0/255.0, blue: 75.0/255.0, alpha: 1)
+    }
+
 }

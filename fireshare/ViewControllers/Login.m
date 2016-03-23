@@ -224,7 +224,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             if ([[responseObject objectForKey:@"Description"] isEqualToString:@"Email does not match password"]){
                 
                 
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alerts = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong email or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 
                 UIAlertAction* ok = [UIAlertAction
@@ -232,11 +232,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                      style:UIAlertActionStyleDefault
                                      handler:^(UIAlertAction * action)
                                      {
-                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         [alerts dismissViewControllerAnimated:YES completion:nil];
                                          
                                      }];
-                [alert addAction:ok];
-                [self presentViewController:alert animated:YES completion:nil];
+                [alerts addAction:ok];
+                [self presentViewController:alerts animated:YES completion:nil];
                 
                 
     
@@ -246,7 +246,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                 
             }else if([[responseObject objectForKey:@"Description"] isEqualToString:@"We could not find any users with that email."]){
             
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Email does not exist. Please try another one or register.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alerts = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Email does not exist. Please try another one or register.", nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 
                 UIAlertAction* ok = [UIAlertAction
@@ -254,11 +254,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                      style:UIAlertActionStyleDefault
                                      handler:^(UIAlertAction * action)
                                      {
-                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         [alerts dismissViewControllerAnimated:YES completion:nil];
                                          
                                      }];
-                [alert addAction:ok];
-                [self presentViewController:alert animated:YES completion:nil];
+                [alerts addAction:ok];
+                [self presentViewController:alerts animated:YES completion:nil];
             
             
             }else{
@@ -278,7 +278,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong username or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alerts = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Wrong username or password. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
             
             
             UIAlertAction* ok = [UIAlertAction
@@ -286,11 +286,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
+                                     [alerts dismissViewControllerAnimated:YES completion:nil];
                                      
                                  }];
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+            [alerts addAction:ok];
+            [self presentViewController:alerts animated:YES completion:nil];
          
            
     
@@ -340,7 +340,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Failed to get your location.", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alerts = [UIAlertController alertControllerWithTitle:@"Oops" message:NSLocalizedString(@"Failed to get your location.", nil) preferredStyle:UIAlertControllerStyleAlert];
     
     
     UIAlertAction* ok = [UIAlertAction
@@ -348,11 +348,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                          style:UIAlertActionStyleDefault
                          handler:^(UIAlertAction * action)
                          {
-                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             [alerts dismissViewControllerAnimated:YES completion:nil];
                              
                          }];
-    [alert addAction:ok];
-    [self presentViewController:alert animated:YES completion:nil];
+    [alerts addAction:ok];
+    [self presentViewController:alerts animated:YES completion:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -429,7 +429,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         
      
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alerts = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         
         
         UIAlertAction* ok = [UIAlertAction
@@ -437,11 +437,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                              style:UIAlertActionStyleDefault
                              handler:^(UIAlertAction * action)
                              {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 [alerts dismissViewControllerAnimated:YES completion:nil];
                                  
                              }];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
+        [alerts addAction:ok];
+        [self presentViewController:alerts animated:YES completion:nil];
     }
     // The user has not enabled any location services. Request background authorization.
     else if (status == kCLAuthorizationStatusNotDetermined) {

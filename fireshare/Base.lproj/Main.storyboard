@@ -62,8 +62,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="backgroundColor.png" translatesAutoresizingMaskIntoConstraints="NO" id="2gN-iw-Vxl">
-                                <rect key="frame" x="-140" y="-16" width="600" height="600"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundColor.png" translatesAutoresizingMaskIntoConstraints="NO" id="2gN-iw-Vxl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fireshare.png" translatesAutoresizingMaskIntoConstraints="NO" id="QS5-t3-Rsb">
                                 <rect key="frame" x="53" y="272" width="215" height="24"/>
@@ -1194,7 +1194,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.7843137255" green="0.2666666667" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="2HH-7u-mmX" firstAttribute="leading" secondItem="TTS-zb-egy" secondAttribute="leading" id="T2R-ja-iss"/>
                             <constraint firstItem="fyA-Ak-YEc" firstAttribute="top" secondItem="2HH-7u-mmX" secondAttribute="bottom" id="k8D-N7-8FG"/>
@@ -2158,17 +2158,17 @@
         <image name="cardFeed.png" width="356" height="296"/>
         <image name="fire.png" width="14" height="18"/>
         <image name="fireshare.png" width="214" height="37"/>
-        <image name="iconDownOff.png" width="40" height="40"/>
-        <image name="iconDownOn.png" width="40" height="40"/>
+        <image name="iconDownOff.png" width="20" height="20"/>
+        <image name="iconDownOn.png" width="20" height="20"/>
         <image name="iconSend.png" width="34" height="20"/>
         <image name="iconSendWrite.png" width="34" height="20"/>
-        <image name="iconUpOff.png" width="40" height="40"/>
-        <image name="iconUpOn.png" width="40" height="40"/>
+        <image name="iconUpOff.png" width="20" height="20"/>
+        <image name="iconUpOn.png" width="20" height="20"/>
         <image name="logout.png" width="20" height="20"/>
         <image name="rectangle99.png" width="375" height="81"/>
-        <image name="report.png" width="40" height="40"/>
+        <image name="report.png" width="20" height="20"/>
         <image name="shapeShapeShape.png" width="32" height="27"/>
-        <image name="trash.png" width="40" height="40"/>
+        <image name="trash.png" width="18" height="18"/>
         <image name="update_icon.png" width="30" height="30"/>
         <image name="user.png" width="64" height="64"/>
     </resources>

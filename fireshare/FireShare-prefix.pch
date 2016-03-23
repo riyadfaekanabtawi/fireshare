@@ -28,6 +28,8 @@
 #define SCROLL_OFFSET_NAVBAR_LIMIT 150.0f
 #define SCROLL_NAVBAR_START_OFFSET 200.0f
 //FONTS
+
+
 #define FONT_REGULAR   @"GothamBook"
 #define FONT_BOLD  @"GothamBold"
 #define FONT_MEDIUM  @"GothamMedium"
