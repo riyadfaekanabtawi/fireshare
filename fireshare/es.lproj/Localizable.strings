@@ -62,7 +62,7 @@
 
 "You have to write something before posting" = "Tienes que escribir algo antes de comentar.";
 
-"There was an error while fetching your location. Please try again." = "Hubo un error al encontrar su ubicación. Porfavor intente nuevamente.";
+"There was an error while fetching your location. Please enable location services." = "Hubo un error al encontrar su ubicación. Porfavor habilite sus servicios de localización.";
 
 "Just now" = "Hace unos instantes";
 

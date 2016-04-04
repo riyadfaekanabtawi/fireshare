@@ -239,8 +239,8 @@ class CommentCollectionViewCell: UICollectionViewCell {
             
             }) { (Bool) -> Void in
         self.alert = SCLAlertView()
-        self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("denunciar"))
-        self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarDenounce"))
+        self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:#selector(CommentCollectionViewCell.denunciar))
+        self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:#selector(CommentCollectionViewCell.cancelarDenounce))
         self.alert.hideWhenBackgroundViewIsTapped = true
         self.alert.showCloseButton = false
    
@@ -266,7 +266,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
             
             
             self.alert = SCLAlertView()
-            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("cancelarDenounce"))
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(CommentCollectionViewCell.cancelarDenounce))
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
             self.alert.showSuccess(NSLocalizedString("Success",comment:""), subTitle: String(format: NSLocalizedString("You have succesfully denounced %@ for commenting: '%@'", comment: ""), self.current_comment.user_owner.name,self.current_comment.comment_content))

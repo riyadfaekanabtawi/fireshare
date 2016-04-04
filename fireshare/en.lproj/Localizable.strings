@@ -97,4 +97,4 @@
 "%.0f weeks" = "%@ weeks";
 
 
-"There was an error while fetching your location. Please try again." = "There was an error while fetching your location. Please try again.";
+"There was an error while fetching your location. Please enable location services." = "There was an error while fetching your location. Please enable location services.";

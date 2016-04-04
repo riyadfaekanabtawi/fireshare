@@ -36,8 +36,8 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
         
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostDetailViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostDetailViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         self.commentTextField.placeholder = NSLocalizedString("Write your comment", comment: "")
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -181,7 +181,7 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
               
                 
                 self.alert = SCLAlertView()
-                self.alert.addButton("OK", target:self, selector:Selector("OKSinTextPost"))
+                self.alert.addButton("OK", target:self, selector:#selector(PostDetailViewController.OKSinTextPost))
                 
                 self.alert.hideWhenBackgroundViewIsTapped = true
                 self.alert.showCloseButton = false
@@ -318,8 +318,8 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
             
             }) { (Bool) -> Void in
         self.alert = SCLAlertView()
-        self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("denunciar"))
-        self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarDenounce"))
+        self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:#selector(PostDetailViewController.denunciar))
+        self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:#selector(PostDetailViewController.cancelarDenounce))
         self.alert.hideWhenBackgroundViewIsTapped = true
         self.alert.showCloseButton = false
         self.alert.showWarning(NSLocalizedString("Denounce",comment:""), subTitle: String(format: NSLocalizedString("Are you sure you want to denounce %@ for posting: '%@' ?", comment: ""), self.post.post_user.name,self.post.post_title))
@@ -334,7 +334,7 @@ class PostDetailViewController: GAITrackedViewController,UICollectionViewDataSou
             
             tracker.send(GAIDictionaryBuilder.createEventWithCategory("Post", action: "Denounce Post", label: "Denounce Post", value: nil).build() as [NSObject : AnyObject])
             self.alert = SCLAlertView()
-            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("cancelarDenounce"))
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(PostDetailViewController.cancelarDenounce))
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
             self.alert.showSuccess(NSLocalizedString("Success",comment:""), subTitle: String(format: NSLocalizedString("You have succesfully denounced %@ for posting: '%@'", comment: ""), self.post.post_user.name,self.post.post_title))

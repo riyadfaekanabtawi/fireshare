@@ -80,7 +80,7 @@
 "You have to write something before commenting." = "Você tem que escrever alguma coisa antes de comentar.";
 
 
-"There was an error while fetching your location. Please try again." = "Ocorreu um erro enquanto buscavamos sua localização. Por favor, tente novamente.";
+"There was an error while fetching your location. Please enable location services." = "Ocorreu um erro enquanto buscavamos sua localização. Por favor, ative os serviços de localização.";
 
 
 "Dont have an account yet?" = "Não tem uma conta ainda?";

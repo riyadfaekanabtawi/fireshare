@@ -42,7 +42,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("", comment: ""))
-        self.refreshControl.addTarget(self, action: "callhomeService", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: #selector(HomeViewController.callhomeService), forControlEvents: UIControlEvents.ValueChanged)
         self.posts_tableView.addSubview(refreshControl)
      
         
@@ -146,7 +146,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
             if self.frase_text_field.text == NSLocalizedString("Write your phrase here..." , comment: "") || self.frase_text_field.text == ""{
          
                 self.alert = SCLAlertView()
-                self.alert.addButton("OK", target:self, selector:Selector("OKSinTextPost"))
+                self.alert.addButton("OK", target:self, selector:#selector(HomeViewController.OKSinTextPost))
               
                 self.alert.hideWhenBackgroundViewIsTapped = true
                 self.alert.showCloseButton = false
@@ -231,7 +231,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
                     
                     self.showError()
                     self.alert = SCLAlertView()
-                    self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                    self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(HomeViewController.OKSinTextPost))
                     
                     self.alert.hideWhenBackgroundViewIsTapped = true
                     self.alert.showCloseButton = false
@@ -349,8 +349,8 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
           self.posts_tableView.hidden = true
      
         
-         self.alert.hideView()
-    self.showLoader()
+        self.alert.hideView()
+        self.showLoader()
         let locManager = CLLocationManager()
         locManager.requestWhenInUseAuthorization()
 
@@ -358,9 +358,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
 
         if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
-                
                 currentLocation = locManager.location
-                
         }
         
         if (currentLocation != nil){
@@ -392,14 +390,15 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         self.posts_array = response as! [Posts]
         self.frase_text_field.resignFirstResponder()
         self.count_caracterrsLabel.textColor = UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 0.5)
-        if self.posts_array.count != 0{
+        
+            if self.posts_array.count != 0{
             self.refreshControl.endRefreshing()
             self.posts_tableView.hidden = false
             self.posts_tableView.reloadData()
             
         }else{
             self.alert = SCLAlertView()
-            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(HomeViewController.OKSinTextPost))
             self.posts_tableView.hidden = true
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
@@ -427,11 +426,11 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
         }else{
             self.refreshControl.endRefreshing()
             self.alert = SCLAlertView()
-            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(HomeViewController.logout))
               self.hideLoader()
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
-            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("There was an error while fetching your location. Please try again.",comment:""))
+            self.alert.showWarning(NSLocalizedString("Oops",comment:""), subTitle: NSLocalizedString("There was an error while fetching your location. Please enable location services.",comment:""))
               self.hideLoader()
         }
         
@@ -443,7 +442,7 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     func showError(){
         self.refreshControl.endRefreshing()
         self.alert = SCLAlertView()
-        self.alert.addButton("Tap to refresh", target:self, selector:Selector("callhomeService"))
+        self.alert.addButton("Tap to refresh", target:self, selector:#selector(HomeViewController.callhomeService))
         
         self.alert.hideWhenBackgroundViewIsTapped = true
         self.alert.showCloseButton = false
@@ -527,8 +526,8 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
 }) { (Bool) -> Void in
     
     self.alert = SCLAlertView()
-    self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:Selector("logout"))
-    self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:Selector("cancelarAlertLogout"))
+    self.alert.addButton(NSLocalizedString("Yes",comment:""), target:self, selector:#selector(HomeViewController.logout))
+    self.alert.addButton(NSLocalizedString("No",comment:""), target:self, selector:#selector(HomeViewController.cancelarAlertLogout))
     self.alert.hideWhenBackgroundViewIsTapped = true
     self.alert.showCloseButton = false
     self.alert.showWarning(NSLocalizedString("Exit FireShare",comment:""), subTitle: NSLocalizedString("Are you sure you want to logout?",comment:""))
@@ -537,6 +536,8 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
 }
 
     func logout(){
+        
+        self.hideLoader()
       self.alert.hideView()
         let tracker = GAI.sharedInstance().defaultTracker
         
@@ -612,7 +613,11 @@ class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITable
     
     
    func hideLoader(){
-   self.indicatorView1.removeFromSuperview()
+    if self.indicatorView1 != nil{
+    
+     self.indicatorView1.removeFromSuperview()
+    }
+  
     
     }
     

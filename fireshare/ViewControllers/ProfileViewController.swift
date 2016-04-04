@@ -217,7 +217,8 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     func showError(){
         self.alert = SCLAlertView()
-        self.alert.addButton("Tap to refresh", target:self, selector:Selector("callUserProfileService"))
+        self.alert.addButton("Tap to refresh", target:self, selector:#selector(ProfileViewController.callUserProfileService))
+        
         
         self.alert.hideWhenBackgroundViewIsTapped = true
         self.alert.showCloseButton = false

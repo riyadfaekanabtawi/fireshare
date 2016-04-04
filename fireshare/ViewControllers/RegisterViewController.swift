@@ -27,8 +27,8 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RegisterViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RegisterViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
      
         
@@ -153,7 +153,7 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
             
             
             self.alert = SCLAlertView()
-            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(RegisterViewController.OKSinTextPost))
             
             self.alert.hideWhenBackgroundViewIsTapped = true
             self.alert.showCloseButton = false
@@ -204,7 +204,7 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
                         
                         if ((response as? String) != nil){
                             self.alert = SCLAlertView()
-                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(RegisterViewController.OKSinTextPost))
                             
                             self.alert.hideWhenBackgroundViewIsTapped = true
                             self.alert.showCloseButton = false
@@ -241,7 +241,7 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
                             
                             
                             self.alert = SCLAlertView()
-                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                            self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(RegisterViewController.OKSinTextPost))
                             
                             self.alert.hideWhenBackgroundViewIsTapped = true
                             self.alert.showCloseButton = false
@@ -256,7 +256,7 @@ class RegisterViewController: GAITrackedViewController,UIImagePickerControllerDe
             }else{
                 
                 self.alert = SCLAlertView()
-                self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:Selector("OKSinTextPost"))
+                self.alert.addButton(NSLocalizedString("OK",comment:""), target:self, selector:#selector(RegisterViewController.OKSinTextPost))
                 
                 self.alert.hideWhenBackgroundViewIsTapped = true
                 self.alert.showCloseButton = false
