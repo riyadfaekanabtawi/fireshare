@@ -1,9 +1,9 @@
 //
 //  Login.h
-//  CookBook
+//  FireShare
 //
-//  Created by Riyad Faek Anabtawi on 11-04-14.
-//  Copyright (c) 2015 Riyad Anabtawi. All rights reserved.
+//  Created by Riyad Faek Anabtawi on 11-01-16.
+//  Copyright (c) 2016 Riyad Anabtawi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

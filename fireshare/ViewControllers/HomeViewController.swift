@@ -9,6 +9,8 @@
 import UIKit
 import CoreLocation
 class HomeViewController: GAITrackedViewController,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,SWRevealViewControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate,HomeCellDelegate,MAActivityIndicatorViewDelegate {
+    
+    
     var indicatorView1 : MAActivityIndicatorView!
 
     var locationManager = CLLocationManager()
